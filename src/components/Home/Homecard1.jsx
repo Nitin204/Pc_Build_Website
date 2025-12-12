@@ -38,7 +38,7 @@ const Homecard1 = () => {
 
                 {/* Right Column: Text Content and CTA */}
                 <div className="lg:w-2/5">
-                    <p className="text-2xl md:text-2xl font-bold text-red-500 mb-2 leading-tight">
+                    <p className="text-2xl md:text-2xl  font-bold text-red-500 mb-2 leading-tight">
                         Your PC — Ready in Just 3 Clicks
                     </p>
                     
