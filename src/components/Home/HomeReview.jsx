@@ -23,7 +23,7 @@ const StarRating = ({ rating }) => {
 const HomeReview = () => {
     const scrollContainerRef = useRef(null);
     // Adjusted padding for better mobile fit
-    const cardClasses = "bg-gray-800 p-6 rounded-lg shadow-xl text-white flex flex-col justify-between relative";
+    const cardClasses = "bg-black border border-gray-700 hover:border-red-500 p-6 rounded-lg shadow-xl text-white flex flex-col justify-between relative";
 
     const scroll = (direction) => {
         if (scrollContainerRef.current) {
@@ -63,7 +63,7 @@ const HomeReview = () => {
                                     <img 
                                         src={testimonial.avatar} 
                                         alt={testimonial.name} 
-                                        className="h-16 w-16 rounded-full object-cover mb-4 border-2 border-red-600"
+                                        className="h-20 w-20 rounded-full object-cover mb-4 border-1 border-red-600"
                                     />
                                     <StarRating rating={testimonial.rating} />
                                 </div>
