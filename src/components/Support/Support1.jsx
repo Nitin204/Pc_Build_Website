@@ -6,9 +6,10 @@ const Support1 = () => {
         name: '',
         phone: '',
         email: '',
-        date: '13-12-2025', 
+        date: '13-12-2025', // Matching screenshot default
         details: '',
     });
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
