@@ -1,0 +1,124 @@
+import React, { useState } from 'react';
+
+// Define reusable styles
+const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 
+const INPUT_CLASSES = 'w-full px-4 py-1 bg-white text-black rounded-lg border-none focus:ring-2 focus:ring-red-500';
+
+const CareersCo = () => {
+    // State for form data 
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        description: ''
+    });
+
+    const MAX_CHARS = 300;
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Placeholder submission logic (send application data to HR API)
+        console.log("Submitting Careers Application:", formData);
+        alert("Your application has been submitted successfully!");
+        // Reset form or redirect on successful API response
+    };
+
+    return (
+        // Full page container with dark background
+        <div className="flex items-start justify-center min-h-screen bg-black text-white p-4 pt-25">
+            
+            {/* Form Box */}
+            <div className="w-full max-w-sm bg-gray-950 p-8 md:p-10 rounded-xl  border border-gray-800" 
+                >
+                
+                {/* Title */}
+                <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-red-600">
+                    Careers
+                </h2>
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    
+                    {/* Name */}
+                    <div>
+                        <label className="block text-base font-medium text-white mb-2">Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your name"
+                            className={INPUT_CLASSES}
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    {/* Email Address */}
+                    <div>
+                        <label className="block text-base font-medium text-white mb-2">Email address</label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            className={INPUT_CLASSES}
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    
+                    {/* Phone Number */}
+                    <div>
+                        <label className="block text-base font-medium text-white mb-2">Phone number</label>
+                        <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            className={INPUT_CLASSES}
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    
+                    {/* Description (Textarea) */}
+                    <div>
+                        <label className="block text-base font-medium text-white mb-2">Description (0/{MAX_CHARS})</label>
+                        <textarea
+                            name="description"
+                            placeholder="Explain how you could make a difference to our organization"
+                            rows="5"
+                            maxLength={MAX_CHARS}
+                            className={`${INPUT_CLASSES} resize-none`}
+                            value={formData.description}
+                            onChange={handleChange}
+                            required
+                        ></textarea>
+                        {/* Character counter (Optional, but useful for user experience) */}
+                        <p className="text-right text-sm text-gray-400 mt-1">
+                            {formData.description.length}/{MAX_CHARS}
+                        </p>
+                    </div>
+                    
+                    {/* Submit Button */}
+                    <button 
+                        type="submit"
+                        className={`w-full py-3 mt-2 uppercase font-bold text-white rounded-lg transition duration-300 ${RED_BUTTON_CLASSES}`}
+                    >
+                        SUBMIT
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    );
+}
+
+export default CareersCo;

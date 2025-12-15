@@ -89,14 +89,14 @@ const PrebuiltsHone = () => {
                 <a href="https://wa.me/" 
        // Used specific hex code for WhatsApp green and text-white for icon color
        className="bg-[#25D366] text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
-        <MessageCircle className="h-8 w-8" />
+        <MessageCircle className="h-5 w-5 md:h-7 md:w-7" />
     </a>
     
     {/* Phone Icon: Changed to Blue bg and white icon */}
     <a href="tel:" 
        // Used Tailwind's strong blue for phone and text-white for icon color
        className="bg-blue-600 text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
-        <Phone className="h-8 w-8" />
+        <Phone className="h-5 w-5 md:h-7 md:w-7" />
     </a>
             </div>
         </section>

@@ -9,7 +9,7 @@ const Support1 = () => {
         date: '13-12-2025', // Matching screenshot default
         details: '',
     });
-    
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -117,6 +117,20 @@ const Support1 = () => {
                     </div>
                 </form>
             </div>
+             <div className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4">
+                                        <a href="https://wa.me/" 
+                               // Used specific hex code for WhatsApp green and text-white for icon color
+                               className="bg-[#25D366] text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
+                                <MessageCircle className="h-5 w-5 md:h-7 md:w-7" />
+                            </a>
+                            
+                            {/* Phone Icon: Changed to Blue bg and white icon */}
+                            <a href="tel:" 
+                               // Used Tailwind's strong blue for phone and text-white for icon color
+                               className="bg-blue-600 text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
+                                <Phone className="h-5 w-5 md:h-7 md:w-7" />
+                            </a>
+                                    </div>
         </section>
     );
 };

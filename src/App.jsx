@@ -9,8 +9,18 @@ import BuildPc from "./pages/BuildPc/BuildPc.jsx";
 import Prebuilts from "./pages/Prebuilts/PrebuiltsPages.jsx";
 import AddOns from "./pages/AddOns/AddOns.jsx";
  import Support from "./pages/Support/Support.jsx";
-// import Cart from "./pages/Cart/Cart.jsx";
-// import Account from "./pages/Account/Account.jsx";
+import Cart from "./pages/Cart/Cart.jsx";
+ import Account from "./pages/Account/Login.jsx";
+ import Reset from "./pages/Account/Reset.jsx";
+ import Register from "./pages/Account/Register.jsx";
+
+ import Careers from "./pages/Legel/Careers.jsx";
+ import Refund from "./pages/Legel/Refund.jsx";
+ import Term from "./pages/Legel/Term.jsx";
+ import Policy from "./pages/Legel/Policy.jsx";
+import Shipping from "./pages/Legel/Shipping.jsx";
+import Privacy from "./pages/Legel/Privacy.jsx";
+
 
 function App() {
   return (
@@ -29,6 +39,33 @@ function App() {
           <Route path="/prebuilts" element={<Prebuilts />} />
           <Route path="/addons" element={<AddOns />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/reset" element={<Reset />} /> 
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
+
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/refund" element={<Refund />} />
+          <Route path="/terms" element={<Term />} />
+          <Route path="/policy" element={<Policy />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/privacy" element={<Privacy />} />
+
+          {/* Sub Menu Routes */}
+          <Route path="/buildpc/:subPage" element={<BuildPc />} />
+          <Route path="/prebuilts/:subPage" element={<Prebuilts />} />
+          <Route path="/addons/:subPage" element={<AddOns />} />
+          <Route path="/support/:subPage" element={<Support />} />
+          <Route path="/account/:subPage" element={<Account/>} />
+          <Route path="/reset/:subPage" element={<Reset />} />
+          <Route path="/register/:subPage" element={<Register />} />
+          <Route path="/cart/:subPage" element={<Cart />} />
+
+
+          <Route path="/careers/:subPage" element={<Careers />} />
+         
+          {/* 404 Page */}
+          <Route path="*" element={<h1>404 Page Not Found</h1>}/>
         
         </Routes>
 

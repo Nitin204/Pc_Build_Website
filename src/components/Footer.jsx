@@ -7,32 +7,30 @@ const Footer = () => {
         {
             title: "USEFUL LINKS",
             links: [
-                { name: "Careers", href: "#careers" },
-                { name: "Contact us", href: "#contact" },
-                { name: "Video Consultation", href: "#consultation" },
-                { name: "Support", href: "#support" },
-                { name: "PC Master Hunt", href: "#pcmasterhunt" },
+                { name: "Careers", href: "/careers" },
+                { name: "Contact us", href: "/support" },
+                { name: "Support", href: "/support" },
+               
             ]
         },
         {
             title: "QUICK LINKS",
             links: [
-                { name: "Build Your Own PC", href: "#build" },
-                { name: "Pre-Builts", href: "#prebuilts" },
-                { name: "Add-Ons", href: "#addons" },
-                { name: "Profile", href: "#profile" },
-                { name: "Orders", href: "#orders" },
-                { name: "Coupons", href: "#coupons" },
+                { name: "Build Your Own PC", href: "/buildpc" },
+                { name: "Pre-Builts", href: "/prebuilts" },
+                { name: "Add-Ons", href: "/addons" },
+               
+                
             ]
         },
         {
             title: "LEGAL",
             links: [
-                { name: "Cancellation & Refund", href: "#refund" },
-                { name: "Terms & Conditions", href: "#terms" },
-                { name: "Returns", href: "#returns" },
-                { name: "Shipping", href: "#shipping" },
-                { name: "Privacy", href: "#privacy" },
+                { name: "Cancellation & Refund", href: "/refund" },
+                { name: "Terms & Conditions", href: "/terms" },
+                { name: "Returns", href: "/policy" },
+                { name: "Shipping", href: "/shipping" },
+                { name: "Privacy", href: "/privacy" },
             ]
         }
     ];
