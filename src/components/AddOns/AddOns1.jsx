@@ -1,153 +1,348 @@
-import React, { useState } from 'react';
-import { MessageCircle, Phone } from 'lucide-react';
-// Added Laptop icon import from lucide-react
+import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
     Monitor, 
-    Laptop, 
     Keyboard, 
     Mouse, 
     Headphones, 
-    Gamepad 
-} from 'lucide-react'; 
+    Gamepad, 
+    MessageCircle, 
+    Phone 
+} from 'lucide-react';
+
+// --- IMAGE IMPORTS ---
+import monitorImg1 from '../../assets/moniter1.webp';
+import monitorImg2 from '../../assets/moniter2.webp';
+import keyboard1 from '../../assets/DellKB216.webp';
+import keyboard2 from '../../assets/Coconut Desire.webp';
+import Mouse1 from '../../assets/Razer DeathAdder Essential.webp';
+import Mouse2 from '../../assets/Coconut GM2 Bullet.webp';
+import Headphones1 from '../../assets/Ant Esports H520W.webp';
+import Headphones2 from '../../assets/Razer BlackShark V2 X USB.webp';
+import gamePad1 from '../../assets/Logitech G29.webp';
+import gamePad2 from '../../assets/Logitech G29.webp';
+
+const ADD_ONS_DATA = [
+    {
+        id: 'mon-01',
+        category: 'monitor',
+        name: 'MSI PRO MP272 E2',
+        specs: '27-inch Full HD Office Monitor - 100Hz, Eye-Friendly, HDMI 1.4b, DP 1.2a.',
+        price: 8490,
+        displayPrice: '₹ 8,490/-',
+        image: monitorImg1
+    },
+    {
+        id: 'mon-02',
+        category: 'monitor',
+        name: 'BenQ GW2490',
+        specs: '24-inch 1080p FHD IPS Monitor, 100Hz, 99% sRGB, Eye-care, Dual HDMI.',
+        price: 7990,
+        displayPrice: '₹ 7,990/-',
+        image: monitorImg2
+    },
+    {
+        id: 'kb-01',
+        category: 'keyboard',
+        name: 'Mechanical Gaming Keyboard',
+        specs: 'RGB Backlit, Blue Switches, Anti-ghosting keys.',
+        price: 2499,
+        displayPrice: '₹ 2,499/-',
+        image: keyboard1
+    },
+    {
+        id: 'kb-02',
+        category: 'keyboard',
+        name: 'Wireless Gaming Keyboard',
+        specs: 'Wireless, RGB Backlit, Mechanical switches, 2.4GHz connection.',
+        price: 3999,
+        displayPrice: '₹ 3,999/-',
+        image: keyboard2
+    },
+    {
+        id: 'ms-01',
+        category: 'mouse',
+        name: 'Gaming Mouse RGB',
+        specs: '12000 DPI, RGB lighting, 7 programmable buttons.',
+        price: 1299,
+        displayPrice: '₹ 1,299/-',
+        image: Mouse1
+    },
+    {
+        id: 'ms-02',
+        category: 'mouse',
+        name: 'Wireless Gaming Mouse',
+        specs: 'Wireless, 16000 DPI, RGB, rechargeable battery.',
+        price: 2199,
+        displayPrice: '₹ 2,199/-',
+        image: Mouse2
+    },
+    {
+        id: 'hs-01',
+        category: 'headset',
+        name: 'Gaming Headset 7.1',
+        specs: '7.1 Surround Sound, RGB lighting, noise cancelling mic.',
+        price: 1899,
+        displayPrice: '₹ 1,899/-',
+        image: Headphones1
+    },
+    {
+        id: 'hs-02',
+        category: 'headset',
+        name: 'Wireless Gaming Headset',
+        specs: 'Wireless, 50mm drivers, 20hr battery, RGB.',
+        price: 3499,
+        displayPrice: '₹ 3,499/-',
+        image: Headphones2
+    },
+    {
+        id: 'gp-01',
+        category: 'simulator',
+        name: 'Racing Wheel Controller',
+        specs: 'Force feedback, 900° rotation, pedals included.',
+        price: 8999,
+        displayPrice: '₹ 8,999/-',
+        image: gamePad1
+    },
+    {
+        id: 'gp-02',
+        category: 'simulator',
+        name: 'Flight Simulator Joystick',
+        specs: 'Precision joystick, throttle control, multiple buttons.',
+        price: 5499,
+        displayPrice: '₹ 5,499/-',
+        image: gamePad2
+    }
+];
+
+const CATEGORIES = [
+    { label: "Monitor", key: "monitor", icon: Monitor },
+    { label: "Keyboard", key: "keyboard", icon: Keyboard },
+    { label: "Mouse", key: "mouse", icon: Mouse },
+    { label: "Headset", key: "headset", icon: Headphones },
+    { label: "Simulator", key: "simulator", icon: Gamepad },
+];
 
 const AddOns1 = () => {
-    // State to track the currently selected Add-On item
-    const [selectedAddOn, setSelectedAddOn] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('monitor');
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [showProductSummary, setShowProductSummary] = useState(false);
+    const [summaryProduct, setSummaryProduct] = useState(null);
+    const navigate = useNavigate();
 
-    // State to manage the selected values in the Laptop sub-dropdowns
-    const [laptopFormData, setLaptopFormData] = useState({
-        laptop_brand: '',
-        laptop_processor: '',
-        laptop_screen: '',
-    });
+    const filteredProducts = useMemo(() => {
+        return ADD_ONS_DATA.filter(product => product.category === selectedCategory);
+    }, [selectedCategory]);
 
-    // Handler for updating the Laptop configuration state
-    const handleLaptopChange = (e) => {
-        const { name, value } = e.target;
-        setLaptopFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-
-    // Array defining the Add-On items (FINAL ORDER)
-    const addOns = [
-        { label: "Monitor", key: "monitor", icon: Monitor },
-        { label: "Keyboard", key: "keyboard", icon: Keyboard },
-        { label: "Mouse", key: "mouse", icon: Mouse },
-        { label: "Headset", key: "headset", icon: Headphones }, 
-        { label: "Simulator", key: "simulator", icon: Gamepad }, 
-        { label: "Laptop", key: "laptop", icon: Laptop } // Laptop is the last item
-    ];
-
-    const handleSelect = (key) => {
-        // Only change the selected add-on. The configuration is handled by laptopFormData.
-        setSelectedAddOn(key);
-    };
-
-    // Styles for the standard sub-dropdowns
-    const subDropdownClass = "w-full bg-black text-white p-3 rounded-md appearance-none border border-gray-600 focus:ring-red-600 focus:border-red-600 cursor-pointer";
-
-    // Sub-field definitions for the Laptop configuration
-    const laptopFields = [
-        { label: "Laptop Brand", key: "laptop_brand", options: ["Dell", "HP", "Lenovo", "Asus", "Acer"] },
-        { label: "Processor Type", key: "laptop_processor", options: ["Core i5", "Core i7", "Ryzen 5", "Ryzen 7"] },
-        { label: "Screen Size", key: "laptop_screen", options: ["14 inch", "15.6 inch", "17 inch"] },
-    ];
-    
-    // Function to render the configuration panel based on the selected Add-On
-    const renderConfigurationPanel = () => {
-        if (!selectedAddOn) return null;
-
-        if (selectedAddOn === 'laptop') {
-            return (
-                <div className="p-4 pt-2 space-y-4 bg-gray-900 border-b border-gray-700">
-                    <h3 className="text-xl font-semibold text-red-500 mb-4">Configure Laptop</h3>
-                    
-                    {/* Render fields for Laptop */}
-                    {laptopFields.map((field, index) => (
-                        <div key={index}>
-                            <label className="block text-sm font-medium mb-1 text-white">{field.label}</label>
-                            <select
-                                name={field.key}
-                                className={subDropdownClass}
-                                // BOUND TO STATE
-                                value={laptopFormData[field.key]} 
-                                onChange={handleLaptopChange} 
-                            >
-                                <option value="" disabled hidden>Choose {field.label}...</option>
-                                {field.options.map((option, optIndex) => (
-                                    <option key={optIndex} value={option}>{option}</option>
-                                ))}
-                            </select>
-                        </div>
-                    ))}
-                    
-                    <div className="pt-2">
-                        <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded transition duration-300">
-                            Add Laptop to Cart
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        // Default placeholder for other items
+    const handleAddToCart = (product) => {
+        const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const itemExists = existingCart.find(item => item.id === product.id);
         
+        let updatedCart;
+        if (itemExists) {
+            updatedCart = existingCart.map(item => 
+                item.id === product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
+            );
+        } else {
+            updatedCart = [...existingCart, { ...product, quantity: 1 }];
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        window.dispatchEvent(new Event('cartUpdated'));
+        alert(`${product.name} added to cart!`);
+    };
+
+    const handleShowSummary = (product) => {
+        setSummaryProduct(product);
+        setShowProductSummary(true);
+    };
+
+    const handleSummaryAddToCart = () => {
+        handleAddToCart(summaryProduct);
+        setShowProductSummary(false);
     };
 
     return (
-        <section className="py-15 px-4 bg-black flex justify-center items-center">
-            {/* max-w-lg ensures responsiveness by capping the container size */}
-            <div className="bg-gray-950 mt-10 md:mt-14 text-white p-6 md:p-10 w-full max-w-4xl shadow-2xl rounded-lg  border border-gray-800">
-                
-                {/* Title */}
-                <h2 className="text-2xl md:text-3xl font-bold text-center text-red-500 mb-10">
+        <section className="py-24 px-4 bg-black text-white min-h-screen">
+            <div className="mx-auto w-full max-w-2xl">
+                <h2 className="text-3xl font-bold text-center text-red-500 mb-14 uppercase tracking-wider">
                     Add-Ons
                 </h2>
 
-                {/* Add-Ons Grid - Responsive Layout */}
-                <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:flex-nowrap space-x-4 md:space-x-10">
-                    {addOns.map((item) => (
-                        <div 
-                            key={item.key} 
-                            // Applied a controlled width for better wrapping on mobile, but let flex handle it on desktop
-                            className={`flex flex-col items-center cursor-pointer p-2 transition duration-300 rounded-lg w-1/4 md:w-auto ${
-                                selectedAddOn === item.key 
-                                    ? 'text-red-500 border-b-2 border-red-500' 
-                                    : 'text-white hover:text-red-500'
+                {/* --- CATEGORY TABS --- */}
+                <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 mb-16 pb-6 overflow-x-auto">
+                    {CATEGORIES.map((cat) => (
+                        <button 
+                            key={cat.key} 
+                            onClick={() => setSelectedCategory(cat.key)}
+                            className={`flex flex-col items-center p-2 transition-all duration-300 outline-none flex-shrink-0 ${
+                                selectedCategory === cat.key 
+                                    ? 'text-red-500 border-b-2 border-red-500 scale-110' 
+                                    : 'text-white hover:text-gray-400'
                             }`}
-                            onClick={() => handleSelect(item.key)}
                         >
-                            <item.icon className={`text-4xl mb-1 ${selectedAddOn === item.key ? 'text-red-500' : 'text-white'} w-10 h-10`} /> 
-                            <span className="text-xs font-medium text-center">{item.label}</span>
-                        </div>
+                            <cat.icon className="w-8 h-8 md:w-10 md:h-10 mb-2" /> 
+                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-tight">{cat.label}</span>
+                        </button>
                     ))}
                 </div>
 
-                {/* Configuration Panel */}
-                {selectedAddOn && (
-                    <div className="mt-8">
-                        {renderConfigurationPanel()}
-                    </div>
-                )}
+                {/* --- PRODUCT GRID --- */}
+                <div className="space-y-6">
+                    {filteredProducts.map((product) => (
+                        <div key={product.id} className="flex flex-col md:flex-row p-5 rounded-xl border border-gray-800 bg-[#0d0d0d] hover:border-red-600 transition-all duration-500 group">
+                            <div className="flex-shrink-0 w-full md:w-40 h-40 bg-black rounded-lg overflow-hidden mb-4 md:mb-0 md:mr-6 flex items-center justify-center border border-gray-800 cursor-pointer hover:border-red-500"
+                                 onClick={() => setSelectedProduct(product)}>
+                                <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                            </div>
+                            
+                            <div className="flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div className="flex justify-between items-start">
+                                        <h3 className="text-xl font-bold text-white mb-2">{product.name}</h3>
+                                        <span className="text-[10px] bg-red-500/10 text-red-500 px-2 py-1 rounded uppercase border border-red-500/20">{product.category}</span>
+                                    </div>
+                                    <p className="text-sm text-gray-400 leading-relaxed mb-4">{product.specs}</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-gray-800/50 gap-4">
+                                    <p className="text-2xl font-black text-red-500">{product.displayPrice}</p>
+                                    <div className="flex space-x-3 w-full sm:w-auto">
+                                        <button onClick={() => setSelectedProduct(product)} className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-all cursor-pointer">Show Info</button>
+                                        <button onClick={() => handleShowSummary(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
 
-             <div className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4">
-                            <a href="https://wa.me/" 
-                   // Used specific hex code for WhatsApp green and text-white for icon color
-                   className="bg-[#25D366] text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
-                    <MessageCircle className="h-5 w-5 md:h-7 md:w-7" />
-                </a>
-                
-                {/* Phone Icon: Changed to Blue bg and white icon */}
-                <a href="tel:" 
-                   // Used Tailwind's strong blue for phone and text-white for icon color
-                   className="bg-blue-600 text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
-                    <Phone className="h-5 w-5 md:h-7 md:w-7" />
-                </a>
+            {/* --- FLOATING CONTACT --- */}
+            <div className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4">
+                <a href="https://wa.me/" className="bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><MessageCircle className="h-6 w-6" /></a>
+                <a href="tel:+916369933507" className="bg-blue-600 text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><Phone className="h-6 w-6" /></a>
+            </div>
+
+            {/* --- PRODUCT INFO MODAL --- */}
+            {selectedProduct && (
+                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                    <div className="bg-[#0a0a0a] text-white rounded-lg shadow-2xl max-w-2xl w-full relative border border-red-500 max-h-[90vh] flex flex-col">
+                        
+                        <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-all text-3xl z-10 p-2 cursor-pointer">&times;</button>
+
+                        <div className="overflow-y-auto p-6 md:p-8">
+                            <div className="flex flex-col md:flex-row gap-8">
+                                <div className="md:w-1/2 flex items-center justify-center bg-black rounded-xl p-4 border border-gray-900">
+                                    <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-48 md:h-64 object-contain" />
+                                </div>
+                                
+                                <div className="md:w-1/2 flex flex-col">
+                                    <h3 className="text-2xl font-bold text-red-500 mb-2">{selectedProduct.name}</h3>
+                                    <p className="text-gray-300 text-sm mb-6 leading-relaxed">{selectedProduct.specs}</p>
+                                    
+                                    <div className="grid grid-cols-1 gap-3 mb-8">
+                                        {[
+                                            { label: 'Features', val: 'High-quality build, RGB lighting' },
+                                            { label: 'Compatibility', val: 'Windows, Mac, Linux' },
+                                            { label: 'Warranty', val: '1 Year manufacturer' }
+                                        ].map((item, i) => (
+                                            <div key={i} className="border-l-2 border-red-500 pl-3 bg-gray-900/30 py-2">
+                                                <h4 className="text-[10px] uppercase font-black text-gray-500 mb-1">{item.label}</h4>
+                                                <p className="text-xs text-white">{item.val}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    
+                                    <div className="mt-auto flex flex-col gap-4">
+                                        <p className="text-3xl font-black text-white">{selectedProduct.displayPrice}</p>
+                                        <button 
+                                            onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }}
+                                            className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-lg transition duration-300 uppercase tracking-widest text-xs shadow-lg shadow-red-600/20 cursor-pointer"
+                                        >
+                                             Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* --- PRODUCT SUMMARY MODAL --- */}
+            {showProductSummary && summaryProduct && (
+                <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+                    <div className="bg-gray-900 text-white p-6 rounded-lg max-w-md w-full max-h-[80vh] overflow-y-auto">
+                        <h3 className="text-xl font-bold text-red-500 mb-4">{summaryProduct.name}</h3>
+                        
+                        {/* Product Image */}
+                        <div className="mb-4 flex justify-center">
+                            <img src={summaryProduct.image} alt={summaryProduct.name} className="w-32 h-32 object-contain bg-black rounded-lg p-2" />
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="space-y-2 mb-4 text-sm">
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Category:</span>
+                                <span className="text-white capitalize">{summaryProduct.category}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Specifications:</span>
+                                <span className="text-white text-right text-xs">{summaryProduct.specs}</span>
+                            </div>
+                        </div>
+
+                        {/* Features */}
+                        <div className="mb-4">
+                            <h4 className="font-semibold text-red-400 mb-2">Features:</h4>
+                            <ul className="text-xs text-gray-300 space-y-1">
+                                <li>• Premium Quality Build</li>
+                                <li>• 1 Year Warranty</li>
+                                <li>• Fast Delivery</li>
+                                <li>• 24/7 Customer Support</li>
+                            </ul>
+                        </div>
+
+                        {/* Price */}
+                        <div className="mb-6">
+                            <div className="text-center">
+                                <span className="text-2xl font-bold text-green-400">{summaryProduct.displayPrice}</span>
+                                <p className="text-xs text-gray-400">*Inclusive of all taxes</p>
+                            </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex space-x-3">
+                            <button 
+                                onClick={() => setShowProductSummary(false)}
+                                className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded transition duration-300"
+                            >
+                                Back
+                            </button>
+                            <button 
+                                onClick={handleSummaryAddToCart}
+                                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded transition duration-300"
+                            >
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* --- BUILD YOUR PC SECTION --- */}
+            <div className="mt-16 pt-8 border-t border-gray-800">
+                <div className="text-center">
+                    <h3 className="text-2xl font-bold text-red-500 mb-4">Want a Custom PC?</h3>
+                    <p className="text-gray-400 mb-6 text-sm">Build your own gaming PC with our step-by-step configurator</p>
+                    <button 
+                        onClick={() => navigate('/build-pc')}
+                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 uppercase tracking-wider text-sm"
+                    >
+                        🖥️ Build Your PC
+                    </button>
+                </div>
+            </div>
         </section>
     );
 };

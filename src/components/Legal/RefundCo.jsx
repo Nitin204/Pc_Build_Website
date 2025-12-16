@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { MessageCircle, Phone, X, ArrowRight } from 'lucide-react'; 
 const RefundCo = () => {
     return (
         // Full page container with dark background
@@ -93,6 +93,17 @@ const RefundCo = () => {
                 
 
             </div>
+            <div className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4">
+                            <a href="https://wa.me/" 
+                                className="bg-[#25D366] text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
+                                <MessageCircle className="h-5 w-5 md:h-7 md:w-7" />
+                            </a>
+                            
+                            <a href="tel:" 
+                                className="bg-blue-600 text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
+                                <Phone className="h-5 w-5 md:h-7 md:w-7" />
+                            </a>
+                        </div>
         </div>
     );
 }

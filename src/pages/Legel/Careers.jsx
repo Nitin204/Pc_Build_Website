@@ -9,6 +9,7 @@ const Careers = () => {
        <CareersCo />   
        </>
     );
+    
 }
 
 export default Careers;

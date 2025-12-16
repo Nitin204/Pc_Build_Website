@@ -14,7 +14,8 @@ return (
         <div className="lg:w-2/5">
           
           <p className="text-2xl md:text-2xl font-bold text-red-500 mb-2 leading-tight">
-            Build Smarter with India's Most Advanced PC Configurator
+            Build Smarter with India's Most 
+Advanced PC Configurator
           </p>
 
           <p className="mb-2 text-white leading-relaxed">

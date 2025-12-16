@@ -51,18 +51,7 @@ function App() {
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/privacy" element={<Privacy />} />
 
-          {/* Sub Menu Routes */}
-          <Route path="/buildpc/:subPage" element={<BuildPc />} />
-          <Route path="/prebuilts/:subPage" element={<Prebuilts />} />
-          <Route path="/addons/:subPage" element={<AddOns />} />
-          <Route path="/support/:subPage" element={<Support />} />
-          <Route path="/account/:subPage" element={<Account/>} />
-          <Route path="/reset/:subPage" element={<Reset />} />
-          <Route path="/register/:subPage" element={<Register />} />
-          <Route path="/cart/:subPage" element={<Cart />} />
-
-
-          <Route path="/careers/:subPage" element={<Careers />} />
+          
          
           {/* 404 Page */}
           <Route path="*" element={<h1>404 Page Not Found</h1>}/>

@@ -53,9 +53,9 @@ const Homecard3 = () => {
                     </div>
 
                     {/* CTA Button */}
-                    <button className={`px-10 py-3 mb-2 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}>
+                   <a href="/support"> <button className={`px-10 py-3 mb-2 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}>
                         Talk To A Techic
-                    </button>
+                    </button></a>
                 </div>
             </div>
         </section>

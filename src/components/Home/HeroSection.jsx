@@ -57,7 +57,7 @@ const HeroSection = () => {
             
             {/* Main Content Area (z-20) */}
             <div className="relative z-20 text-center flex flex-col items-center justify-center flex-grow pt-10">
-                <p className="text-3xl md:text-4xl font-bold mb-1" style={{ fontFamily: "cursive" }}>Welcome To Fusion Gaming</p>
+                <p className="text-3xl md:text-4xl font-bold mb-1 mt-10" style={{ fontFamily: "" }}>Welcome To Fusion Gaming</p>
                 <p
                 className="text-1xl md:text-2xl mb-8"
                 style={{ fontFamily: "italic" }}
@@ -66,12 +66,12 @@ const HeroSection = () => {
 </p>
                 
                 {/* CTA Button */}
-                <button 
+                <a href="/buildpc"><button 
                     onClick={handleCtaClick}
                     className={`px-8 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}
                 >
                     Build Yours Now
-                </button>
+                </button></a>
             </div>
 
             {/* Footer Strip (z-20) */}
@@ -128,11 +128,11 @@ const HeroSection = () => {
 
                         {/* Action Button: Claim Free Account */}
                         <a 
-                            href="/account/login" // Changed button to an anchor tag for proper navigation
+                            href="/account" // Changed button to an anchor tag for proper navigation
                             onClick={handleClaimFreeAccount} 
                             className={`w-full py-1 font-semibold rounded transition duration-300 flex items-center justify-center text-lg ${RED_BUTTON_CLASSES}`}
                         >
-                           <a href="/account/login"> Claim Your Free Account </a><ArrowRight className="w-5 h-5 ml-2" />
+                           <a href="/account"> Claim Your Free Account </a><ArrowRight className="w-5 h-5 ml-2" />
                         </a>
                     </div>
                 </div>

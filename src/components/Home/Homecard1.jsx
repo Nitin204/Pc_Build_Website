@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // Assuming the gamer image is named gamer-setup.webp (or similar) and is in src/assets
 import gamerImage from '../../assets/home1.webp'; 
 
@@ -54,9 +55,11 @@ const Homecard1 = () => {
                     </div>
 
                     {/* CTA Button */}
-                    <button className={`px-10 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}>
-                        Shop Pre-Builts
-                    </button>
+                    <Link to="/prebuilts">
+                        <button className={`px-10 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}>
+                            Shop Pre-Builts
+                        </button>
+                    </Link>
                 </div>
             </div>
         </section>

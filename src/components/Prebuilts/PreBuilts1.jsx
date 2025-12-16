@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, Phone, Share2 } from 'lucide-react';
+import { 
+    MessageCircle, 
+    Phone,
+    Share2 
+} from 'lucide-react';
 import { FaGamepad, FaRobot, FaBuilding, FaCamera, FaChartLine } from 'react-icons/fa';
 
 const PREBUILT_DATA = [
@@ -75,66 +79,6 @@ const PREBUILT_DATA = [
         discount: '10% Off',
         displayPrice: '₹ 1,80,000/-',
         image: 'https://placehold.co/400x400/111/white?text=Trade+PC'
-    },
-    {
-        id: 'p7',
-        category: 'gaming',
-        name: 'Budget Gaming PC',
-        specs: 'Core i5 12400F/B660M WIFI/16GB DDR4 3200MHz/Nvidia RTX 4060 8GB/Stock Cooler/550W 80+ Bronze/500GB NVMe SSD/Cooler Master MasterBox Q300L',
-        price: 75000,
-        oldPrice: 85000,
-        savings: 10000,
-        discount: '12% Off',
-        displayPrice: '₹ 75,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Budget+Gaming'
-    },
-    {
-        id: 'p8',
-        category: 'editing',
-        name: 'Entry Level Creator PC',
-        specs: 'Core i5 13400F/B760M WIFI/32GB DDR5 4800MHz/Nvidia RTX 4060 Ti 8GB/Tower Cooler/650W 80+ Bronze/1TB NVMe SSD/Fractal Design Core 1000',
-        price: 95000,
-        oldPrice: 105000,
-        savings: 10000,
-        discount: '10% Off',
-        displayPrice: '₹ 95,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Entry+Creator'
-    },
-    {
-        id: 'p9',
-        category: 'ai',
-        name: 'AI Learning Starter',
-        specs: 'Core i7 13700F/B760 WIFI/64GB DDR5 5200MHz/Nvidia RTX 4070 12GB/240mm AIO/750W 80+ Gold/1TB NVMe SSD/NZXT H5 Flow',
-        price: 145000,
-        oldPrice: 160000,
-        savings: 15000,
-        discount: '9% Off',
-        displayPrice: '₹ 1,45,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=AI+Starter'
-    },
-    {
-        id: 'p10',
-        category: 'architecture',
-        name: 'CAD Entry Workstation',
-        specs: 'Core i5 13600K/B760 WIFI/32GB DDR5 4800MHz/Nvidia RTX 4060 Ti 16GB/Tower Cooler/650W 80+ Gold/1TB NVMe SSD/Corsair 4000D Airflow',
-        price: 110000,
-        oldPrice: 125000,
-        savings: 15000,
-        discount: '12% Off',
-        displayPrice: '₹ 1,10,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=CAD+Entry'
-    },
-    {
-        id: 'p11',
-        category: 'trading',
-        name: 'Basic Trading Setup',
-        specs: 'Core i3 13100F/B660M/16GB DDR4 3200MHz/Nvidia GTX 1660 Super 6GB/Stock Cooler/450W 80+ Bronze/500GB NVMe SSD/Cooler Master MasterBox Q300L',
-        price: 55000,
-        oldPrice: 62000,
-        savings: 7000,
-        discount: '11% Off',
-        displayPrice: '₹ 55,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Basic+Trade'
     }
 ];
 
@@ -146,18 +90,14 @@ const CATEGORIES = [
     { label: "Trading", key: "trading", icon: FaChartLine },
 ];
 
-const PrebuiltsHone = () => {
+const PreBuilts1 = () => {
     const [selectedCategory, setSelectedCategory] = useState('gaming');
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [budget, setBudget] = useState(250000);
-    const [showResults, setShowResults] = useState(false);
     const navigate = useNavigate();
 
     const filteredProducts = useMemo(() => {
-        return PREBUILT_DATA.filter(product => 
-            product.category === selectedCategory && product.price <= budget
-        );
-    }, [selectedCategory, budget]);
+        return PREBUILT_DATA.filter(product => product.category === selectedCategory);
+    }, [selectedCategory]);
 
     const handleAddToCart = (product) => {
         const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -187,14 +127,11 @@ const PrebuiltsHone = () => {
                 </h2>
 
                 {/* --- CATEGORY TABS --- */}
-                <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 mb-8 pb-6 overflow-x-auto">
+                <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 mb-16 pb-6 overflow-x-auto">
                     {CATEGORIES.map((cat) => (
                         <button 
                             key={cat.key} 
-                            onClick={() => {
-                                setSelectedCategory(cat.key);
-                                setShowResults(false);
-                            }}
+                            onClick={() => setSelectedCategory(cat.key)}
                             className={`flex flex-col items-center p-2 transition-all duration-300 outline-none flex-shrink-0 ${
                                 selectedCategory === cat.key 
                                     ? 'text-red-500 border-b-2 border-red-500 scale-110' 
@@ -207,32 +144,7 @@ const PrebuiltsHone = () => {
                     ))}
                 </div>
 
-                {/* --- BUDGET RANGE --- */}
-                <div className="text-center mb-16">
-                    <p className="text-red-500 text-xs font-bold uppercase mb-4 tracking-widest">Budget Range</p>
-                    <input 
-                        type="range" 
-                        min="40000" 
-                        max="500000" 
-                        step="10000"
-                        value={budget} 
-                        onChange={(e) => {
-                            setBudget(e.target.value);
-                            setShowResults(false);
-                        }}
-                        className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-red-600 mb-4"
-                    />
-                    <p className="text-xl font-black text-white mb-6">{formatCurrency(budget)}</p>
-                    <button 
-                        onClick={() => setShowResults(true)}
-                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-8 rounded-md text-sm transition-all uppercase"
-                    >
-                        Find My PC
-                    </button>
-                </div>
-
                 {/* --- PRODUCT GRID --- */}
-                {showResults && (
                 <div className="space-y-6">
                     {filteredProducts.map((product) => (
                         <div key={product.id} className="flex flex-col md:flex-row p-5 rounded-xl border border-gray-800 bg-[#0d0d0d] hover:border-red-600 transition-all duration-500 group">
@@ -269,7 +181,6 @@ const PrebuiltsHone = () => {
                         </div>
                     ))}
                 </div>
-                )}
             </div>
 
             {/* --- FLOATING CONTACT --- */}
@@ -336,4 +247,4 @@ const PrebuiltsHone = () => {
     );
 };
 
-export default PrebuiltsHone;
+export default PreBuilts1;

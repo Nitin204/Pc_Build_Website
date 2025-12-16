@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +14,22 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartCount(cart.length);
+    };
+    
+    updateCartCount();
+    window.addEventListener('storage', updateCartCount);
+    window.addEventListener('cartUpdated', updateCartCount);
+    
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('cartUpdated', updateCartCount);
+    };
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -48,16 +65,26 @@ const Navbar = () => {
             <Link to="/account" className="hover:text-red-500">
               <i className="fa-solid fa-user"></i>
             </Link>
-            <Link to="/cart" className="hover:text-red-500">
+            <Link to="/cart" className="hover:text-red-500 relative">
               <i className="fa-solid fa-shopping-cart"></i>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>
 
         {/* Mobile Icons */}
         <div className="md:hidden flex items-center space-x-6 text-white text-xl">
-          <Link to="/cart" className="hover:text-red-500">
+          <Link to="/cart" className="hover:text-red-500 relative">
             <i className="fa-solid fa-shopping-cart"></i>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
           <Link to="/account" className="hover:text-red-500">
