@@ -46,6 +46,7 @@ const HeroSection = () => {
         <section className="relative w-full h-screen overflow-hidden text-white flex flex-col justify-between pt-24 md:pt-20">
             
             {/* Background Video and Dark Overlay (z-10) */}
+            {/* nitin */}
             <div className="absolute inset-0 z-10">
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div> 
                 
