@@ -2,7 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MessageCircle, Phone, Share2 } from 'lucide-react';
 import { FaGamepad, FaRobot, FaBuilding, FaCamera, FaChartLine } from 'react-icons/fa';
-
+import gaming1 from '../../assets/gaming1.webp';
+import gaming2 from '../../assets/gaming2.webp';
+import ai1 from '../../assets/ai1.webp';
+import ai2 from '../../assets/ai2.webp';
+import arch1 from '../../assets/arch1.webp';
+import arch2 from '../../assets/arch3.webp';
+import arch3 from '../../assets/arch2.webp';
 const PREBUILT_DATA = [
     {
         id: 'p1',
@@ -14,7 +20,7 @@ const PREBUILT_DATA = [
         savings: 26249,
         discount: '10% Off',
         displayPrice: '₹ 2,36,241/-',
-        image: 'https://placehold.co/400x400/111/white?text=PC+1'
+        image: gaming1
     },
     {
         id: 'p2',
@@ -26,7 +32,7 @@ const PREBUILT_DATA = [
         savings: 27099,
         discount: '10% Off',
         displayPrice: '₹ 2,43,891/-',
-        image: 'https://placehold.co/400x400/111/white?text=PC+2'
+        image: gaming2
     },
     {
         id: 'p3',
@@ -38,7 +44,7 @@ const PREBUILT_DATA = [
         savings: 50000,
         discount: '10% Off',
         displayPrice: '₹ 4,50,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=AI+PC'
+        image: ai1
     },
     {
         id: 'p4',
@@ -50,7 +56,7 @@ const PREBUILT_DATA = [
         savings: 35000,
         discount: '10% Off',
         displayPrice: '₹ 3,20,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=CAD+PC'
+        image: ai2
     },
     {
         id: 'p5',
@@ -62,7 +68,7 @@ const PREBUILT_DATA = [
         savings: 30000,
         discount: '10% Off',
         displayPrice: '₹ 2,80,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Edit+PC'
+        image: arch1
     },
     {
         id: 'p6',
@@ -74,7 +80,7 @@ const PREBUILT_DATA = [
         savings: 20000,
         discount: '10% Off',
         displayPrice: '₹ 1,80,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Trade+PC'
+        image: arch2
     },
     {
         id: 'p7',
@@ -86,7 +92,7 @@ const PREBUILT_DATA = [
         savings: 10000,
         discount: '12% Off',
         displayPrice: '₹ 75,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Budget+Gaming'
+        image: arch3
     },
     {
         id: 'p8',
@@ -98,7 +104,7 @@ const PREBUILT_DATA = [
         savings: 10000,
         discount: '10% Off',
         displayPrice: '₹ 95,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Entry+Creator'
+        image: ai2
     },
     {
         id: 'p9',
@@ -110,7 +116,7 @@ const PREBUILT_DATA = [
         savings: 15000,
         discount: '9% Off',
         displayPrice: '₹ 1,45,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=AI+Starter'
+        image:ai1
     },
     {
         id: 'p10',
@@ -122,7 +128,7 @@ const PREBUILT_DATA = [
         savings: 15000,
         discount: '12% Off',
         displayPrice: '₹ 1,10,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=CAD+Entry'
+        image: arch1
     },
     {
         id: 'p11',
@@ -134,7 +140,7 @@ const PREBUILT_DATA = [
         savings: 7000,
         discount: '11% Off',
         displayPrice: '₹ 55,000/-',
-        image: 'https://placehold.co/400x400/111/white?text=Basic+Trade'
+        image: gaming2
     }
 ];
 
@@ -225,7 +231,7 @@ const PrebuiltsHone = () => {
                     <p className="text-xl font-black text-white mb-6">{formatCurrency(budget)}</p>
                     <button 
                         onClick={() => setShowResults(true)}
-                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-8 rounded-md text-sm transition-all uppercase"
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-8 rounded-md text-sm transition-all uppercase cursor-pointer"
                     >
                         Find My PC
                     </button>
@@ -253,7 +259,7 @@ const PrebuiltsHone = () => {
                                     <div className="space-y-1">
                                         <div className="flex items-center gap-3">
                                             <span className="text-sm text-gray-500 line-through">{formatCurrency(product.oldPrice)}</span>
-                                            <span className="text-2xl font-black text-red-500">{product.displayPrice}</span>
+                                            <span className="text-1xl font-black text-red-500">{product.displayPrice}</span>
                                         </div>
                                         <p className="text-xs font-bold text-white uppercase">
                                             Save <span className="text-red-500">{formatCurrency(product.savings)}</span> 
@@ -262,7 +268,7 @@ const PrebuiltsHone = () => {
                                     </div>
                                     <div className="flex space-x-3 w-full sm:w-auto">
                                         <button onClick={() => setSelectedProduct(product)} className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-all cursor-pointer">PC Info</button>
-                                        <button onClick={() => handleAddToCart(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all">Add to Cart</button>
+                                        <button onClick={() => handleAddToCart(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-500 hover:bg-red-600 text-white transition-all cursor-pointer">Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -321,8 +327,7 @@ const PrebuiltsHone = () => {
                                         </div>
                                         <button 
                                             onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }}
-                                            className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-lg transition duration-300 uppercase tracking-widest text-xs shadow-lg shadow-red-600/20 cursor-pointer"
-                                        >
+                                            className="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 rounded-lg transition duration-300 uppercase tracking-widest text-xs shadow-lg shadow-red-600/20 cursor-pointer" >
                                              Add to Cart
                                         </button>
                                     </div>

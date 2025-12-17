@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { MessageCircle, Phone } from 'lucide-react';
 
-
+import img1 from '../../assets/imagepc.png';
 const BuildPcsection = () => {
     // State to manage which component section is currently open/expanded
-    const [openSection, setOpenSection] = useState(null); 
+    const [openSection, setOpenSection] = useState('Processor'); 
 
     // State to manage the selected values in the sub-dropdowns
     const [formData, setFormData] = useState({});
@@ -12,7 +12,7 @@ const BuildPcsection = () => {
     // State to manage PC build summary display
     const [showBuildSummary, setShowBuildSummary] = useState(false);
     const [buildPrice, setBuildPrice] = useState(0);
-    const [activeTab, setActiveTab] = useState('overview');
+    const [activeTab, setActiveTab] = useState('features');
 
     // --- DUMMY PRICING DATA ENGINE ---
     const componentPrices = {
@@ -60,7 +60,7 @@ const BuildPcsection = () => {
         };
         setFormData(newFormData);
         
-        // Auto-close logic
+        // Auto-open next section logic
         const currentSection = componentFields.find(field => 
             subFieldMapping[field]?.some(subField => subField.key === name)
         );
@@ -72,7 +72,16 @@ const BuildPcsection = () => {
             );
             
             if (isComplete) {
-                setTimeout(() => setOpenSection(null), 500);
+                const currentIndex = componentFields.indexOf(currentSection);
+                const nextSection = componentFields[currentIndex + 1];
+                
+                setTimeout(() => {
+                    if (nextSection) {
+                        setOpenSection(nextSection);
+                    } else {
+                        setOpenSection(null);
+                    }
+                }, 500);
             }
         }
     };
@@ -199,7 +208,7 @@ const BuildPcsection = () => {
     const isExpanded = (field) => openSection === field;
 
     // Styles for the standard sub-dropdowns
-    const subDropdownClass = "w-full bg-black text-white p-3 rounded-md appearance-none border border-gray-600 focus:ring-red-600 focus:border-red-600 cursor-pointer";
+    const subDropdownClass = "w-full bg-black text-white p-3 rounded-md appearance-none border border-gray-600 focus:ring-red-500 focus:border-red-500 cursor-pointer";
 
     return (
         <section className="py-20 px-4 bg-black">
@@ -276,7 +285,7 @@ const BuildPcsection = () => {
                 <div className="text-center mt-10">
                     <button 
                         onClick={handleBuildPC}
-                        className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded transition duration-300"
+                        className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded transition duration-300 cursor-pointer"
                     >
                         Build PC
                     </button>
@@ -292,7 +301,7 @@ const BuildPcsection = () => {
             {/* PC Build Summary Section - Outside Form */}
             {showBuildSummary && (
                 <div className="flex justify-center mt-8 px-4">
-                    <div className="bg-gray-900 text-white p-6 w-full max-w-6xl shadow-2xl rounded-lg border border-gray-700">
+                    <div className="bg-gray-950 text-white p-6 w-full max-w-6xl shadow-2xl rounded-lg border border-gray-700">
                         <h3 className="text-2xl font-bold text-red-500 mb-6 text-center">Fusion Gaming Elite PC</h3>
                         <p className="text-center text-gray-400 mb-6">Powered by AI System</p>
                         
@@ -325,8 +334,8 @@ const BuildPcsection = () => {
                             {/* PC Image */}
                             <div className="lg:w-1/3">
                                 <div className="bg-black rounded-lg p-6 border border-gray-700">
-                                    <div className="w-full h-64 bg-gradient-to-br from-red-900/20 to-gray-900 rounded-lg flex items-center justify-center border border-red-500/30 mb-4">
-                                        <div className="text-8xl text-red-500">🖥️</div>
+                                    <div className="w-full h-64  from-red-900/20 to-gray-900 rounded-lg flex items-center justify-center  mb-4 cursor-pointer hover:scale-105 transition-transform duration-300">
+                                        <img src={img1} alt="PC Build" className="max-h-full object-contain" />
                                     </div>
                                    
                                 </div>
@@ -496,13 +505,13 @@ const BuildPcsection = () => {
                                             </button>
                                             <button 
                                                 onClick={handleAddToCart}
-                                                className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded transition duration-300 font-bold"
+                                                className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded transition duration-300 font-bold cursor-pointer"
                                             >
                                                 ADD TO CART
                                             </button>
                                         </div>
                                     </div>
-                                    <p className="text-center text-xs text-gray-500 mt-4">Need Assistance? Call +91-6369933507</p>
+                                   
                                 </div>
                             </div>
                         </div>

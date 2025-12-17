@@ -20,6 +20,7 @@ import Cart from "./pages/Cart/Cart.jsx";
  import Policy from "./pages/Legel/Policy.jsx";
 import Shipping from "./pages/Legel/Shipping.jsx";
 import Privacy from "./pages/Legel/Privacy.jsx";
+import Checkout from "./pages/Checkout/Checkout.jsx";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/policy" element={<Policy />} />
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/checkout" element={<Checkout />} />
 
           
          

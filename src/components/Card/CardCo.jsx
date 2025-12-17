@@ -52,12 +52,12 @@ const CardCo = () => {
                         {cartItems.map((item, index) => (
                             <div key={index} className="flex flex-col md:flex-row p-6 bg-gray-900 rounded-lg space-y-4 md:space-y-0 md:space-x-6">
                                 {/* Product Image */}
-                                <div className="w-full md:w-32 h-32 bg-black rounded-lg overflow-hidden flex-shrink-0">
+                                <div className="w-full md:w-32 h-32 bg-black rounded-lg overflow-hidden flex-shrink-0 cursor-pointer">
                                     {item.image ? (
                                         <img 
                                             src={item.image} 
                                             alt={item.name} 
-                                            className="w-full h-full object-contain p-2"
+                                            className="w-full h-full object-contain p-2 hover:scale-110 transition-transform duration-300"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-gray-700 flex items-center justify-center text-xs text-gray-400">No Image</div>
@@ -67,7 +67,7 @@ const CardCo = () => {
                                 {/* Product Details */}
                                 <div className="flex-grow">
                                     <h3 className="text-xl font-bold text-white mb-2">{item.name}</h3>
-                                    <p className="text-sm text-gray-400 leading-relaxed mb-3">{item.specs}</p>
+                                    <p className="text-sm text-white leading-relaxed mb-3">{item.specs}</p>
                                     <div className="space-y-1">
                                         <p className="text-lg text-gray-300">Price: {typeof item.displayPrice === 'string' ? item.displayPrice : `₹${item.price}/-`}</p>
                                         <p className="text-2xl font-semibold text-red-500">Subtotal: ₹{((typeof item.price === 'string' ? parseInt(item.price.replace(/[^0-9]/g, '')) : item.price) * (item.quantity || 1)).toLocaleString()}/-</p>
@@ -141,9 +141,9 @@ const CardCo = () => {
                         </div>
                     </div>
                     
-                    <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition duration-300 mb-3 cursor-pointer">
+                    <a href="/checkout"><button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition duration-300 mb-3 cursor-pointer">
                         Proceed to Checkout
-                    </button>
+                    </button></a>
                     
                    
                 </div>

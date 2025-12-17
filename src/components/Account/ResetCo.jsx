@@ -52,7 +52,7 @@ const ResetCo = () => {
                 {/* Footer Links */}
                 <div className="text-center mt-6 text-sm space-y-2">
                     <p className="text-gray-400">
-                        Remember your password? <a href="/account/login" className="text-red-500 font-semibold hover:underline">Back to Login</a>
+                        Remember your password? <a href="/account" className="text-red-500 font-semibold hover:underline">Back to Login</a>
                     </p>
                 </div>
                 

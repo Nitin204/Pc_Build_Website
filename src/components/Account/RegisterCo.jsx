@@ -144,7 +144,7 @@ const RegisterCo = () => {
                 {/* Login Link */}
                 <div className="text-center mt-4 text-sm">
                     <p className="text-gray-400">
-                        Already have an account? <a href="/login" className="text-red-500 font-semibold hover:underline">Login here</a>
+                        Already have an account? <a href="/account" className="text-red-500 font-semibold hover:underline">Login here</a>
                     </p>
                 </div>
                 
