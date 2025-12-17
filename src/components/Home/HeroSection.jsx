@@ -49,8 +49,8 @@ const HeroSection = () => {
             <div className="absolute inset-0 z-10">
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div> 
                 
-                <video autoPlay muted loop id="hero-video" className="w-full h-full object-cover opacity-60">
-                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+                <video autoPlay muted loop id="hero-video" className="w-full h-full object-cover opacity-80">
+                    <source src="https://www.fusiongaming.in/video/FG_Final.mp4" type="video/mp4" />
                     <source src="/FG_final.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
@@ -58,7 +58,7 @@ const HeroSection = () => {
             
             {/* Main Content Area (z-20) */}
             <div className="relative z-20 text-center flex flex-col items-center justify-center flex-grow pt-10">
-                <p className="text-3xl md:text-4xl font-bold mb-1 mt-10" style={{ fontFamily: "" }}>Welcome To Fusion Gaming</p>
+                <p className="text-3xl md:text-4xl font-bold mb-1 mt-10  " style={{ fontFamily: "" }}>Welcome To Fusion Gaming</p>
                 <p
                 className="text-1xl md:text-2xl mb-8"
                 style={{ fontFamily: "italic" }}

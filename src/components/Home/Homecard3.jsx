@@ -12,9 +12,11 @@ const Homecard3 = () => {
                 {/* Left Column: Image (Visible on all sizes) */}
                 <div className="lg:w-2/3 mb-2 lg:mb-0 relative">
                     {/* The image should be responsive and centered */}
-                    <div className="w-full h-64 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl flex items-center justify-center">
-                        <div className="text-6xl text-red-500">🖥️</div>
-                    </div>
+                    <img 
+                        src="https://www.fusiongaming.in/Untitled-3.webp" 
+                        alt="Gaming PC Setup" 
+                        className="w-full h-auto object-cover rounded-lg shadow-2xl"
+                    />
                     
                     {/* Floating contact buttons (Duplicate from HeroSection, needs to be moved to App.jsx for reuse) */}
                     {/* NOTE: If you keep these buttons here, they will only scroll with this section. 
