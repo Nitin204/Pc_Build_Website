@@ -10,6 +10,10 @@ const POPUP_DELAY_MS = 3000;
 const HeroSection = () => {
     // State to control the visibility of the modal
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
+    const [mouseX, setMouseX] = useState(0);
+    const [mouseY, setMouseY] = useState(0);
+    const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
     // --- UPDATED EFFECT: Trigger the promotional modal with a delay ---
     useEffect(() => {
@@ -18,9 +22,27 @@ const HeroSection = () => {
             setIsModalOpen(true);
         }, POPUP_DELAY_MS);
 
+        // Parallax scroll effect
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener('scroll', handleScroll);
+
+        // Enhanced mouse parallax with tilt effect
+        const handleMouseMove = (e) => {
+            const x = (e.clientX - window.innerWidth / 2) / window.innerWidth;
+            const y = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+            setMouseX(x);
+            setMouseY(y);
+            setTilt({ x: y * 5, y: -x * 5 });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+
         // Cleanup function to clear the timer if the component unmounts
         // before the delay finishes (prevents memory leaks).
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
     }, []); 
     // -----------------------------------------------------------------
 
@@ -49,7 +71,18 @@ const HeroSection = () => {
             <div className="absolute inset-0 z-10">
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div> 
                 
-                <video autoPlay muted loop id="hero-video" className="w-full h-full object-cover opacity-80">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    id="hero-video" 
+                    className="w-full h-full object-cover opacity-80"
+                    style={{
+                        transform: `translateY(${scrollY * 0.5}px) translateX(${mouseX * 30}px) translateY(${mouseY * 15}px) scale(${1.1 + Math.abs(mouseX) * 0.05}) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+                        transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        transformOrigin: 'center center'
+                    }}
+                >
                     <source src="https://www.fusiongaming.in/video/FG_Final.mp4" type="video/mp4" />
                     <source src="/FG_final.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
@@ -57,33 +90,75 @@ const HeroSection = () => {
             </div>
             
             {/* Main Content Area (z-20) */}
-            <div className="relative z-20 text-center flex flex-col items-center justify-center flex-grow pt-10">
-                <p className="text-3xl md:text-4xl font-bold mb-1 mt-10  " style={{ fontFamily: "" }}>Welcome To Fusion Gaming</p>
-                <p
-                className="text-1xl md:text-2xl mb-8"
-                style={{ fontFamily: "italic" }}
+            <div 
+                className="relative z-20 text-center flex flex-col items-center justify-center flex-grow pt-10"
+                style={{
+                    transform: `translateY(${scrollY * -0.3}px) translateX(${mouseX * -25}px) translateY(${mouseY * -12}px) rotateX(${-tilt.x * 0.3}deg) rotateY(${-tilt.y * 0.3}deg)`,
+                    transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    transformStyle: 'preserve-3d'
+                }}
+            >
+                <p 
+                    className="text-3xl md:text-4xl font-bold mb-1 mt-10" 
+                    style={{ 
+                        fontFamily: "",
+                        transform: `translateY(${scrollY * -0.15}px) translateX(${mouseX * -18}px) translateY(${mouseY * -8}px) translateZ(50px) scale(${1 + Math.abs(mouseY) * 0.02})`,
+                        transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        textShadow: `${mouseX * 2}px ${mouseY * 2}px 20px rgba(239, 68, 68, 0.3)`
+                    }}
                 >
-    You Dream, We Build
-</p>
+                    Welcome To Fusion Gaming
+                </p>
+                <p
+                    className="text-1xl md:text-2xl mb-8"
+                    style={{ 
+                        fontFamily: "italic",
+                        transform: `translateY(${scrollY * -0.2}px) translateX(${mouseX * -20}px) translateY(${mouseY * -10}px) translateZ(30px)`,
+                        transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        textShadow: `${mouseX * 1.5}px ${mouseY * 1.5}px 15px rgba(255, 255, 255, 0.2)`
+                    }}
+                >
+                    You Dream, We Build
+                </p>
                 
                 {/* CTA Button */}
-                <a href="/buildpc"><button 
-                    onClick={handleCtaClick}
-                    className={`px-8 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}
-                >
-                    Build Yours Now
-                </button></a>
+                <a href="/buildpc">
+                    <button 
+                        onClick={handleCtaClick}
+                        className={`px-8 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}
+                        style={{
+                            transform: `translateY(${scrollY * -0.35}px) scale(${1 - scrollY * 0.0002 + Math.abs(mouseX) * 0.05}) translateX(${mouseX * -15}px) translateY(${mouseY * -8}px) translateZ(40px) rotateX(${-tilt.x * 0.5}deg) rotateY(${-tilt.y * 0.5}deg)`,
+                            transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                            boxShadow: `${mouseX * 3}px ${mouseY * 3}px 25px rgba(239, 68, 68, 0.4), 0 0 30px rgba(239, 68, 68, 0.2)`
+                        }}
+                    >
+                        Build Yours Now
+                    </button>
+                </a>
             </div>
 
             {/* Footer Strip (z-20) */}
-            <div className="relative z-20 w-full bg-black bg-opacity-80 text-center py-4">
+            <div 
+                className="relative z-20 w-full bg-black bg-opacity-80 text-center py-4"
+                style={{
+                    transform: `translateY(${scrollY * -0.0}px)`,
+                    transition: 'transform 0.1s ease-out'
+                }}
+            >
                 <p className="text-sm">
                     <span className="text-red-500 mx-3">♦</span> Safe Payments, Free Shipping & Lifetime Support <span className="text-red-500 mx-3">♦</span>
                 </p>
             </div>
 
             {/* Floating Contact Icons (z-50) */}
-            <div className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4">
+            <div 
+                className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4"
+                style={{
+                    transform: `translateY(${scrollY * 0.15}px) translateX(${mouseX * 8}px) translateY(${mouseY * 5}px) rotateZ(${mouseX * 2}deg)`,
+                    transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    filter: `drop-shadow(${mouseX * 2}px ${mouseY * 2}px 10px rgba(0, 0, 0, 0.3))`
+                }}
+            >
                 <a href="https://wa.me/" 
                     className="bg-[#25D366] text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
                     <MessageCircle className="h-5 w-5 md:h-7 md:w-7" />

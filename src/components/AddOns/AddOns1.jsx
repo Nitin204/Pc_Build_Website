@@ -331,18 +331,8 @@ const AddOns1 = () => {
             )}
 
             {/* --- BUILD YOUR PC SECTION --- */}
-            <div className="mt-16 pt-8 border-t border-gray-800">
-                <div className="text-center">
-                    <h3 className="text-2xl font-bold text-red-500 mb-4">Want a Custom PC?</h3>
-                    <p className="text-gray-400 mb-6 text-sm">Build your own gaming PC with our step-by-step configurator</p>
-                    <button 
-                        onClick={() => navigate('/build-pc')}
-                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 uppercase tracking-wider text-sm"
-                    >
-                        🖥️ Build Your PC
-                    </button>
-                </div>
-            </div>
+           
+            
         </section>
     );
 };

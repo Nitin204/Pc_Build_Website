@@ -1,21 +1,32 @@
-import React from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 
 // Constant for the main red CTA button styling
 const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 
 
 const Homecard3 = () => {
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         // Container: Dark background, uses max-w-7xl for content centering, padding top/bottom
         <section className="bg-gray-950 text-white py-10 px-6">
             <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:space-x-12">
                 
                 {/* Left Column: Image (Visible on all sizes) */}
-                <div className="lg:w-2/3 mb-2 lg:mb-0 relative">
+                <div className="lg:w-2/3 mb-2 lg:mb-0 relative overflow-hidden rounded-lg">
                     {/* The image should be responsive and centered */}
                     <img 
                         src="https://www.fusiongaming.in/Untitled-3.webp" 
                         alt="Gaming PC Setup" 
-                        className="w-full h-auto object-cover rounded-lg shadow-2xl"
+                        className="w-full h-auto object-cover rounded-lg shadow-2xl transition-transform duration-300 ease-out hover:scale-110"
+                        style={{
+                            transform: `translateY(${scrollY * 0.0}px) scale(${1 + scrollY * 0.0001})`
+                        }}
                     />
                     
                     {/* Floating contact buttons (Duplicate from HeroSection, needs to be moved to App.jsx for reuse) */}
