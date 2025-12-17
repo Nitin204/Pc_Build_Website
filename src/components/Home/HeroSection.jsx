@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'; 
 import { MessageCircle, Phone, X, ArrowRight } from 'lucide-react'; 
-import backgroundVideo from '../../assets/fg_final.mp4'; 
 
 // Define a reusable style constant for the red button
 const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 
@@ -51,7 +50,7 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div> 
                 
                 <video autoPlay muted loop id="hero-video" className="w-full h-full object-cover opacity-60">
-                    <source src={backgroundVideo} type="video/mp4" />
+                    <source src="/FG_final.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             </div>
