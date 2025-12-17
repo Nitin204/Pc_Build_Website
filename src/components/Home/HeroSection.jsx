@@ -50,6 +50,7 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div> 
                 
                 <video autoPlay muted loop id="hero-video" className="w-full h-full object-cover opacity-60">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
                     <source src="/FG_final.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
