@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import { MessageCircle, Phone, X, ArrowRight } from 'lucide-react'; 
-import backgroundVideo from '../../assets/FG_final.mp4'; 
+import backgroundVideo from '../../assets/fg_final.mp4'; 
 
 // Define a reusable style constant for the red button
 const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 
