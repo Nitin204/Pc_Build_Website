@@ -1,6 +1,4 @@
-import React from 'react';
-// Assuming the gamer image is named gamer-setup.webp (or similar) and is in src/assets
-import gamerImage from '../../assets/homecard2.webp'; 
+import React from 'react'; 
 
 // Constant for the main red CTA button styling
 const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 
@@ -14,11 +12,9 @@ const Homecard3 = () => {
                 {/* Left Column: Image (Visible on all sizes) */}
                 <div className="lg:w-2/3 mb-2 lg:mb-0 relative">
                     {/* The image should be responsive and centered */}
-                    <img 
-                        src={gamerImage} 
-                        alt="Gamer at high-performance PC setup" 
-                        className="w-full h-auto rounded-lg shadow-2xl"
-                    />
+                    <div className="w-full h-64 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl flex items-center justify-center">
+                        <div className="text-6xl text-red-500">🖥️</div>
+                    </div>
                     
                     {/* Floating contact buttons (Duplicate from HeroSection, needs to be moved to App.jsx for reuse) */}
                     {/* NOTE: If you keep these buttons here, they will only scroll with this section. 
