@@ -164,7 +164,7 @@ const HeroSection = () => {
                     <MessageCircle className="h-5 w-5 md:h-7 md:w-7" />
                 </a>
                 
-                <a href="tel:" 
+                <a href="tel:7887782951" 
                     className="bg-blue-600 text-white p-3 rounded-full shadow-lg text-xl hover:scale-105 transition duration-200 flex items-center justify-center">
                     <Phone className="h-5 w-5 md:h-7 md:w-7" />
                 </a>
