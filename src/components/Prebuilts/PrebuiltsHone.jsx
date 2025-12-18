@@ -180,7 +180,6 @@ const PrebuiltsHone = () => {
         
         localStorage.setItem('cart', JSON.stringify(updatedCart));
         window.dispatchEvent(new Event('cartUpdated'));
-        alert(`${product.name} added to cart!`);
     };
 
     const formatCurrency = (amount) => `₹ ${new Intl.NumberFormat('en-IN').format(amount)}/-`;

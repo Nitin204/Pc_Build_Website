@@ -3,10 +3,19 @@ import React from 'react';
 import nvidiaLogo from '../../assets/nvidia.webp'; 
 import amdLogo from '../../assets/amd.webp'; 
 import intelLogo from '../../assets/intel.webp'; 
+import Bg from '../../assets/deepcool-brand-home-bg.webp';
 
 const HomeLast = () => {
     return (
-        <section className="bg-black py-5 px-6">
+        <section 
+            className="py-5 px-6 relative"
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url(${Bg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
+        >
             <div className="max-w-7xl mx-auto text-center">
                 
                 {/* Main Heading */}

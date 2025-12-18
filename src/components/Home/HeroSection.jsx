@@ -154,9 +154,9 @@ const HeroSection = () => {
             <div 
                 className="fixed right-6 bottom-16 z-50 flex flex-col space-y-4"
                 style={{
-                    transform: `translateY(${scrollY * 0.15}px) translateX(${mouseX * 8}px) translateY(${mouseY * 5}px) rotateZ(${mouseX * 2}deg)`,
+                    transform: `translateY(${scrollY * 0.0}px) translateX(${mouseX * 0}px) translateY(${mouseY * 5}px) rotateZ(${mouseX * 0}deg)`,
                     transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                    filter: `drop-shadow(${mouseX * 2}px ${mouseY * 2}px 10px rgba(0, 0, 0, 0.3))`
+                    filter: `drop-shadow(${mouseX * 0}px ${mouseY * 0}px 10px rgba(0, 0, 0, 0.3))`
                 }}
             >
                 <a href="https://wa.me/" 
@@ -204,11 +204,11 @@ const HeroSection = () => {
 
                         {/* Action Button: Claim Free Account */}
                         <a 
-                            href="/account" // Changed button to an anchor tag for proper navigation
+                            href="/account"
                             onClick={handleClaimFreeAccount} 
                             className={`w-full py-1 font-semibold rounded transition duration-300 flex items-center justify-center text-lg ${RED_BUTTON_CLASSES}`}
                         >
-                           <a href="/account"> Claim Your Free Account </a><ArrowRight className="w-5 h-5 ml-2" />
+                            Claim Your Free Account <ArrowRight className="w-5 h-5 ml-2" />
                         </a>
                     </div>
                 </div>

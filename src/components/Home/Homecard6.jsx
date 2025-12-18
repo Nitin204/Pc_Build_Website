@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // Assuming you save the image as shipping-truck.png or similar in src/assets
 import shippingTruck from '../../assets/shipping.webp'; 
 
 const Homecard6 = () => {
+    const [isRunning, setIsRunning] = useState(false);
+
+    useEffect(() => {
+        setIsRunning(true);
+        setTimeout(() => setIsRunning(false), 2000);
+    }, []);
+
     return (
         // Full-width section with dark background and large vertical padding
-        <section className="bg-black  px-6">
+        <section className="bg-black px-6">
             <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between">
                 
                 {/* Left Column: Text Content */}
@@ -24,8 +31,9 @@ const Homecard6 = () => {
                     <img 
                         src={shippingTruck} 
                         alt="Free Shipping Truck Illustration" 
-                        // The illustration spans a good portion of the space; adjust h-64 as needed.
-                        className="h-64 object-contain" 
+                        className={`h-64 object-contain transition-all duration-2000 ${
+                            isRunning ? '-translate-x-[300%]' : 'translate-x-0'
+                        }`}
                     />
                 </div>
             </div>

@@ -2,14 +2,14 @@ import React from 'react';
 // Importing icons for Competitive Pricing (Tag), High Quality (Anchor), 
 // Lifetime Support (Wrench), and Authorized Integrators (Award)
 import { Tag, Anchor, Wrench, Award } from 'lucide-react'; 
-
+import Bg from '../../assets/featured-category-home.webp';
 
 // Renaming the component to FeaturesSection for project consistency
 const Homecard5 = () => {
     
     // Defines a consistent style for the feature cards with transition and hover effects
     const cardClasses = "bg-black p-8 rounded-lg text-center flex flex-col items-center justify-start h-full " +
-                        "transition duration-300 ease-in-out transform hover:scale-[1.07] hover:shadow-2xl border border-transparent hover:border-red-500";
+                        "transition duration-300 ease-in-out transform hover:scale-[1.07] hover:shadow-2xl border border-gray-400 hover:border-red-500";
 
     // Data structure for the features
     const features = [
@@ -36,7 +36,15 @@ const Homecard5 = () => {
     ];
 
     return (
-        <section className="bg-gray-950 py-10 px-6">
+        <section 
+            className="py-10 px-6 relative"
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url(${Bg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
+        >
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-3xl md:text-3xl font-bold text-red-500 text-center mb-16">
                     The Fusion Gaming Difference

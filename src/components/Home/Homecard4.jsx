@@ -1,7 +1,7 @@
 import React from 'react';
 // Import icons for the contact buttons and the bullet points
 import { MessageCircle, Phone, Zap, DollarSign, Lock, RefreshCcw, Star } from 'lucide-react'; 
-
+ import Bg from '../../assets/footer-subscribe-bg.jpg';
 // Constant for the main red CTA button styling
 const RED_BUTTON_CLASSES = 'bg-red-600 hover:bg-red-700';
 

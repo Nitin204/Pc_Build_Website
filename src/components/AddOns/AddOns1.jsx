@@ -21,6 +21,7 @@ import Headphones1 from '../../assets/Ant Esports H520W.webp';
 import Headphones2 from '../../assets/Razer BlackShark V2 X USB.webp';
 import gamePad1 from '../../assets/Logitech G29.webp';
 import gamePad2 from '../../assets/Logitech G29.webp';
+import bgImage from '../../assets/gaming1.webp';
 
 const ADD_ONS_DATA = [
     {
@@ -149,7 +150,6 @@ const AddOns1 = () => {
         
         localStorage.setItem('cart', JSON.stringify(updatedCart));
         window.dispatchEvent(new Event('cartUpdated'));
-        alert(`${product.name} added to cart!`);
     };
 
     const handleShowSummary = (product) => {
@@ -163,26 +163,27 @@ const AddOns1 = () => {
     };
 
     return (
-        <section className="py-24 px-4 bg-black text-white min-h-screen">
-            <div className="mx-auto w-full max-w-2xl">
+        <section className="py-24 px-4 text-white min-h-screen relative bg-cover bg-center bg-fixed" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80)'}}>
+            <div className="absolute inset-0 bg-black"></div>
+            <div className="mx-auto w-full max-w-2xl relative z-10">
                 <h2 className="text-3xl font-bold text-center text-red-500 mb-14 uppercase tracking-wider">
                     Add-Ons
                 </h2>
 
                 {/* --- CATEGORY TABS --- */}
-                <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 mb-16 pb-6 overflow-x-auto">
+                <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 mb-16 pb-6 overflow-x-auto ">
                     {CATEGORIES.map((cat) => (
                         <button 
                             key={cat.key} 
                             onClick={() => setSelectedCategory(cat.key)}
                             className={`flex flex-col items-center p-2 transition-all duration-300 outline-none flex-shrink-0 ${
                                 selectedCategory === cat.key 
-                                    ? 'text-red-500 border-b-2 border-red-500 scale-110' 
+                                    ? 'text-red-500 border-b-2 border-red-500 scale-110 ' 
                                     : 'text-white hover:text-gray-400'
                             }`}
                         >
-                            <cat.icon className="w-8 h-8 md:w-10 md:h-10 mb-2" /> 
-                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-tight">{cat.label}</span>
+                            <cat.icon className="w-8 h-8 md:w-10 md:h-10 mb-2 cursor-pointer" /> 
+                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-tight ">{cat.label}</span>
                         </button>
                     ))}
                 </div>
@@ -208,7 +209,7 @@ const AddOns1 = () => {
                                     <p className="text-2xl font-black text-red-500">{product.displayPrice}</p>
                                     <div className="flex space-x-3 w-full sm:w-auto">
                                         <button onClick={() => setSelectedProduct(product)} className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-all cursor-pointer">Show Info</button>
-                                        <button onClick={() => handleShowSummary(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all">Add to Cart</button>
+                                        <button onClick={() => handleAddToCart(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all cursor-pointer">Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -321,7 +322,7 @@ const AddOns1 = () => {
                             </button>
                             <button 
                                 onClick={handleSummaryAddToCart}
-                                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded transition duration-300"
+                                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded transition duration-300 cursor-pointer"
                             >
                                 Add to Cart
                             </button>
