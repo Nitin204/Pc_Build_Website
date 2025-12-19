@@ -10,7 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 1);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -46,11 +46,11 @@ const Navbar = () => {
       <div className="flex justify-between items-center max-w-7xl mx-auto">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3">
+        <Link to="/" className="flex items-center space-x-3 -my-2">
           <img
             src={fusionGamingLogo}
             alt="Fusion Gaming Logo"
-            className="h-12  object-contain md:h-13 "
+            className="h-15 object-contain md:h-17 lg:h-18"
           />
         </Link>
 

@@ -40,26 +40,24 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto">
                 
                 {/* 1. Main Grid: Logo, 3 Link Columns, and Contact Info (5 columns on large screens) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-16 ">
                     
                     {/* Column 1: Logo and About (The first column in the 5-column grid) */}
-                    <div className="space-y-4">
+                    <div className="space-y-4 ">
                         {/* Logo Element */}
-                        <a href="/" className="flex flex-col space-y-1 w-fit">
+                        <a href="/" className="flex flex-col space-y-1 w-fit ">
                             <img 
                                 src={fusionGamingLogo} 
                                 alt="Fusion Gaming Logo" 
-                                className="h-20 w-auto object-contain mb-1" 
+                                className="h-15 object-contain md:h-17 lg:h-25 lg:w-40 " 
                             />
                         </a>
                         
                         {/* Description Block */}
                         <div className="space-y-1">
                             <h3 className="text-xl font-extrabold tracking-tight leading-none text-white">SYSTEM BUILDERS</h3>
-                            <div className="text-base font-bold text-red-600 tracking-wider">THE PC FACTORY</div>
-                            <p className="text-sm text-gray-400 max-w-xs pt-2">
-                                System Builders is a one-stop shop for your computer needs. We excels in custom-built PCs and boasts over 3500+ loyal customers all across India.
-                            </p>
+                            <div className="text-base font-bold text-red-600 tracking-wider  ">THE PC FACTORY</div>
+                            
                         </div>
                         
                         {/* Social Media Icons */}
