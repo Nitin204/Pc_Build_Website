@@ -42,9 +42,9 @@ Advanced PC Configurator
           </p>
 
           {/* CTA BUTTON */}
-          <button className={`px-8 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}>
+          <a href="/buildpc"><button className={`px-8 py-3 uppercase font-bold text-white rounded transition duration-300 ${RED_BUTTON_CLASSES}`}>
             Build Your Own PC
-          </button>
+          </button></a>
         </div>
          {/* LEFT IMAGE SECTION */}
         <div className="lg:w-2/3 mb-1 mt-4 lg:mb-0 relative overflow-hidden rounded-lg">

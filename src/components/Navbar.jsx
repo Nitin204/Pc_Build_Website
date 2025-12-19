@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import fusionGamingLogo from "../assets/FG_Logo.webp";
+import fusionGamingLogo from "../assets/logo.png";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -50,16 +50,16 @@ const Navbar = () => {
           <img
             src={fusionGamingLogo}
             alt="Fusion Gaming Logo"
-            className="h-8 md:h-12"
+            className="h-12  object-contain md:h-13 "
           />
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8 font-bold text-lg">
-          <Link to="/buildpc" className={linkClasses}>Build Your Own PC</Link>
-          <Link to="/prebuilts" className={linkClasses}>Pre-Builts</Link>
-          <Link to="/addons" className={linkClasses}>Add-Ons</Link>
-          <Link to="/support" className={linkClasses}>Support</Link>
+        <div className="hidden md:flex items-center space-x-8 font-extrabold text-lg">
+          <Link to="/buildpc" className={linkClasses}>Custom PC build</Link>
+          <Link to="/prebuilts" className={linkClasses}>Pre-assembled PCs</Link>
+          <Link to="/addons" className={linkClasses}> Accessories</Link>
+          <Link to="/support" className={linkClasses}>services</Link>
 
           <div className="flex items-center space-x-6 text-white text-xl">
             <Link to="/account" className="hover:text-red-500">
@@ -104,10 +104,10 @@ const Navbar = () => {
         }`}
       >
         <div className="flex flex-col space-y-3 px-6 text-base font-semibold">
-          <Link to="/buildpc" className={linkClasses} onClick={toggleMenu}>Build Your Own PC</Link>
-          <Link to="/prebuilts" className={linkClasses} onClick={toggleMenu}>Pre-Builts</Link>
-          <Link to="/addons" className={linkClasses} onClick={toggleMenu}>Add-Ons</Link>
-          <Link to="/support" className={linkClasses} onClick={toggleMenu}>Support</Link>
+          <Link to="/buildpc" className={linkClasses} onClick={toggleMenu}>Custom PC you build</Link>
+          <Link to="/prebuilts" className={linkClasses} onClick={toggleMenu}>Pre-assembled PCs</Link>
+          <Link to="/addons" className={linkClasses} onClick={toggleMenu}>Extras and accessories</Link>
+          <Link to="/support" className={linkClasses} onClick={toggleMenu}>Help/services</Link>
         </div>
       </div>
     </nav>

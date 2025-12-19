@@ -1,6 +1,6 @@
 import React from 'react';
-import fusionGamingLogo from "../assets/FG_Logo.webp"; // Assuming the logo is in assets
 
+import fusionGamingLogo from "../assets/logo.png";
 const Footer = () => {
     // Data structure for the link columns (USEFUL, QUICK, LEGAL)
     const linkColumns = [
@@ -49,16 +49,16 @@ const Footer = () => {
                             <img 
                                 src={fusionGamingLogo} 
                                 alt="Fusion Gaming Logo" 
-                                className="h-16 w-auto object-contain mb-1" 
+                                className="h-20 w-auto object-contain mb-1" 
                             />
                         </a>
                         
                         {/* Description Block */}
                         <div className="space-y-1">
-                            <h3 className="text-xl font-extrabold tracking-tight leading-none text-white">FUSION GAMING</h3>
+                            <h3 className="text-xl font-extrabold tracking-tight leading-none text-white">SYSTEM BUILDERS</h3>
                             <div className="text-base font-bold text-red-600 tracking-wider">THE PC FACTORY</div>
                             <p className="text-sm text-gray-400 max-w-xs pt-2">
-                                Fusion Gaming excels in custom-built PCs and boasts over 3500+ loyal customers all across India.
+                                System Builders is a one-stop shop for your computer needs. We excels in custom-built PCs and boasts over 3500+ loyal customers all across India.
                             </p>
                         </div>
                         

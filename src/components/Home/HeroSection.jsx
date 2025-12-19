@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import { MessageCircle, Phone, X, ArrowRight } from 'lucide-react'; 
-
-// Define a reusable style constant for the red button
+import Imgbg from '../../assets/videobg.mp4';
 const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 
 
 // Define the delay time in milliseconds (e.g., 3000ms = 3 seconds)
@@ -72,21 +71,24 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div> 
                 
                 <video 
-                    autoPlay 
-                    muted 
-                    loop 
-                    id="hero-video" 
-                    className="w-full h-full object-cover opacity-80"
-                    style={{
-                        transform: `translateY(${scrollY * 0.5}px) translateX(${mouseX * 30}px) translateY(${mouseY * 15}px) scale(${1.1 + Math.abs(mouseX) * 0.05}) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                        transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                        transformOrigin: 'center center'
-                    }}
-                >
-                    <source src="https://www.fusiongaming.in/video/FG_Final.mp4" type="video/mp4" />
-                    <source src="/FG_final.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+    autoPlay 
+    muted 
+    loop 
+    playsInline 
+    id="hero-video" 
+    className="w-full h-full object-cover opacity-50"
+    style={{
+        // Keeps your parallax and tilt logic
+        transform: `translateY(${scrollY * 0.5}px) translateX(${mouseX * 30}px) translateY(${mouseY * 15}px) scale(${1.1 + Math.abs(mouseX) * 0.05}) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        transformOrigin: 'center center',
+        backgroundColor: 'black' // Prevents white flash while loading
+    }}
+>
+    {/* This points to the file in your public folder */}
+    <source src={Imgbg} type="video/mp4" />
+    Your browser does not support the video tag.
+</video>
             </div>
             
             {/* Main Content Area (z-20) */}
@@ -107,7 +109,7 @@ const HeroSection = () => {
                         textShadow: `${mouseX * 2}px ${mouseY * 2}px 20px rgba(239, 68, 68, 0.3)`
                     }}
                 >
-                    Welcome To Fusion Gaming
+                    Welcome To System Builders
                 </p>
                 <p
                     className="text-1xl md:text-2xl mb-8"
@@ -193,9 +195,7 @@ const HeroSection = () => {
                         <div className="text-center space-y-4 mb-8">
                             <p className="text-base sm:text-lg text-white ">
                                 Sign in with Google to get access to 
-                                <span className="text-red-500  mx-1">discount coupons</span>, 
-                                <span className="text-red-500  mx-1">free 1-on-1 tech consultation</span>, and 
-                                <span className="text-red-500 mx-1">exclusive offers</span> on all our PCs!
+                        discount coupons free 1-on-1 tech consultation and exclusive offers on all our PCs!
                             </p>
                             <p className="text-xs text-gray-400 pt-2">
                                 Save more with every configuration — **it's completely free!**

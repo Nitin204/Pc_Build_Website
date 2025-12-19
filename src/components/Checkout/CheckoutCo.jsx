@@ -25,7 +25,7 @@ const CheckoutCo = () => {
 
     return (
         <section className="pt-20 md:pt-32 pb-10 md:pb-20 px-2 md:px-4 bg-black min-h-screen">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-2xl mx-auto">
                 <h2 className="text-xl md:text-3xl font-bold text-red-500 mb-4 md:mb-6 text-center">Checkout</h2>
                 
                 {/* Order Summary */}

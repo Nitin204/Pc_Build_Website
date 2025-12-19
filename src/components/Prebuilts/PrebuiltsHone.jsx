@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MessageCircle, Phone, Share2 } from 'lucide-react';
 import { FaGamepad, FaRobot, FaBuilding, FaCamera, FaChartLine } from 'react-icons/fa';
@@ -158,6 +158,7 @@ const PrebuiltsHone = () => {
     const [budget, setBudget] = useState(250000);
     const [showResults, setShowResults] = useState(false);
     const navigate = useNavigate();
+    const productsRef = useRef(null);
 
     const filteredProducts = useMemo(() => {
         return PREBUILT_DATA.filter(product => 
@@ -229,7 +230,12 @@ const PrebuiltsHone = () => {
                     />
                     <p className="text-xl font-black text-white mb-6">{formatCurrency(budget)}</p>
                     <button 
-                        onClick={() => setShowResults(true)}
+                        onClick={() => {
+                            setShowResults(true);
+                            setTimeout(() => {
+                                window.scrollBy({ top: 300, behavior: 'smooth' });
+                            }, 100);
+                        }}
                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-8 rounded-md text-sm transition-all uppercase cursor-pointer"
                     >
                         Find My PC
@@ -238,7 +244,7 @@ const PrebuiltsHone = () => {
 
                 {/* --- PRODUCT GRID --- */}
                 {showResults && (
-                <div className="space-y-6">
+                <div ref={productsRef} className="space-y-6">
                     {filteredProducts.map((product) => (
                         <div key={product.id} className="flex flex-col md:flex-row p-5 rounded-xl border border-gray-800 bg-[#0d0d0d] hover:border-red-600 transition-all duration-500 group">
                             <div className="flex-shrink-0 w-full md:w-40 h-40 bg-black rounded-lg overflow-hidden mb-4 md:mb-0 md:mr-6 flex items-center justify-center border border-gray-800 cursor-pointer hover:border-red-500"
@@ -283,53 +289,67 @@ const PrebuiltsHone = () => {
                 <a href="tel:+916369933507" className="bg-blue-600 text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><Phone className="h-6 w-6" /></a>
             </div>
 
-            {/* --- RESPONSIVE MODAL --- */}
+            {/* --- PC INFO MODAL --- */}
             {selectedProduct && (
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-                    <div className="bg-[#0a0a0a] text-white rounded-lg shadow-2xl max-w-2xl w-full relative border border-red-500 max-h-[90vh] flex flex-col">
+                <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-2 sm:p-4">
+                    <div className="bg-black text-white rounded-xl max-w-4xl w-full relative border border-red-500 overflow-hidden max-h-[95vh] overflow-y-auto">
                         
-                        <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-all text-3xl z-10 p-2 cursor-pointer">&times;</button>
+                        {/* Close Button */}
+                        <button 
+                            onClick={() => setSelectedProduct(null)} 
+                            className="absolute top-3 right-3 sm:top-6 sm:right-6 text-white hover:text-red-500 transition-all text-xl sm:text-2xl z-10 cursor-pointer"
+                        >
+                            ✕
+                        </button>
 
-                        <div className="overflow-y-auto p-6 md:p-8">
-                            <div className="flex flex-col md:flex-row gap-8">
-                                <div className="md:w-1/2 flex items-center justify-center bg-black rounded-xl p-4 border border-gray-900">
-                                    <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-48 md:h-64 object-contain" />
+                        <div className="flex flex-col md:flex-row">
+                            {/* Product Image */}
+                            <div className="md:w-1/2 bg-black p-4 sm:p-6 flex items-center justify-center">
+                                <img 
+                                    src={selectedProduct.image} 
+                                    alt={selectedProduct.name} 
+                                    className="w-full h-48 sm:h-64 object-contain" 
+                                />
+                            </div>
+                            
+                            {/* Product Details */}
+                            <div className="md:w-1/2 p-4 sm:p-6 flex flex-col justify-between">
+                                {/* Header */}
+                                <div>
+                                    <h2 className="text-xl sm:text-2xl font-bold text-red-500 mb-2">{selectedProduct.name}</h2>
+                                    <p className="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">{selectedProduct.specs}</p>
+                                    
+                                    {/* Features */}
+                                    <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
+                                        <div className="border-l-4 border-red-500 pl-2 sm:pl-3">
+                                            <h4 className="text-xs uppercase font-bold text-gray-500 mb-1">FEATURES</h4>
+                                            <p className="text-white text-xs sm:text-sm">High-quality build, RGB lighting</p>
+                                        </div>
+                                        
+                                        <div className="border-l-4 border-red-500 pl-2 sm:pl-3">
+                                            <h4 className="text-xs uppercase font-bold text-gray-500 mb-1">COMPATIBILITY</h4>
+                                            <p className="text-white text-xs sm:text-sm">Windows, Mac, Linux</p>
+                                        </div>
+                                        
+                                        <div className="border-l-4 border-red-500 pl-2 sm:pl-3">
+                                            <h4 className="text-xs uppercase font-bold text-gray-500 mb-1">WARRANTY</h4>
+                                            <p className="text-white text-xs sm:text-sm">1 Year manufacturer</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div className="md:w-1/2 flex flex-col">
-                                    <h3 className="text-2xl font-bold text-red-500 mb-2">{selectedProduct.name}</h3>
-                                    <p className="text-gray-300 text-sm mb-6 leading-relaxed">{selectedProduct.specs}</p>
-                                    
-                                    <div className="grid grid-cols-1 gap-3 mb-8">
-                                        {[
-                                            { label: 'Performance', val: 'High-end gaming & professional workloads' },
-                                            { label: 'Warranty', val: '3 Year comprehensive warranty' },
-                                            { label: 'Support', val: '24/7 technical support included' }
-                                        ].map((item, i) => (
-                                            <div key={i} className="border-l-2 border-red-500 pl-3 bg-gray-900/30 py-2">
-                                                <h4 className="text-[10px] uppercase font-black text-gray-500 mb-1">{item.label}</h4>
-                                                <p className="text-xs text-white">{item.val}</p>
-                                            </div>
-                                        ))}
+                                {/* Price & Button */}
+                                <div>
+                                    <div className="mb-3 sm:mb-4">
+                                        <span className="text-2xl sm:text-3xl font-bold text-white">{selectedProduct.displayPrice}</span>
                                     </div>
                                     
-                                    <div className="mt-auto flex flex-col gap-4">
-                                        <div className="space-y-1">
-                                            <div className="flex items-center gap-3">
-                                                <span className="text-sm text-gray-500 line-through">{formatCurrency(selectedProduct.oldPrice)}</span>
-                                                <span className="text-3xl font-black text-white">{selectedProduct.displayPrice}</span>
-                                            </div>
-                                            <p className="text-xs font-bold text-white uppercase">
-                                                Save <span className="text-red-500">{formatCurrency(selectedProduct.savings)}</span> 
-                                                <span className="ml-2 text-red-500">({selectedProduct.discount})</span>
-                                            </p>
-                                        </div>
-                                        <button 
-                                            onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }}
-                                            className="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 rounded-lg transition duration-300 uppercase tracking-widest text-xs shadow-lg shadow-red-600/20 cursor-pointer" >
-                                             Add to Cart
-                                        </button>
-                                    </div>
+                                    <button 
+                                        onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }}
+                                        className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg transition-all uppercase text-xs sm:text-sm cursor-pointer"
+                                    >
+                                        ADD TO CART
+                                    </button>
                                 </div>
                             </div>
                         </div>
