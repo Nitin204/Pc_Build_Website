@@ -75,7 +75,7 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
-
+{/* nitin */}
         {/* Mobile Icons */}
         <div className="md:hidden flex items-center space-x-6 text-white text-xl">
           <Link to="/cart" className="hover:text-red-500 relative">
