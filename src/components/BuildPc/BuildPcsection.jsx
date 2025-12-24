@@ -360,39 +360,7 @@ const BuildPcsection = () => {
                                         </div>
 
                                         {/* Right Column - Compatibility & Features */}
-                                        <div>
-                                            <h4 className="text-red-500 font-bold mb-4">Compatibility</h4>
-                                            <div className="space-y-2 text-sm mb-6">
-                                                <div className="flex items-center">
-                                                    <span className="text-red-500 mr-2">•</span>
-                                                    <span className="text-gray-300">OS Support: Windows 11/10 & Linux</span>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <span className="text-red-500 mr-2">•</span>
-                                                    <span className="text-gray-300">VR Ready: Yes</span>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <span className="text-red-500 mr-2">•</span>
-                                                    <span className="text-gray-300">4K Gaming: Supported</span>
-                                                </div>
-                                            </div>
-
-                                            <h4 className="text-red-500 font-bold mb-4">Exclusive Features</h4>
-                                            <div className="space-y-2 text-sm">
-                                                <div className="flex items-center">
-                                                    <span className="text-red-500 mr-2">•</span>
-                                                    <span className="text-gray-300">SATA devices: up to 4 SATA devices</span>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <span className="text-red-500 mr-2">•</span>
-                                                    <span className="text-gray-300">RAM: 8 slots available</span>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <span className="text-red-500 mr-2">•</span>
-                                                    <span className="text-gray-300">Power Headroom: Available 350W</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 )}
 
