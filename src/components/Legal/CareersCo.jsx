@@ -10,16 +10,17 @@ const CareersCo = () => {
         name: '',
         email: '',
         phone: '',
-        description: ''
+        description: '',
+        resume: null
     });
 
     const MAX_CHARS = 300;
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: files ? files[0] : value
         }));
     };
 
@@ -83,6 +84,19 @@ const CareersCo = () => {
                             placeholder="Enter your phone number"
                             className={INPUT_CLASSES}
                             value={formData.phone}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    
+                    {/* Resume Upload */}
+                    <div>
+                        <label className="block text-base font-medium text-white mb-2">Resume</label>
+                        <input
+                            type="file"
+                            name="resume"
+                            accept=".pdf,.doc,.docx"
+                            className="w-full px-4 py-2 bg-white text-black rounded-lg border-none focus:ring-2 focus:ring-red-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-500 file:text-white file:cursor-pointer hover:file:bg-red-600"
                             onChange={handleChange}
                             required
                         />

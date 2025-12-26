@@ -145,6 +145,14 @@ const CardCo = () => {
                         Proceed to Checkout
                     </button></a>
                     
+                    <a href="/orderhistory"><button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg transition duration-300 mb-2 cursor-pointer">
+                        Order History
+                    </button></a>
+                    
+                    <a href="/orderdetails"><button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition duration-300 cursor-pointer">
+                        Track Order
+                    </button></a>
+                    
                    
                 </div>
             </div>
