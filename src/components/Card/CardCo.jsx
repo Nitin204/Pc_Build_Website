@@ -56,12 +56,17 @@ const CardCo = () => {
                                     {item.image ? (
                                         <img 
                                             src={item.image} 
-                                            alt={item.name} 
+                                            alt={item.name || 'Product'} 
                                             className="w-full h-full object-contain p-2 hover:scale-110 transition-transform duration-300"
+                                            onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'flex';
+                                            }}
                                         />
-                                    ) : (
-                                        <div className="w-full h-full bg-gray-700 flex items-center justify-center text-xs text-gray-400">No Image</div>
-                                    )}
+                                    ) : null}
+                                    <div className={`w-full h-full bg-gray-700 flex items-center justify-center text-xs text-gray-400 ${item.image ? 'hidden' : 'flex'}`}>
+                                        {item.image ? 'Image Error' : 'No Image'}
+                                    </div>
                                 </div>
                                 
                                 {/* Product Details */}

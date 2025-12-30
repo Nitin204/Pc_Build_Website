@@ -119,6 +119,7 @@ const BuildPcsection = () => {
             displayPrice: `₹${buildPrice.toLocaleString()}`,
             quantity: 1,
             category: 'pc-build',
+            image: img1,
             specs: Object.entries(formData).map(([key, value]) => `${key.replace(/_/g, ' ')}: ${value}`).join(', ')
         };
         

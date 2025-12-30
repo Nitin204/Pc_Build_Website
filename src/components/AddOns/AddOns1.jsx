@@ -129,11 +129,16 @@ const AddOns1 = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showProductSummary, setShowProductSummary] = useState(false);
     const [summaryProduct, setSummaryProduct] = useState(null);
+    const [priceRange, setPriceRange] = useState([0, 10000]);
     const navigate = useNavigate();
 
     const filteredProducts = useMemo(() => {
-        return ADD_ONS_DATA.filter(product => product.category === selectedCategory);
-    }, [selectedCategory]);
+        return ADD_ONS_DATA.filter(product => 
+            product.category === selectedCategory &&
+            product.price >= priceRange[0] &&
+            product.price <= priceRange[1]
+        );
+    }, [selectedCategory, priceRange]);
 
     const handleAddToCart = (product) => {
         const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -165,56 +170,97 @@ const AddOns1 = () => {
     return (
         <section className="py-24 px-4 text-white min-h-screen relative bg-cover bg-center bg-fixed" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80)'}}>
             <div className="absolute inset-0 bg-black"></div>
-            <div className="mx-auto w-full max-w-2xl relative z-10">
+            <div className="mx-auto w-full max-w-7xl relative z-10">
                 <h2 className="text-3xl font-bold text-center text-red-500 mb-14 uppercase tracking-wider">
                     Add-Ons
                 </h2>
 
-                {/* --- CATEGORY TABS --- */}
-                <div className="flex justify-center items-center flex-wrap gap-8 md:gap-16 mb-16 pb-6 overflow-x-auto ">
-                    {CATEGORIES.map((cat) => (
-                        <button 
-                            key={cat.key} 
-                            onClick={() => setSelectedCategory(cat.key)}
-                            className={`flex flex-col items-center p-2 transition-all duration-300 outline-none flex-shrink-0 ${
-                                selectedCategory === cat.key 
-                                    ? 'text-red-500 border-b-2 border-red-500 scale-110 ' 
-                                    : 'text-white hover:text-gray-400'
-                            }`}
-                        >
-                            <cat.icon className="w-8 h-8 md:w-10 md:h-10 mb-2 cursor-pointer" /> 
-                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-tight ">{cat.label}</span>
-                        </button>
-                    ))}
-                </div>
-
-                {/* --- PRODUCT GRID --- */}
-                <div className="space-y-6">
-                    {filteredProducts.map((product) => (
-                        <div key={product.id} className="flex flex-col md:flex-row p-5 rounded-xl border border-gray-800 bg-[#0d0d0d] hover:border-red-600 transition-all duration-500 group">
-                            <div className="flex-shrink-0 w-full md:w-40 h-40 bg-black rounded-lg overflow-hidden mb-4 md:mb-0 md:mr-6 flex items-center justify-center border border-gray-800 cursor-pointer hover:border-red-500"
-                                 onClick={() => setSelectedProduct(product)}>
-                                <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                <div className="flex flex-col lg:flex-row gap-4">
+                    {/* Left Sidebar - Price Filter */}
+                    <div className="w-full lg:w-64 bg-gray-950 p-4 lg:p-6 rounded-lg border border-red-500 h-fit">
+                        <h3 className="text-lg lg:text-xl font-bold text-red-500 mb-4">Price Filter</h3>
+                        
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-white text-sm mb-2">Price Range</label>
+                                <div className="flex items-center space-x-2">
+                                    <input
+                                        type="number"
+                                        value={priceRange[0]}
+                                        onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
+                                        className="w-16 lg:w-20 px-2 py-1 bg-gray-800 text-white rounded text-sm"
+                                        placeholder="Min"
+                                    />
+                                    <span className="text-gray-400">-</span>
+                                    <input
+                                        type="number"
+                                        value={priceRange[1]}
+                                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 10000])}
+                                        className="w-16 lg:w-20 px-2 py-1 bg-gray-800 text-white rounded text-sm"
+                                        placeholder="Max"
+                                    />
+                                </div>
                             </div>
                             
-                            <div className="flex-grow flex flex-col justify-between">
-                                <div>
-                                    <div className="flex justify-between items-start">
-                                        <h3 className="text-xl font-bold text-white mb-2">{product.name}</h3>
-                                        <span className="text-[10px] bg-red-500/10 text-red-500 px-2 py-1 rounded uppercase border border-red-500/20">{product.category}</span>
-                                    </div>
-                                    <p className="text-sm text-gray-400 leading-relaxed mb-4">{product.specs}</p>
-                                </div>
-                                <div className="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-gray-800/50 gap-4">
-                                    <p className="text-2xl font-black text-red-500">{product.displayPrice}</p>
-                                    <div className="flex space-x-3 w-full sm:w-auto">
-                                        <button onClick={() => setSelectedProduct(product)} className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-all cursor-pointer">Show Info</button>
-                                        <button onClick={() => handleAddToCart(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all cursor-pointer">Add to Cart</button>
-                                    </div>
-                                </div>
+                            <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                                <button onClick={() => setPriceRange([0, 2000])} className="w-full text-left px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded text-xs lg:text-sm">Under ₹2,000</button>
+                                <button onClick={() => setPriceRange([2000, 5000])} className="w-full text-left px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded text-xs lg:text-sm">₹2,000 - ₹5,000</button>
+                                <button onClick={() => setPriceRange([5000, 8000])} className="w-full text-left px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded text-xs lg:text-sm">₹5,000 - ₹8,000</button>
+                                <button onClick={() => setPriceRange([8000, 10000])} className="w-full text-left px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded text-xs lg:text-sm">Above ₹8,000</button>
+                                <button onClick={() => setPriceRange([0, 10000])} className="w-full text-left px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-xs lg:text-sm col-span-2 lg:col-span-1">All Prices</button>
                             </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* Right Content */}
+                    <div className="flex-1">
+                        {/* --- CATEGORY TABS --- */}
+                        <div className="flex justify-center items-center flex-wrap gap-8 md:gap-25 mb-16 pb-6 overflow-x-auto ">
+                            {CATEGORIES.map((cat) => (
+                                <button 
+                                    key={cat.key} 
+                                    onClick={() => setSelectedCategory(cat.key)}
+                                    className={`flex flex-col items-center p-2 transition-all duration-300 outline-none flex-shrink-0 ${
+                                        selectedCategory === cat.key 
+                                            ? 'text-red-500 border-b-2 border-red-500 scale-110 ' 
+                                            : 'text-white hover:text-gray-400'
+                                    }`}
+                                >
+                                    <cat.icon className="w-8 h-8 md:w-10 md:h-10 mb-2 cursor-pointer" /> 
+                                    <span className="text-[10px] md:text-xs font-bold uppercase tracking-tight ">{cat.label}</span>
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* --- PRODUCT GRID --- */}
+                        <div className="space-y-6">
+                            {filteredProducts.map((product) => (
+                                <div key={product.id} className="flex flex-col md:flex-row p-5 rounded-xl border border-gray-800 bg-[#0d0d0d] hover:border-red-600 transition-all duration-500 group">
+                                    <div className="flex-shrink-0 w-full md:w-40 h-40 bg-black rounded-lg overflow-hidden mb-4 md:mb-0 md:mr-6 flex items-center justify-center border border-gray-800 cursor-pointer hover:border-red-500"
+                                         onClick={() => setSelectedProduct(product)}>
+                                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                                    </div>
+                                    
+                                    <div className="flex-grow flex flex-col justify-between">
+                                        <div>
+                                            <div className="flex justify-between items-start">
+                                                <h3 className="text-xl font-bold text-white mb-2">{product.name}</h3>
+                                                <span className="text-[10px] bg-red-500/10 text-red-500 px-2 py-1 rounded uppercase border border-red-500/20">{product.category}</span>
+                                            </div>
+                                            <p className="text-sm text-gray-400 leading-relaxed mb-4">{product.specs}</p>
+                                        </div>
+                                        <div className="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-gray-800/50 gap-4">
+                                            <p className="text-2xl font-black text-red-500">{product.displayPrice}</p>
+                                            <div className="flex space-x-3 w-full sm:w-auto">
+                                                <button onClick={() => setSelectedProduct(product)} className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-all cursor-pointer">Show Info</button>
+                                                <button onClick={() => handleAddToCart(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all cursor-pointer">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
 

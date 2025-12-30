@@ -7,6 +7,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,13 +23,29 @@ const Navbar = () => {
       setCartCount(cart.length);
     };
     
+    const updateUser = () => {
+      const userData = localStorage.getItem('user');
+      console.log('User data from localStorage:', userData);
+      if (userData) {
+        const parsedUser = JSON.parse(userData);
+        console.log('Parsed user:', parsedUser);
+        setUser(parsedUser);
+      } else {
+        setUser(null);
+      }
+    };
+    
     updateCartCount();
+    updateUser();
+    
     window.addEventListener('storage', updateCartCount);
     window.addEventListener('cartUpdated', updateCartCount);
+    window.addEventListener('userLoggedIn', updateUser);
     
     return () => {
       window.removeEventListener('storage', updateCartCount);
       window.removeEventListener('cartUpdated', updateCartCount);
+      window.removeEventListener('userLoggedIn', updateUser);
     };
   }, []);
 
@@ -62,9 +79,26 @@ const Navbar = () => {
           <Link to="/support" className={linkClasses}>services</Link>
 
           <div className="flex items-center space-x-6 text-white text-xl">
-            <Link to="/account" className="hover:text-red-500">
-              <i className="fa-solid fa-user"></i>
-            </Link>
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-red-500 font-bold text-sm">{user.firstName || user.name || 'User'}</span>
+                <button 
+                  onClick={() => {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('token');
+                    setUser(null);
+                    window.location.reload();
+                  }}
+                  className="text-xs text-gray-400 hover:text-red-500"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link to="/account" className="hover:text-red-500">
+                <i className="fa-solid fa-user"></i>
+              </Link>
+            )}
             <Link to="/cart" className="hover:text-red-500 relative">
               <i className="fa-solid fa-shopping-cart"></i>
               {cartCount > 0 && (
@@ -87,9 +121,26 @@ const Navbar = () => {
             )}
           </Link>
 
-          <Link to="/account" className="hover:text-red-500">
-            <i className="fa-solid fa-user"></i>
-          </Link>
+          {user ? (
+            <div className="flex items-center space-x-2">
+              <span className="text-red-500 font-bold text-sm">{user.firstName || user.name || 'User'}</span>
+              <button 
+                onClick={() => {
+                  localStorage.removeItem('user');
+                  localStorage.removeItem('token');
+                  setUser(null);
+                  window.location.reload();
+                }}
+                className="text-xs text-gray-400 hover:text-red-500"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/account" className="hover:text-red-500">
+              <i className="fa-solid fa-user"></i>
+            </Link>
+          )}
 
           <button onClick={toggleMenu} className="md:hidden text-2xl hover:text-red-500">
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
