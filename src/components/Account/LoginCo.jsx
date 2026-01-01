@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { LogIn, MessageCircle, Phone } from 'lucide-react';
 import image from '../../assets/image.png'; // Google icon
-const googleLogin = () => {
-  window.location.href = "http://localhost:8080/oauth2/authorization/google";
-};
 
 // Simple check for Google login success
 window.addEventListener('message', (event) => {
@@ -30,6 +27,25 @@ const LoginCo = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        const newErrors = {};
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Valid email is required';
+        }
+        
+        // Password validation
+        if (formData.password.length < 8) {
+            newErrors.password = 'Password must be at least 6 characters';
+        }
+        
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,21 +54,33 @@ const LoginCo = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
         setLoading(true);
         setError('');
         try {
             const response = await axios.post('http://localhost:8080/api/auth/login', formData);
             console.log('Full login response:', response.data);
             
-            // Handle different response structures
-            const userName = response.data.user?.name || response.data.user?.firstName || response.data.name || response.data.firstName || 'User';
+            // Manual firstName extraction
+            let firstName = 'Parth'; // Hardcode for now
+            
+            // Try to extract from response
+            if (response.data.user?.firstName) firstName = response.data.user.firstName;
+            else if (response.data.firstName) firstName = response.data.firstName;
+            else if (response.data.user?.name) firstName = response.data.user.name.split(' ')[0];
+            else if (response.data.name) firstName = response.data.name.split(' ')[0];
+            
             const userObj = {
-                name: userName,
-                firstName: response.data.user?.firstName || response.data.firstName,
+                name: response.data.user?.name || response.data.name || firstName,
+                firstName: firstName,
                 email: response.data.user?.email || response.data.email
             };
-            
-            alert(`Welcome ${userName}!`);
+
+            alert(`Welcome ${firstName}!`);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(userObj));
             
@@ -81,19 +109,19 @@ const LoginCo = () => {
                 
                 <h2 className="text-2xl md:text-3xl font-bold text-center text-red-500 mb-4">Welcome Back</h2>
                 <p className="text-center text-gray-400 mb-8">
-                    Sign in to continue building your dream PC with <span className="text-red-500 font-semibold">Fusion Gaming</span>
+                    Sign in to continue building your dream PC with <span className="text-red-500 font-semibold">SYSTEM BUILDERS</span>
                 </p>
 
                 {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
 
-                {/* Google Sign In */}
+                {/* Google Sign In
               <button
-  onClick={googleLogin}
+  onClick={handleGoogleLogin}
   className="w-full flex items-center justify-center border border-red-500 py-1 rounded"
 >
   <img src={image} className="w-5 h-5 mr-3" />
   Sign in with Google
-</button>
+</button> */}
 
 
 
@@ -110,22 +138,24 @@ const LoginCo = () => {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            className={inputClass}
+                            className={`${inputClass} ${errors.email ? 'border-red-500' : ''}`}
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
+                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
                     <div>
                         <input
                             type="password"
                             name="password"
                             placeholder="Password"
-                            className={inputClass}
+                            className={`${inputClass} ${errors.password ? 'border-red-500' : ''}`}
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
+                        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                     </div>
 
                     <button type="submit" disabled={loading} className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded transition duration-300 flex items-center justify-center">
@@ -137,7 +167,7 @@ const LoginCo = () => {
                 {/* Footer Links */}
                 <div className="text-center mt-4 text-sm space-y-2">
                     <p className="text-gray-400">
-                        New to Fusion Gaming? <a href="/register" className="text-red-500 font-semibold hover:underline">Create Account</a>
+                        New to SYSTEM BUILDERS? <a href="/register" className="text-red-500 font-semibold hover:underline">Create Account</a>
                     </p>
                     <p>
                         <a href="/reset" className="text-red-500 font-semibold hover:underline">Reset Password</a>

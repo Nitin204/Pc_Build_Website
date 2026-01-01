@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAutoLogout } from "./hooks/useAutoLogout.js";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -24,7 +25,11 @@ import Checkout from "./pages/Checkout/Checkout.jsx";
 import OrderHistory from "./components/Account/OrderHistory.jsx";
 import OrderDetails from "./components/Account/OrderStatus.jsx";
 
+import Profile from "./components/Account/Profile.jsx";
+
 function App() {
+  useAutoLogout();
+  
   return (
     <Router>
       <div className="App">
@@ -55,6 +60,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/orderdetails" element={<OrderDetails />} />
+          <Route path="/profile" element={<Profile />} />
 
           
          

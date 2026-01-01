@@ -11,6 +11,37 @@ const RegisterCo = () => {
     password: '',
     confirmPassword: '',
   });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Name validation
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) newErrors.email = 'Valid email is required';
+    
+    // Phone validation
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(formData.phone)) newErrors.phone = '10-digit phone number required';
+    
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password = '8+ chars, uppercase, lowercase, number & symbol required';
+    }
+    
+    // Confirm password validation
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,8 +51,7 @@ const RegisterCo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert('❌ Passwords do not match');
+    if (!validateForm()) {
       return;
     }
 
@@ -46,6 +76,7 @@ const RegisterCo = () => {
         password: '',
         confirmPassword: '',
       });
+      setErrors({});
     } catch (error) {
       console.error(error);
       alert('❌ Registration failed');
@@ -75,9 +106,10 @@ const RegisterCo = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className={inputClass}
+              className={`${inputClass} ${errors.firstName ? 'border-red-500' : ''}`}
               required
             />
+            {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
           </div>
 
           <div>
@@ -87,9 +119,10 @@ const RegisterCo = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              className={inputClass}
+              className={`${inputClass} ${errors.lastName ? 'border-red-500' : ''}`}
               required
             />
+            {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
           </div>
 
           <div>
@@ -99,9 +132,10 @@ const RegisterCo = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={inputClass}
+              className={`${inputClass} ${errors.email ? 'border-red-500' : ''}`}
               required
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
           <div>
@@ -111,9 +145,10 @@ const RegisterCo = () => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={inputClass}
+              className={`${inputClass} ${errors.phone ? 'border-red-500' : ''}`}
               required
             />
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
           </div>
 
           <div>
@@ -123,9 +158,10 @@ const RegisterCo = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={inputClass}
+              className={`${inputClass} ${errors.password ? 'border-red-500' : ''}`}
               required
             />
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
           <div>
@@ -135,9 +171,10 @@ const RegisterCo = () => {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={inputClass}
+              className={`${inputClass} ${errors.confirmPassword ? 'border-red-500' : ''}`}
               required
             />
+            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
             <p className="text-xs text-gray-400 mt-1">
               8+ chars, uppercase, lowercase, number & symbol
             </p>

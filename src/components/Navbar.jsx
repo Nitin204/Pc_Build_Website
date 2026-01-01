@@ -81,18 +81,10 @@ const Navbar = () => {
           <div className="flex items-center space-x-6 text-white text-xl">
             {user ? (
               <div className="flex items-center space-x-2">
-                <span className="text-red-500 font-bold text-sm">{user.firstName || user.name || 'User'}</span>
-                <button 
-                  onClick={() => {
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('token');
-                    setUser(null);
-                    window.location.reload();
-                  }}
-                  className="text-xs text-gray-400 hover:text-red-500"
-                >
-                  Logout
-                </button>
+                <Link to="/profile" className="text-red-500 font-bold text-lg hover:text-red-400">
+                  {user.firstName || user.name || 'User'}
+                </Link>
+                
               </div>
             ) : (
               <Link to="/account" className="hover:text-red-500">
@@ -123,7 +115,9 @@ const Navbar = () => {
 
           {user ? (
             <div className="flex items-center space-x-2">
-              <span className="text-red-500 font-bold text-sm">{user.firstName || user.name || 'User'}</span>
+              <Link to="/profile" className="text-red-500 font-bold text-sm hover:text-red-400">
+                {user.firstName || user.name || 'User'}
+              </Link>
               <button 
                 onClick={() => {
                   localStorage.removeItem('user');
