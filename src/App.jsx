@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAutoLogout } from "./hooks/useAutoLogout.js";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -27,52 +28,58 @@ import OrderDetails from "./components/Account/OrderStatus.jsx";
 
 import Profile from "./components/Account/Profile.jsx";
 
+
+
+
+
 function App() {
   useAutoLogout();
   
   return (
-    <Router>
-      <div className="App">
+    <AuthProvider>
+      <Router>
+        <div className="App">
 
-        {/* NAVBAR */}
-        <Navbar />
+          {/* NAVBAR */}
+          <Navbar />
 
-        {/* PAGE ROUTING */}
-        <Routes>
-          <Route path="/" element={<Homepage />} />
+          {/* PAGE ROUTING */}
+          <Routes>
+            <Route path="/" element={<Homepage />} />
 
-          {/* Main Menu Routes */}
-          <Route path="/buildpc" element={<BuildPc />} />
-          <Route path="/prebuilts" element={<Prebuilts />} />
-          <Route path="/addons" element={<AddOns />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/reset" element={<Reset />} /> 
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
+            {/* Main Menu Routes */}
+            <Route path="/buildpc" element={<BuildPc />} />
+            <Route path="/prebuilts" element={<Prebuilts />} />
+            <Route path="/addons" element={<AddOns />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/login" element={<Account />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/reset" element={<Reset />} /> 
+            <Route path="/register" element={<Register />} />
+            <Route path="/cart" element={<Cart />} />
 
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/refund" element={<Refund />} />
-          <Route path="/terms" element={<Term />} />
-          <Route path="/policy" element={<Policy />} />
-          <Route path="/shipping" element={<Shipping />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orderhistory" element={<OrderHistory />} />
-          <Route path="/orderdetails" element={<OrderDetails />} />
-          <Route path="/profile" element={<Profile />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/terms" element={<Term />} />
+            <Route path="/policy" element={<Policy />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orderhistory" element={<OrderHistory />} />
+            <Route path="/orderdetails" element={<OrderDetails />} />
+            <Route path="/profile" element={<Profile />} />
+           
 
+            {/* 404 Page */}
+            <Route path="*" element={<h1>404 Page Not Found</h1>}/>
           
-         
-          {/* 404 Page */}
-          <Route path="*" element={<h1>404 Page Not Found</h1>}/>
-        
-        </Routes>
+          </Routes>
 
-        {/* FOOTER */}
-        <Footer />
-      </div>
-    </Router>
+          {/* FOOTER */}
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -37,7 +37,7 @@ const Profile = () => {
     const handleSave = async () => {
         try {
             await axios.put(
-                `http://localhost:8080/api/user/update/${user.email}`,
+                `http://localhost:8181/api/user/update/${user.email}`,
                 editData
             );
             
@@ -80,10 +80,15 @@ const Profile = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        window.location.href = '/';
-    };
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  localStorage.removeItem('userId'); // 🔥 VERY IMPORTANT
+  localStorage.removeItem('cart');
+
+  window.dispatchEvent(new Event('userLoggedOut')); // ✅ proper event
+  window.location.href = '/';
+};
+
 
     if (!user) {
         return (

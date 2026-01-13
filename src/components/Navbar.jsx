@@ -23,6 +23,7 @@ const Navbar = () => {
       setCartCount(cart.length);
     };
     
+    
     const updateUser = () => {
       const userData = localStorage.getItem('user');
       console.log('User data from localStorage:', userData);
@@ -122,7 +123,9 @@ const Navbar = () => {
                 onClick={() => {
                   localStorage.removeItem('user');
                   localStorage.removeItem('token');
+                  localStorage.removeItem('cart');
                   setUser(null);
+                  window.dispatchEvent(new Event('cartUpdated'));
                   window.location.reload();
                 }}
                 className="text-xs text-gray-400 hover:text-red-500"
@@ -149,10 +152,10 @@ const Navbar = () => {
         }`}
       >
         <div className="flex flex-col space-y-3 px-6 text-base font-semibold">
-          <Link to="/buildpc" className={linkClasses} onClick={toggleMenu}>Custom PC you build</Link>
+          <Link to="/buildpc" className={linkClasses} onClick={toggleMenu}>Custom PC build</Link>
           <Link to="/prebuilts" className={linkClasses} onClick={toggleMenu}>Pre-assembled PCs</Link>
-          <Link to="/addons" className={linkClasses} onClick={toggleMenu}>Extras and accessories</Link>
-          <Link to="/support" className={linkClasses} onClick={toggleMenu}>Help/services</Link>
+          <Link to="/addons" className={linkClasses} onClick={toggleMenu}>Accessories</Link>
+          <Link to="/support" className={linkClasses} onClick={toggleMenu}>services</Link>
         </div>
       </div>
     </nav>

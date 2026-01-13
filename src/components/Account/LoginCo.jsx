@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { LogIn, MessageCircle, Phone } from 'lucide-react';
+import { LogIn, MessageCircle, Phone, Eye, EyeOff } from 'lucide-react';
 import image from '../../assets/image.png'; // Google icon
 
 // Simple check for Google login success
 window.addEventListener('message', (event) => {
-  if (event.origin !== 'http://localhost:8080') return;
+  if (event.origin !== 'http://localhost:8181') return;
   
   if (event.data.type === 'GOOGLE_LOGIN_SUCCESS') {
     const { token, user } = event.data;
@@ -23,11 +23,14 @@ window.addEventListener('message', (event) => {
   }
 });
 
+
+
 const LoginCo = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
@@ -52,54 +55,52 @@ const LoginCo = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        if (!validateForm()) {
-            return;
-        }
-        
-        setLoading(true);
-        setError('');
-        try {
-            const response = await axios.post('http://localhost:8080/api/auth/login', formData);
-            console.log('Full login response:', response.data);
-            
-            // Manual firstName extraction
-            let firstName = 'Parth'; // Hardcode for now
-            
-            // Try to extract from response
-            if (response.data.user?.firstName) firstName = response.data.user.firstName;
-            else if (response.data.firstName) firstName = response.data.firstName;
-            else if (response.data.user?.name) firstName = response.data.user.name.split(' ')[0];
-            else if (response.data.name) firstName = response.data.name.split(' ')[0];
-            
-            const userObj = {
-                name: response.data.user?.name || response.data.name || firstName,
-                firstName: firstName,
-                email: response.data.user?.email || response.data.email
-            };
+   const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            alert(`Welcome ${firstName}!`);
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(userObj));
-            
-            // Force navbar update
-            window.dispatchEvent(new Event('userLoggedIn'));
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
+    if (!validateForm()) return;
 
-    const handleGoogleLogin = () => {
-        alert('Google login triggered!');
-        // Here you can redirect to backend OAuth endpoint later
-    };
+    setLoading(true);
+    setError('');
+
+    try {
+        const response = await axios.post(
+            'http://localhost:8181/api/auth/login',
+            formData
+        );
+
+        const userId = response.data.user.id;   // ✅ NOW VALID
+        const token = response.data.token;
+
+        const firstName =
+            response.data.user?.firstName ||
+            response.data.user?.name?.split(' ')[0] ||
+            'User';
+
+        const userObj = {
+            id: userId,
+            name: response.data.user.name,
+            firstName,
+            email: response.data.user.email
+        };
+
+        // ✅ SAVE HERE (CORRECT SCOPE)
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('user', JSON.stringify(userObj));
+
+        window.dispatchEvent(new Event('userLoggedIn'));
+
+        alert(`Welcome ${firstName}! 🎉`);
+
+        window.location.reload();
+
+    } catch (err) {
+        setError(err.response?.data?.message || 'Login failed');
+    } finally {
+        setLoading(false);
+    }
+};
 
     const inputClass = "w-full bg-white text-black p-2 rounded-md border border-gray-300 focus:ring-red-500 focus:border-red-500 transition duration-150";
 
@@ -145,16 +146,23 @@ const LoginCo = () => {
                         />
                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
-                    <div>
+                    <div className="relative">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="Password"
-                            className={`${inputClass} ${errors.password ? 'border-red-500' : ''}`}
+                            className={`${inputClass} pr-10 ${errors.password ? 'border-red-500' : ''}`}
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </button>
                         {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                     </div>
 

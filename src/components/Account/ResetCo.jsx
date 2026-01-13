@@ -11,7 +11,7 @@ const ResetCo = () => {
 
     try {
       const response = await fetch(
-        'http://localhost:8080/api/auth/reset-password',
+        'http://localhost:8181/api/auth/reset-password',
         {
           method: 'POST',
           headers: {

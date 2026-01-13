@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { MessageCircle, Phone } from 'lucide-react';
+import { MessageCircle, Phone, Eye, EyeOff } from 'lucide-react';
 
 const RegisterCo = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,8 @@ const RegisterCo = () => {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -57,7 +59,7 @@ const RegisterCo = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/auth/register',
+        'http://localhost:8181/api/auth/register',
         {
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -153,27 +155,45 @@ const RegisterCo = () => {
 
           <div>
             <label className="text-sm">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className={`${inputClass} ${errors.password ? 'border-red-500' : ''}`}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={`${inputClass} pr-10 ${errors.password ? 'border-red-500' : ''}`}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
           <div>
             <label className="text-sm">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className={`${inputClass} ${errors.confirmPassword ? 'border-red-500' : ''}`}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className={`${inputClass} pr-10 ${errors.confirmPassword ? 'border-red-500' : ''}`}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
             {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
             <p className="text-xs text-gray-400 mt-1">
               8+ chars, uppercase, lowercase, number & symbol

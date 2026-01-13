@@ -16,12 +16,39 @@ const Support1 = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Placeholder for form submission logic
-        console.log('Form Submitted:', formData);
-        alert('Request submitted! We will call you back soon.');
-    };
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await fetch("http://localhost:8181/api/leads", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to submit request");
+        }
+
+        alert("Request submitted! We will call you back soon.");
+
+        // reset form (optional)
+        setFormData({
+            name: '',
+            phone: '',
+            email: '',
+            date: '',
+            details: '',
+        });
+
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong. Please try again.");
+    }
+};
+
 
     const inputClass = "w-full bg-white text-black p-2 rounded-md border border-gray-300 focus:ring-red-500 focus:border-red-500 transition duration-150";
 
