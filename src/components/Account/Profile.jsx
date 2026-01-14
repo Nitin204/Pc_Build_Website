@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
+
 const Profile = () => {
     const location = useLocation();
     const [user, setUser] = useState(null);
@@ -11,10 +12,13 @@ const Profile = () => {
     const [addresses, setAddresses] = useState([]);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editingAddressId, setEditingAddressId] = useState(null);
+    
     const emptyAddressForm = {
         name: "", phone: "", street: "", city: "", state: "", pincode: ""
     };
     const [addressForm, setAddressForm] = useState(emptyAddressForm);
+    const [orders, setOrders] = useState([]);
+    const [loadingOrders, setLoadingOrders] = useState(false);
 
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
@@ -42,11 +46,15 @@ const Profile = () => {
     }, [token]);
 
     // Fetch Addresses when the Addresses section is active
-    useEffect(() => {
-        if (activeSection === 'addresses' && userId) {
-            loadAddresses();
-        }
-    }, [activeSection, userId]);
+   useEffect(() => {
+    if (activeSection === 'addresses' && userId) {
+        loadAddresses();
+    }
+
+    if (activeSection === 'orders' && userId) {
+        loadOrders();
+    }
+}, [activeSection, userId]);
 
     /* ================= ADDRESS LOGIC ================= */
     const loadAddresses = async () => {
@@ -132,6 +140,18 @@ const Profile = () => {
         window.location.href = '/';
     };
 
+    const loadOrders = async () => {
+        try {
+            setLoadingOrders(true);
+            const res = await axios.get("http://localhost:8181/api/order/user/" + userId);
+            setOrders(res.data || []);
+        } catch (error) {
+            console.error("Error loading orders", error);
+        } finally {
+            setLoadingOrders(false);
+        }
+    };
+
     if (!user) {
         return (
             <div className="pt-32 pb-20 px-4 bg-black min-h-screen flex items-center justify-center">
@@ -157,7 +177,6 @@ const Profile = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3 mb-6">
                         <button onClick={() => setActiveSection('profile')} className={`flex items-center font-medium py-2 px-3 rounded hover:bg-gray-700 ${activeSection === 'profile' ? 'text-red-500 bg-gray-800' : 'text-red-500'}`}><i className="fa-solid fa-user mr-3"></i> My Profile</button>
                         <button onClick={() => setActiveSection('orders')} className={`flex items-center font-medium py-2 px-3 rounded hover:bg-gray-700 ${activeSection === 'orders' ? 'text-red-500 bg-gray-800' : 'text-red-500'}`}><i className="fa-solid fa-box mr-3"></i> My Orders</button>
-                        <button onClick={() => setActiveSection('track')} className={`flex items-center font-medium py-2 px-3 rounded hover:bg-gray-700 ${activeSection === 'track' ? 'text-red-500 bg-gray-800' : 'text-red-500'}`}><i className="fa-solid fa-truck mr-3"></i> Track Order</button>
                         <button onClick={() => setActiveSection('addresses')} className={`flex items-center font-medium py-2 px-3 rounded hover:bg-gray-700 ${activeSection === 'addresses' ? 'text-red-500 bg-gray-800' : 'text-red-500'}`}><i className="fa-solid fa-map-marker-alt mr-3"></i> My Addresses</button>
                     </div>
 
@@ -287,8 +306,49 @@ const Profile = () => {
 )}
 
                     {/* Placeholder for other sections */}
-                    {activeSection === 'orders' && <h2 className="text-red-500 font-bold text-xl">My Orders</h2>}
-                    {activeSection === 'track' && <h2 className="text-red-500 font-bold text-xl">Track Order</h2>}
+                   {activeSection === 'orders' && (
+    <>
+        <h2 className="text-red-500 font-bold text-xl sm:text-2xl mb-6">
+            My Orders
+        </h2>
+
+        {loadingOrders && (
+            <p className="text-gray-400">Loading orders...</p>
+        )}
+
+        {!loadingOrders && orders.length === 0 && (
+            <p className="text-gray-400">No orders found</p>
+        )}
+
+        <div className="space-y-4">
+            {orders.map((order) => (
+                <div
+                    key={order.id}
+                    className="border border-red-900 p-5 rounded-lg bg-transparent"
+                >
+                    <div className="flex justify-between items-center mb-2">
+                        <p className="text-white font-bold">
+                            Order #{order.orderId}
+                        </p>
+                        <span className="text-sm text-red-500 font-semibold">
+                            {order.status}
+                        </span>
+                    </div>
+
+                    <p className="text-gray-400 text-sm">
+                        Date: {order.orderDate}
+                    </p>
+
+                    <p className="text-white mt-2">
+                        Total: ₹{order.totalAmount}
+                    </p>
+                </div>
+            ))}
+        </div>
+    </>
+)}
+
+
                 </div>
             </div>
         </div>

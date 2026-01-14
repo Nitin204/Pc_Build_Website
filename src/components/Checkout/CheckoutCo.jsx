@@ -103,6 +103,16 @@ const CheckoutCo = () => {
   const gst = Math.round(subtotal * 0.18);
   const grandTotal = subtotal + gst;
 
+  const handleProceedToPayment = () => {
+    if (!selectedAddress) {
+      alert("Please select a delivery address");
+      return;
+    }
+    navigate('/payment', {
+      state: { cartItems, selectedAddress, grandTotal }
+    });
+  };
+
   return (
     <section className="pt-20 pb-20 bg-black min-h-screen px-3">
       <div className="max-w-2xl mx-auto">
@@ -209,7 +219,7 @@ const CheckoutCo = () => {
           </div>
         </div>
 
-        <button className="w-full mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded">
+        <button onClick={handleProceedToPayment} className="w-full mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded">
           Proceed to Payment
         </button>
 

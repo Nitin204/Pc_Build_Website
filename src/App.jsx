@@ -23,6 +23,7 @@ import Cart from "./pages/Cart/Cart.jsx";
 import Shipping from "./pages/Legel/Shipping.jsx";
 import Privacy from "./pages/Legel/Privacy.jsx";
 import Checkout from "./pages/Checkout/Checkout.jsx";
+import Payment from "./pages/Checkout/Payment.jsx";
 
 
 import Profile from "./components/Account/Profile.jsx";
@@ -64,6 +65,7 @@ function App() {
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment" element={<Payment />} />
            
             <Route path="/profile" element={<Profile />} />
            
