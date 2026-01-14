@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // Assuming the gamer image is named gamer-setup.webp (or similar) and is in src/assets
-import gamerImage from '../../assets/home1.webp'; 
+import gamerImage from '../../assets/Untitled-1.webp'; 
 
 // Constant for the main red CTA button styling
 const RED_BUTTON_CLASSES = 'bg-red-500 hover:bg-red-600'; 

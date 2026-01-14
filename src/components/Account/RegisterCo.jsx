@@ -70,6 +70,12 @@ const RegisterCo = () => {
       );
 
       alert('🎉 Registration Successfull');
+      
+      // Auto redirect to login page
+      setTimeout(() => {
+        window.location.href = '/login';
+      });
+      
       setFormData({
         firstName: '',
         lastName: '',
@@ -80,9 +86,13 @@ const RegisterCo = () => {
       });
       setErrors({});
     } catch (error) {
-      console.error(error);
-      alert('❌ Registration failed');
-    }
+  if (error.response && error.response.status === 409) {
+    alert("⚠️ Email already registered. Please login.");
+  } else {
+    alert("❌ Registration failed");
+  }
+}
+
   };
 
   const inputClass =

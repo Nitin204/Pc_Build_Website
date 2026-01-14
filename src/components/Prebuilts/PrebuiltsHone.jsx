@@ -404,23 +404,37 @@ const PrebuiltsHone = () => {
         );
     }, [products, selectedCategory, budget]);
 
-   const handleAddToCart = async (product) => {
-  const userId = localStorage.getItem("userId");
+  const handleAddToCart = async (product) => {
+  try {
+    const userId = localStorage.getItem("userId");
 
-  if (!userId) {
-    alert("Please login first");
-    return;
+    if (!userId) {
+      alert("Please login first");
+      return;
+    }
+
+    const cartItem = {
+      userId: userId,
+      productId: product.id,
+      productType: "ACCESSORY",   // 🔴 IMPORTANT
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1
+    };
+
+    await axios.post(
+      "http://localhost:8181/api/cart/add",
+      cartItem
+    );
+
+    window.dispatchEvent(new Event("cartUpdated"));
+    alert("Added to cart ✅");
+
+  } catch (err) {
+    console.error("Add to cart failed:", err);
+    alert("Add to cart failed ❌");
   }
-
-  await axios.post(`http://localhost:8181/api/cart/${userId}/add`, {
-    productId: product.id,
-    name: product.name,
-    price: product.price,
-    image: product.image,
-    specs: product.specs
-  });
-
-  window.dispatchEvent(new Event("cartUpdated"));
 };
 
 

@@ -570,10 +570,17 @@ const BuildPcsection = () => {
         const currentSectionFields = subFieldMapping[openSection];
         const allFieldsFilled = currentSectionFields.every(sub => newFormData[sub.key]);
         
-        // Auto-close section if all fields are selected
+        // Auto-open next section if all fields are selected
         if (allFieldsFilled) {
+            const currentIndex = componentFields.indexOf(openSection);
+            const nextSection = componentFields[currentIndex + 1];
+            
             setTimeout(() => {
-                setOpenSection(null);
+                if (nextSection) {
+                    setOpenSection(nextSection);
+                } else {
+                    setOpenSection(null);
+                }
             }, 300);
         }
     };
@@ -603,22 +610,36 @@ const BuildPcsection = () => {
  
 
 const handleAddToCart = async (product) => {
-  const userId = localStorage.getItem("userId");
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  if (!userId) {
-    alert("Please login first");
-    return;
+    if (!user) {
+      alert("Please login first");
+      return;
+    }
+
+    const cartItem = {
+      userId: user.id,                // ✅ same as backend
+      productId: product.id,
+      productType: "PC_BUILD",        // ✅ correct type
+      name: product.name,
+      price: product.discountPrice,  // ✅ FIXED
+      image: product.image || img1,  // ✅ FIXED
+      quantity: 1
+    };
+
+    await axios.post(
+      "http://localhost:8181/api/cart/add",
+      cartItem
+    );
+
+    window.dispatchEvent(new Event("cartUpdated"));
+    alert("Added to cart ✅");
+
+  } catch (err) {
+    console.error("Add to cart failed:", err);
+    alert("Add to cart failed ❌");
   }
-
-  await axios.post(`http://localhost:8181/api/cart/${userId}/add`, {
-    productId: product.id,
-    name: product.name,
-    price: product.price,
-    image: product.image,
-    specs: product.specs
-  });
-
-  window.dispatchEvent(new Event("cartUpdated"));
 };
 
 
@@ -781,12 +802,13 @@ const handleAddToCart = async (product) => {
                                         >
                                             Edit Build
                                         </button>
-                                        <button
-                                            onClick={handleAddToCart}
-                                            className="bg-red-600 px-6 py-3 rounded font-bold"
-                                        >
-                                            ADD TO CART
-                                        </button>
+                                       <button
+  onClick={() => handleAddToCart(selectedBuild)}
+  className="bg-red-600 px-6 py-3 rounded font-bold"
+>
+  ADD TO CART
+</button>
+
                                     </div>
                                 </div>
 

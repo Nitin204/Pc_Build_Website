@@ -1,114 +1,221 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CheckoutCo = () => {
-    const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
-    useEffect(() => {
-        const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-        setCartItems(savedCart);
-    }, []);
+  const [cartItems, setCartItems] = useState([]);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
-    const calculateSubtotal = () => {
-        return cartItems.reduce((sum, item) => {
-            const price = typeof item.price === 'string' ? parseInt(item.price.replace(/[^0-9]/g, '')) : item.price;
-            return sum + (price * (item.quantity || 1));
-        }, 0);
-    };
+  const emptyForm = {
+    id: null,
+    userId,
+    name: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    pincode: "",
+    latitude: "",
+    longitude: ""
+  };
 
-    const calculatePlatformFee = () => {
-        return Math.round(calculateSubtotal() * 0.02);
-    };
+  const [addressForm, setAddressForm] = useState(emptyForm);
 
-    const calculateGrandTotal = () => {
-        return calculateSubtotal() + calculatePlatformFee();
-    };
+  /* ================= CART ================= */
+  const loadCart = async () => {
+    if (!userId || !token) return;
+    const res = await axios.get(`http://localhost:8181/api/cart/${userId}`);
+    setCartItems(res.data || []);
+  };
 
-    return (
-        <section className="pt-20 md:pt-32 pb-10 md:pb-20 px-2 md:px-4 bg-black min-h-screen">
-            <div className="max-w-2xl mx-auto">
-                <h2 className="text-xl md:text-3xl font-bold text-red-500 mb-4 md:mb-6 text-center">Checkout</h2>
-                
-                {/* Order Summary */}
-                <div className="bg-gray-950 p-3 md:p-6 rounded-lg border border-gray-700 mb-4 md:mb-6">
-                    <h3 className="text-base md:text-lg font-bold text-red-500 mb-3 md:mb-4">Order Summary</h3>
-                    
-                    <div className="space-y-4">
-                        {cartItems.map((item, index) => (
-                            <div key={index} className="flex flex-col sm:flex-row items-start sm:items-center p-3 md:p-4 bg-gray-800 rounded border border-gray-600 space-y-3 sm:space-y-0">
-                                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-black rounded mr-0 sm:mr-4 flex items-center justify-center overflow-hidden flex-shrink-0">
-                                    {item.image ? (
-                                        <img 
-                                            src={item.image} 
-                                            alt={item.name} 
-                                            className="w-full h-full object-contain"
-                                        />
-                                    ) : (
-                                        <div className="text-2xl">🖥️</div>
-                                    )}
-                                </div>
-                                <div className="flex-grow w-full sm:w-auto">
-                                    <h4 className="text-sm sm:text-base text-white font-medium">{item.name}</h4>
-                                    <p className="text-xs text-gray-400 mb-2">{item.specs}</p>
-                                    <div className="flex flex-col sm:flex-row sm:justify-between space-y-1 sm:space-y-0 mt-2">
-                                        <span className="text-xs sm:text-sm text-white">Price: ₹{((typeof item.price === 'string' ? parseInt(item.price.replace(/[^0-9]/g, '')) : item.price)).toLocaleString()}/-</span>
-                                        <span className="text-xs sm:text-sm text-red-500">Subtotal: ₹{((typeof item.price === 'string' ? parseInt(item.price.replace(/[^0-9]/g, '')) : item.price) * (item.quantity || 1)).toLocaleString()}/-</span>
-                                    </div>
-                                    <div className="text-xs sm:text-sm text-white mt-1">Qty: {item.quantity || 1}</div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+  const deleteCartItem = async (itemId) => {
+    await axios.delete(`http://localhost:8181/api/cart/${userId}/${itemId}`);
+    loadCart();
+  };
 
-                <div className="space-y-4 md:space-y-6">
-                    {/* Delivery Address */}
-                    <div className="bg-gray-950 p-3 md:p-6 rounded-lg border border-gray-700">
-                        <h3 className="text-base md:text-lg font-bold text-red-500 mb-3 md:mb-4">Select Delivery Address</h3>
-                        
-                       
-                        
-                        <button className="mt-3 md:mt-4 bg-red-600 hover:bg-red-700 text-white px-3 md:px-4 py-2 rounded transition duration-300 text-sm md:text-base w-full sm:w-auto">
-                            Add a New Address
-                        </button>
-                    </div>
-
-                    {/* Payment Summary */}
-                    <div className="bg-gray-950 p-3 md:p-6 rounded-lg border border-gray-700">
-                        <div className="space-y-2 text-xs md:text-sm">
-                            <div className="flex flex-col sm:flex-row sm:justify-between text-white">
-                                <span>Total Before Coupon:</span>
-                                <span className="font-medium">₹{calculateSubtotal().toLocaleString()}/-</span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:justify-between text-white">
-                                <span>Coupon Value:</span>
-                                <span className="font-medium">Not Applicable</span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:justify-between text-white">
-                                <span>Total After Coupon:</span>
-                                <span className="font-medium">₹{calculateSubtotal().toLocaleString()}/-</span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:justify-between text-white">
-                                <span>Platform Fee (2%):</span>
-                                <span className="font-medium">₹{calculatePlatformFee().toLocaleString()}/-</span>
-                            </div>
-                            <div className="flex flex-col sm:flex-row sm:justify-between text-white font-bold border-t border-gray-600 pt-2 mt-2">
-                                <span>Grand Total:</span>
-                                <span className="text-red-500 text-base md:text-lg">₹{calculateGrandTotal().toLocaleString()}/-</span>
-                            </div>
-                        </div>
-                        
-                        <p className="text-xs text-gray-400 mt-3 md:mt-4 leading-relaxed">
-                            Platform Fee (2%) can be waived by paying via UPI, Net Banking, or Cash. Contact +91-63699-33507 for assistance.
-                        </p>
-                    </div>
-
-                    <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 md:py-4 rounded-lg transition duration-300 text-sm md:text-base">
-                        Proceed to Payment
-                    </button>
-                </div>
-            </div>
-        </section>
+  /* ================= ADDRESS ================= */
+  const loadAddresses = async () => {
+    const res = await axios.get(
+      `http://localhost:8181/api/address/${userId}`
     );
+    setAddresses(res.data || []);
+    if (res.data?.length) {
+      setSelectedAddress(res.data[0]);
+    }
+  };
+  const removeItem = async (id) => {
+    await axios.delete(`http://localhost:8181/api/cart/${id}`);
+    loadCart();
+  };
+
+  const saveAddress = async () => {
+    if (editingId) {
+      await axios.put(
+        `http://localhost:8181/api/address/${editingId}`,
+        addressForm
+      );
+    } else {
+      await axios.post(
+        `http://localhost:8181/api/address`,
+        addressForm
+      );
+    }
+    resetForm();
+    loadAddresses();
+  };
+
+  const editAddress = (addr) => {
+    setEditingId(addr.id);
+    setAddressForm({ ...addr });
+    setShowAddressForm(true);
+  };
+
+  const deleteAddress = async (id) => {
+    if (!window.confirm("Delete this address?")) return;
+    await axios.delete(`http://localhost:8181/api/address/${id}`);
+    loadAddresses();
+    setSelectedAddress(null);
+  };
+
+  const resetForm = () => {
+    setEditingId(null);
+    setShowAddressForm(false);
+    setAddressForm(emptyForm);
+  };
+
+  useEffect(() => {
+    loadCart();
+    loadAddresses();
+  }, [userId]);
+
+  /* ================= PRICE ================= */
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const gst = Math.round(subtotal * 0.18);
+  const grandTotal = subtotal + gst;
+
+  return (
+    <section className="pt-20 pb-20 bg-black min-h-screen px-3">
+      <div className="max-w-2xl mx-auto">
+
+        <h2 className="text-3xl font-bold text-red-500 mb-6 text-center">
+          Checkout
+        </h2>
+
+        {/* ================= ORDER SUMMARY ================= */}
+        <div className="bg-gray-950 p-5 rounded border border-red-500 mb-6">
+          <h3 className="text-lg font-bold text-red-500 mb-4">
+            Order Summary ({cartItems.length} {cartItems.length === 1 ? 'Item' : 'Items'})
+          </h3>
+
+          <div className="space-y-4">
+            {cartItems.map((item, i) => (
+              <div key={i} className="flex gap-4 pb-4 border-b border-gray-800 last:border-0">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-20 h-20 object-contain bg-black rounded border border-gray-700"
+                />
+                
+                <div className="flex-1">
+                  <h4 className="text-white font-bold mb-1">{item.name}</h4>
+                  <p className="text-gray-400 text-sm mb-2">{item.category}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400 text-sm">Qty: {item.quantity}</span>
+                    <div className="text-right">
+                     
+                      <p className="text-red-500 font-bold text-lg">₹{(item.price * item.quantity).toLocaleString()}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => removeItem(item.id)}
+                  className="bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded flex items-center justify-center self-start transition-colors"
+                >
+                  <i className="fa-solid fa-trash-can text-sm"></i>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+       {/* ================= ADDRESS ================= */}
+<div className="bg-transparent p-0 mb-6">
+  <h3 className="text-xl font-bold text-red-500 mb-6">
+    Select Delivery Address
+  </h3>
+
+  <div className="space-y-4">
+    {addresses.map((a) => (
+      <div
+        key={a.id}
+        onClick={() => setSelectedAddress(a)}
+        className={`border p-6 rounded-lg relative cursor-pointer transition-all ${
+          selectedAddress?.id === a.id
+            ? "border-red-500 bg-gray-900/40"
+            : "border-gray-800 bg-transparent hover:border-gray-600"
+        }`}
+      >
+        {selectedAddress?.id === a.id && (
+          <div className="absolute top-4 right-4 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center">
+            <i className="fa-solid fa-check"></i>
+          </div>
+        )}
+        
+        <h4 className="text-red-500 font-bold text-lg mb-2">
+          {a.name}
+        </h4>
+
+        <p className="text-white font-medium leading-relaxed">
+          {a.street}, {a.city}, {a.state}, {a.pincode}.
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <button
+    onClick={() => navigate('/profile', { state: { activeSection: 'addresses' } })}
+    className="mt-6 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded font-bold transition-colors"
+  >
+    Add A New Address
+  </button>
+</div>
+
+        {/* ================= PAYMENT ================= */}
+        <div className="bg-gray-950 p-5 rounded border border-gray-700">
+          <div className="flex justify-between text-white">
+            <span>Total</span>
+            <span>₹{subtotal.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between text-white">
+            <span>GST (18%)</span>
+            <span>₹{gst.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between font-bold border-t border-gray-600 pt-2 mt-2">
+            <span className="text-white">Grand Total</span>
+            <span className="text-red-500 text-lg">
+              ₹{grandTotal.toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        <button className="w-full mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded">
+          Proceed to Payment
+        </button>
+
+      </div>
+    </section>
+  );
 };
 
 export default CheckoutCo;

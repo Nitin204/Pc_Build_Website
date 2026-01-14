@@ -23,8 +23,7 @@ import Cart from "./pages/Cart/Cart.jsx";
 import Shipping from "./pages/Legel/Shipping.jsx";
 import Privacy from "./pages/Legel/Privacy.jsx";
 import Checkout from "./pages/Checkout/Checkout.jsx";
-import OrderHistory from "./components/Account/OrderHistory.jsx";
-import OrderDetails from "./components/Account/OrderStatus.jsx";
+
 
 import Profile from "./components/Account/Profile.jsx";
 
@@ -65,8 +64,7 @@ function App() {
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/orderhistory" element={<OrderHistory />} />
-            <Route path="/orderdetails" element={<OrderDetails />} />
+           
             <Route path="/profile" element={<Profile />} />
            
 

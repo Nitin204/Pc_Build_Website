@@ -173,46 +173,7 @@ const HeroSection = () => {
             </div>
 
             {/* --- NEW PROMOTIONAL MODAL OVERLAY --- */}
-            {isModalOpen && (
-                // Changed the outer div styling for better mobile view
-                <div className="fixed inset-0  bg-opacity-85 z-[60] flex items-center justify-center p-4"> 
-                    <div className="bg-black text-white p-6 md:p-8 rounded-lg shadow-2xl max-w-sm sm:max-w-md w-full relative border-2 border-gray-400  "> 
-                        
-                        {/* Close Button */}
-                        <button 
-                            onClick={closeModal} 
-                            className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
-                            aria-label="Close modal"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
-
-                        {/* Title matching the screenshot */}
-                        <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-6 text-center pt-2 border-b border-gray-400 pb-4">
-                            Unlock Exclusive PC Deals Instantly! – Join The PC Community!
-                        </h3>
-                        
-                        <div className="text-center space-y-4 mb-8">
-                            <p className="text-base sm:text-lg text-white ">
-                                Sign in with Google to get access to 
-                        discount coupons free 1-on-1 tech consultation and exclusive offers on all our PCs!
-                            </p>
-                            <p className="text-xs text-gray-400 pt-2">
-                                Save more with every configuration — **it's completely free!**
-                            </p>
-                        </div>
-
-                        {/* Action Button: Claim Free Account */}
-                        <a 
-                            href="/account"
-                            onClick={handleClaimFreeAccount} 
-                            className={`w-full py-1 font-semibold rounded transition duration-300 flex items-center justify-center text-lg ${RED_BUTTON_CLASSES}`}
-                        >
-                            Claim Your Free Account <ArrowRight className="w-5 h-5 ml-2" />
-                        </a>
-                    </div>
-                </div>
-            )}
+            
         </section>
     );
 }

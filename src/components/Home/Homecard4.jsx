@@ -8,8 +8,8 @@ const RED_BUTTON_CLASSES = 'bg-red-600 hover:bg-red-700';
 const Homecard4 = () => {
     return (
         // Container: Dark background, large padding top/bottom
-        <section className="bg-black py-10 px-6">
-            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:space-x-12 p-8 rounded-lg">
+        <section className=" py-10 px-6" style={{ backgroundImage: `url(${Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:space-x-12 p-8 rounded-lg bg-black/70">
                 
                 {/* Left Column: Expert Consultation Text and Selling Points */}
                 <div className="lg:w-1/2 text-white mb-10 lg:mb-0 pr-8">
@@ -51,46 +51,6 @@ const Homecard4 = () => {
                     </ul>
                 </div>
 
-                {/* Right Column: Contact Form and Contact Buttons */}
-                <div className="lg:w-1/2 bg-gray-900 p-8 rounded-lg relative shadow-xl">
-                    <form className="space-y-5">
-                        <input 
-                            type="text" 
-                            placeholder="Name" 
-                            className="w-full bg-black text-white p-3 rounded-lg border border-gray-700 focus:border-red-600 focus:ring-1 focus:ring-red-600"
-                        />
-                        <input 
-                            type="text" 
-                            placeholder="Mobile Number" 
-                            className="w-full bg-black text-white p-3 rounded-lg border border-gray-700 focus:border-red-600 focus:ring-1 focus:ring-red-600"
-                        />
-                        <input 
-                            type="email" 
-                            placeholder="Email" 
-                            className="w-full bg-black text-white p-3 rounded-lg border border-gray-700 focus:border-red-600 focus:ring-1 focus:ring-red-600"
-                        />
-                        {/* The image shows four input fields, so I've included a second "Email" or general placeholder */}
-                        
-
-                        
-
-<button 
-    type="submit"
-    // CHANGES HERE: 
-    // 1. Reduced default mobile padding (py-3 -> py-2)
-    // 2. Reduced default mobile font size (added text-sm)
-    // 3. Used md: prefix to restore the larger size for desktops
-    className={`w-full py-1 text-sm uppercase font-bold text-white rounded transition duration-300 
-                md:py-3 md:text-base md:font-bold ${RED_BUTTON_CLASSES}`} 
->
-    Reach Out To Our Expert
-</button>
-                    </form>
-
-                    {/* Contact Buttons (Positioned to match the image, using brand colors) */}
-                    {/* These buttons are relative to the form container (bg-gray-900) */}
-                    
-                </div>
                 
             </div>
         </section>

@@ -233,8 +233,9 @@ const CardCo = () => {
 
   // 🔄 Load cart
   const loadCart = async () => {
-    if (!userId) {
-      setCartItems([]); // ✅ no user → empty cart
+    const token = localStorage.getItem('token');
+    if (!token || !userId) {
+      setCartItems([]); // ✅ no token/user → empty cart
       return;
     }
 
@@ -282,16 +283,16 @@ const CardCo = () => {
     (sum, i) => sum + i.price * i.quantity,
     0
   );
-  const gst = Math.round(subTotal * 0.18);
-  const total = subTotal + gst;
+
+  const total = subTotal ;
 
   return (
     <section className="pt-32 pb-20 px-4 bg-black min-h-screen">
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
 
         {/* LEFT */}
-        <div className="lg:w-2/3 bg-gray-950 border border-red-500 rounded-xl p-6">
-          <h2 className="text-2xl font-bold text-red-500 mb-6">
+        <div className="lg:w-2/3 bg-gray-950 border border-red-500 rounded-xl p-4 md:p-6">
+          <h2 className="text-xl md:text-2xl font-bold text-red-500 mb-4 md:mb-6">
             My Cart ({cartItems.length} items)
           </h2>
 
@@ -299,47 +300,54 @@ const CardCo = () => {
             <p className="text-gray-300">No items in cart</p>
           ) : (
             cartItems.map((item) => (
-              <div key={item.id} className="flex bg-gray-800 p-5 rounded-xl mb-4">
+              <div key={item.id} className="flex flex-col md:flex-row bg-gray-800 p-4 md:p-5 rounded-xl mb-4 space-y-4 md:space-y-0">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-32 h-32 object-contain bg-black rounded"
+                  className="w-24 h-24 md:w-32 md:h-32 object-contain bg-black rounded mx-auto md:mx-0"
                 />
 
-                <div className="flex-grow ml-6">
-                  <h3 className="text-white text-xl font-bold">
+                <div className="flex-grow md:ml-6 text-center md:text-left">
+                  <h3 className="text-white text-lg md:text-xl font-bold">
                     {item.name}
                   </h3>
-                  <p className="text-gray-400">{item.specs}</p>
+                  <p className="text-gray-400 text-sm">{item.specs}</p>
 
-                  <p className="text-red-500 text-2xl font-bold mt-2">
+                  <p className="text-red-500 text-xl md:text-2xl font-bold mt-2">
                     ₹{(item.price * item.quantity).toLocaleString()}/-
                   </p>
 
-                  <div className="flex items-center mt-4 space-x-3">
+                  <div className="flex items-center justify-center md:justify-start mt-4 space-x-3">
+                    <span className="text-white font-medium">Qty:</span>
                     <button
                       onClick={() => updateQty(item.id, item.quantity - 1)}
-                      className="w-8 h-8 bg-gray-700 text-white rounded"
+                      className="w-8 h-8 bg-gray-700 hover:bg-gray-600 text-white rounded flex items-center justify-center font-bold"
                     >
                       -
                     </button>
-                    <span className="text-white font-bold">
-                      {item.quantity}
-                    </span>
+                    <input
+                      type="number"
+                      min="1"
+                      value={item.quantity}
+                      onChange={(e) => updateQty(item.id, parseInt(e.target.value) || 1)}
+                      className="w-16 text-center bg-gray-700 text-white rounded px-2 py-1 font-bold"
+                    />
                     <button
                       onClick={() => updateQty(item.id, item.quantity + 1)}
-                      className="w-8 h-8 bg-gray-700 text-white rounded"
+                      className="w-8 h-8 bg-gray-700 hover:bg-gray-600 text-white rounded flex items-center justify-center font-bold"
                     >
                       +
                     </button>
                   </div>
                 </div>
 
+            
+                
                 <button
                   onClick={() => removeItem(item.id)}
-                  className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded h-fit"
+                  className="bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded flex items-center justify-center self-start transition-colors"
                 >
-                  Remove
+                  <i className="fa-solid fa-trash-can text-sm"></i>
                 </button>
               </div>
             ))
@@ -347,8 +355,8 @@ const CardCo = () => {
         </div>
 
         {/* RIGHT */}
-        <div className="lg:w-1/3 bg-gray-950 border border-red-500 rounded-xl p-6 h-fit">
-          <h3 className="text-xl font-bold text-red-500 mb-4">
+        <div className="lg:w-1/3 bg-gray-950 border border-red-500 rounded-xl p-4 md:p-6 h-fit">
+          <h3 className="text-lg md:text-xl font-bold text-red-500 mb-4">
             Order Summary
           </h3>
 
@@ -357,10 +365,7 @@ const CardCo = () => {
               <span>Subtotal</span>
               <span>₹{subTotal.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between">
-              <span>GST (18%)</span>
-              <span>₹{gst.toLocaleString()}</span>
-            </div>
+            
             <hr className="border-gray-700" />
             <div className="flex justify-between text-xl font-bold text-red-500">
               <span>Total</span>

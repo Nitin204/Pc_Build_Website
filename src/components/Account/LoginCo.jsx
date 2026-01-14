@@ -93,7 +93,10 @@ const LoginCo = () => {
 
         alert(`Welcome ${firstName}! 🎉`);
 
-        window.location.reload();
+        // Redirect to home page after login
+        setTimeout(() => {
+            window.location.href = '/';
+        });
 
     } catch (err) {
         setError(err.response?.data?.message || 'Login failed');
