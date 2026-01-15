@@ -127,6 +127,7 @@ const Profile = () => {
         });
     };
 
+    
     const handleInputChange = (field, value) => {
         setEditData(prev => ({ ...prev, [field]: value }));
     };
@@ -149,6 +150,16 @@ const Profile = () => {
             console.error("Error loading orders", error);
         } finally {
             setLoadingOrders(false);
+        }
+    };
+
+    const cancelOrder = async (orderId) => {
+        if (!window.confirm("Cancel this order?")) return;
+        try {
+            await axios.delete(`http://localhost:8181/api/order/${orderId}`);
+            loadOrders();
+        } catch (error) {
+            alert("Error cancelling order");
         }
     };
 
@@ -306,7 +317,7 @@ const Profile = () => {
 )}
 
                     {/* Placeholder for other sections */}
-                   {activeSection === 'orders' && (
+    {activeSection === 'orders' && (
     <>
         <h2 className="text-red-500 font-bold text-xl sm:text-2xl mb-6">
             My Orders
@@ -321,29 +332,43 @@ const Profile = () => {
         )}
 
         <div className="space-y-4">
-            {orders.map((order) => (
-                <div
-                    key={order.id}
-                    className="border border-red-900 p-5 rounded-lg bg-transparent"
-                >
-                    <div className="flex justify-between items-center mb-2">
-                        <p className="text-white font-bold">
-                            Order #{order.orderId}
-                        </p>
-                        <span className="text-sm text-red-500 font-semibold">
-                            {order.status}
-                        </span>
-                    </div>
+           {orders.map(order => (
+  <div key={order.id} className="border border-red-900 rounded-lg p-5 bg-gray-900">
+    
+    <div className="flex justify-between items-center mb-4">
+      <span className="font-bold text-red-500 text-lg">
+        Order #{order.id?.toString().slice(-6) || 'N/A'}
+      </span>
+      <span className="text-gray-400 text-sm">{order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'N/A'}</span>
+    </div>
 
-                    <p className="text-gray-400 text-sm">
-                        Date: {order.orderDate}
-                    </p>
+    {order.items?.map((item, index) => (
+      <div key={index} className="flex gap-4 mb-3 pb-3 border-b border-gray-800 last:border-0">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="w-20 h-20 object-contain bg-black rounded border border-gray-700"
+        />
+        <div className="flex-1">
+          <h4 className="font-semibold text-white mb-1">{item.name}</h4>
+          <p className="text-sm text-gray-400">Qty: {item.quantity}</p>
+          <p className="text-sm font-bold text-red-500">₹{item.price?.toLocaleString()}</p>
+        </div>
+      </div>
+    ))}
 
-                    <p className="text-white mt-2">
-                        Total: ₹{order.totalAmount}
-                    </p>
-                </div>
-            ))}
+    <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-800">
+      <span className="font-bold text-white text-lg">Total: ₹{order.totalAmount?.toLocaleString()}</span>
+      <div className="flex gap-3 items-center">
+        <span className="px-3 py-1 text-sm rounded bg-red-500 text-white font-medium">{order.status || 'Pending'}</span>
+        <button onClick={() => cancelOrder(order.id)} className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded text-sm font-medium">Cancel</button>
+      </div>
+    </div>
+
+
+  </div>
+))}
+
         </div>
     </>
 )}

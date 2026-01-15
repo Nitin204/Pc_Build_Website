@@ -31,6 +31,8 @@ const LoginCo = () => {
     const [error, setError] = useState('');
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+localStorage.setItem("userName", res.data.name);
+localStorage.setItem("userEmail", res.data.email);
 
     const validateForm = () => {
         const newErrors = {};

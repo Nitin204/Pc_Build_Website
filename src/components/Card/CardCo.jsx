@@ -224,6 +224,9 @@
 // };
 
 // export default CardCo;
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -312,10 +315,8 @@ const CardCo = () => {
                     {item.name}
                   </h3>
                   <p className="text-gray-400 text-sm">{item.specs}</p>
-
-                  <p className="text-red-500 text-xl md:text-2xl font-bold mt-2">
-                    ₹{(item.price * item.quantity).toLocaleString()}/-
-                  </p>
+                  <p className="text-white text-sm mt-1"><span className="text-red-500 font-semibold">Price:</span> ₹{(item.price).toLocaleString()}/-</p>
+                  <p className="text-white text-lg font-bold mt-1"><span className="text-red-500">Subtotal:</span> ₹{(item.price * item.quantity).toLocaleString()}/-</p>
 
                   <div className="flex items-center justify-center md:justify-start mt-4 space-x-3">
                     <span className="text-white font-medium">Qty:</span>
@@ -360,16 +361,13 @@ const CardCo = () => {
             Order Summary
           </h3>
 
-          <div className="text-gray-300 space-y-2">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>₹{subTotal.toLocaleString()}</span>
-            </div>
+          <div className="text-white space-y-2">
+            
             
             <hr className="border-gray-700" />
-            <div className="flex justify-between text-xl font-bold text-red-500">
-              <span>Total</span>
-              <span>₹{total.toLocaleString()}</span>
+            <div className="flex justify-between text-xl font-bold">
+              <span className="text-red-500">Total</span>
+              <span className="text-red-500">₹{total.toLocaleString()}</span>
             </div>
           </div>
 

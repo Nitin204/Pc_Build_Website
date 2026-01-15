@@ -101,23 +101,35 @@ const HeroSection = () => {
                 }}
             >
                 <p 
-                    className="text-3xl md:text-4xl font-bold mb-1 mt-10" 
+                    className="text-3xl md:text-5xl font-bold mb-1 mt-10" 
                     style={{ 
-                        fontFamily: "",
+                        fontFamily: "'Orbitron', 'Rajdhani', sans-serif",
+                        letterSpacing: '3px',
+                        fontWeight: '900',
+                        background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 50%, #ffffff 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
                         transform: `translateY(${scrollY * -0.15}px) translateX(${mouseX * -18}px) translateY(${mouseY * -8}px) translateZ(50px) scale(${1 + Math.abs(mouseY) * 0.02})`,
                         transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                        textShadow: `${mouseX * 2}px ${mouseY * 2}px 20px rgba(239, 68, 68, 0.3)`
+                        textShadow: 'none',
+                        filter: `drop-shadow(${mouseX * 2}px ${mouseY * 2}px 10px rgba(239, 68, 68, 0.5))`
                     }}
                 >
                     Welcome To System Builders
                 </p>
                 <p
-                    className="text-1xl md:text-2xl mb-8"
+                    className="text-xl md:text-3xl mb-8"
                     style={{ 
-                        fontFamily: "italic",
+                        fontFamily: "'Playfair Display', 'Georgia', serif",
+                        fontStyle: 'italic',
+                        letterSpacing: '2px',
+                        fontWeight: '700',
+                        color: '#ffffff',
                         transform: `translateY(${scrollY * -0.2}px) translateX(${mouseX * -20}px) translateY(${mouseY * -10}px) translateZ(30px)`,
                         transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                        textShadow: `${mouseX * 1.5}px ${mouseY * 1.5}px 15px rgba(255, 255, 255, 0.2)`
+                        textShadow: `0 0 30px rgba(239, 68, 68, 0.8), 0 0 60px rgba(239, 68, 68, 0.4), ${mouseX * 2}px ${mouseY * 2}px 20px rgba(255, 255, 255, 0.4)`,
+                        filter: 'brightness(1.2)'
                     }}
                 >
                     You Dream, We Build

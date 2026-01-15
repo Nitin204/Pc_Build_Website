@@ -142,8 +142,8 @@ const CheckoutCo = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400 text-sm">Qty: {item.quantity}</span>
                     <div className="text-right">
-                     
-                      <p className="text-red-500 font-bold text-lg">₹{(item.price * item.quantity).toLocaleString()}</p>
+                      <p className="text-white text-sm"><span className="text-red-500 font-semibold">Price:</span> ₹{item.price.toLocaleString()} x {item.quantity}</p>
+                      <p className="text-white font-bold text-lg"><span className="text-red-500">Subtotal:</span> ₹{(item.price * item.quantity).toLocaleString()}</p>
                     </div>
                   </div>
                 </div>
@@ -203,17 +203,17 @@ const CheckoutCo = () => {
 
         {/* ================= PAYMENT ================= */}
         <div className="bg-gray-950 p-5 rounded border border-gray-700">
-          <div className="flex justify-between text-white">
-            <span>Total</span>
-            <span>₹{subtotal.toLocaleString()}</span>
+          <div className="flex justify-between text-white mb-2">
+            <span className="font-semibold">Subtotal</span>
+            <span className="font-bold">₹{subtotal.toLocaleString()}</span>
           </div>
-          <div className="flex justify-between text-white">
-            <span>GST (18%)</span>
-            <span>₹{gst.toLocaleString()}</span>
+          <div className="flex justify-between text-white mb-2">
+            <span className="font-semibold">GST (18%)</span>
+            <span className="font-bold">₹{gst.toLocaleString()}</span>
           </div>
           <div className="flex justify-between font-bold border-t border-gray-600 pt-2 mt-2">
-            <span className="text-white">Grand Total</span>
-            <span className="text-red-500 text-lg">
+            <span className="text-white text-lg">Total</span>
+            <span className="text-red-500 text-xl">
               ₹{grandTotal.toLocaleString()}
             </span>
           </div>

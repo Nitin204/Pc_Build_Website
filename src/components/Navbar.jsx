@@ -248,7 +248,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center space-x-8 font-extrabold text-lg">
+        <div className="hidden md:flex items-center space-x-8 font-extrabold text-lg" style={{ fontFamily: "'Poppins', 'Inter', sans-serif", letterSpacing: '0.5px' }}>
           <Link to="/buildpc" className={linkClasses}>Custom PC build</Link>
           <Link to="/prebuilts" className={linkClasses}>Pre-assembled PCs</Link>
           <Link to="/addons" className={linkClasses}>Accessories</Link>
@@ -305,7 +305,7 @@ const Navbar = () => {
           isMenuOpen ? "max-h-screen py-4 border-t border-gray-800" : "max-h-0"
         }`}
       >
-        <div className="flex flex-col space-y-3 px-6 text-base font-semibold">
+        <div className="flex flex-col space-y-3 px-6 text-base font-semibold" style={{ fontFamily: "'Poppins', 'Inter', sans-serif", letterSpacing: '0.5px' }}>
           <Link to="/buildpc" className={linkClasses} onClick={toggleMenu}>Custom PC build</Link>
           <Link to="/prebuilts" className={linkClasses} onClick={toggleMenu}>Pre-assembled PCs</Link>
           <Link to="/addons" className={linkClasses} onClick={toggleMenu}>Accessories</Link>
