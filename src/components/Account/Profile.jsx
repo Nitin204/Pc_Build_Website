@@ -333,35 +333,35 @@ const Profile = () => {
 
         <div className="space-y-4">
            {orders.map(order => (
-  <div key={order.id} className="border border-red-900 rounded-lg p-5 bg-gray-900">
+  <div key={order.id} className="border border-red-900 rounded-lg p-3 sm:p-5 bg-gray-900">
     
-    <div className="flex justify-between items-center mb-4">
-      <span className="font-bold text-red-500 text-lg">
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
+      <span className="font-bold text-red-500 text-base sm:text-lg">
         Order #{order.id?.toString().slice(-6) || 'N/A'}
       </span>
-      <span className="text-gray-400 text-sm">{order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'N/A'}</span>
+      <span className="text-gray-400 text-xs sm:text-sm">{order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'N/A'}</span>
     </div>
 
     {order.items?.map((item, index) => (
-      <div key={index} className="flex gap-4 mb-3 pb-3 border-b border-gray-800 last:border-0">
+      <div key={index} className="flex gap-3 sm:gap-4 mb-3 pb-3 border-b border-gray-800 last:border-0">
         <img
           src={item.image}
           alt={item.name}
-          className="w-20 h-20 object-contain bg-black rounded border border-gray-700"
+          className="w-16 h-16 sm:w-20 sm:h-20 object-contain bg-black rounded border border-gray-700"
         />
         <div className="flex-1">
-          <h4 className="font-semibold text-white mb-1">{item.name}</h4>
-          <p className="text-sm text-gray-400">Qty: {item.quantity}</p>
-          <p className="text-sm font-bold text-red-500">₹{item.price?.toLocaleString()}</p>
+          <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">{item.name}</h4>
+          <p className="text-xs sm:text-sm text-gray-400">Qty: {item.quantity}</p>
+          <p className="text-xs sm:text-sm font-bold text-red-500">₹{item.price?.toLocaleString()}</p>
         </div>
       </div>
     ))}
 
-    <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-800">
-      <span className="font-bold text-white text-lg">Total: ₹{order.totalAmount?.toLocaleString()}</span>
-      <div className="flex gap-3 items-center">
-        <span className="px-3 py-1 text-sm rounded bg-red-500 text-white font-medium">{order.status || 'Pending'}</span>
-        <button onClick={() => cancelOrder(order.id)} className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded text-sm font-medium">Cancel</button>
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-4 pt-3 border-t border-gray-800">
+      <span className="font-bold text-white text-base sm:text-lg">Total: ₹{order.totalAmount?.toLocaleString()}</span>
+      <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
+        <span className="px-3 py-1 text-xs sm:text-sm rounded bg-red-500 text-white font-medium">{order.status || 'Pending'}</span>
+        <button onClick={() => cancelOrder(order.id)} className="bg-gray-700 hover:bg-gray-600 text-white px-3 sm:px-4 py-1 rounded text-xs sm:text-sm font-medium">Cancel</button>
       </div>
     </div>
 

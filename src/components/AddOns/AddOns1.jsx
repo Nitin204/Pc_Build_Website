@@ -587,6 +587,36 @@ const handleAddToCart = async (product) => {
                 <a href="https://wa.me/" className="bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><MessageCircle className="h-6 w-6" /></a>
                 <a href="tel:+916369933507" className="bg-blue-600 text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><Phone className="h-6 w-6" /></a>
             </div>
+
+            {/* Product Info Modal */}
+            {selectedProduct && (
+                <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-2 sm:p-4">
+                    <div className="bg-black text-white rounded-xl max-w-4xl w-full relative border border-red-500 overflow-hidden max-h-[95vh] overflow-y-auto">
+                        <button onClick={() => setSelectedProduct(null)} className="absolute top-3 right-3 sm:top-6 sm:right-6 text-white hover:text-red-500 text-xl sm:text-2xl z-10">✕</button>
+                        <div className="flex flex-col md:flex-row">
+                            <div className="md:w-1/2 bg-black p-4 sm:p-6 flex items-center justify-center">
+                                <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-48 sm:h-64 object-contain" />
+                            </div>
+                            <div className="md:w-1/2 p-4 sm:p-6 flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-xl sm:text-2xl font-bold text-red-500 mb-2">{selectedProduct.name}</h2>
+                                    <p className="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4">{selectedProduct.specs}</p>
+                                    <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
+                                        <div className="border-l-4 border-red-500 pl-2 sm:pl-3">
+                                            <h4 className="text-xs uppercase font-bold text-gray-500 mb-1">CATEGORY</h4>
+                                            <p className="text-white text-xs sm:text-sm">{selectedProduct.category}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="mb-3 sm:mb-4"><span className="text-2xl sm:text-3xl font-bold text-white">{selectedProduct.displayPrice}</span></div>
+                                    <button onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }} className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg uppercase text-xs sm:text-sm">ADD TO CART</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

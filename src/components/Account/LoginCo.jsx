@@ -31,8 +31,7 @@ const LoginCo = () => {
     const [error, setError] = useState('');
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
-localStorage.setItem("userName", res.data.name);
-localStorage.setItem("userEmail", res.data.email);
+
 
     const validateForm = () => {
         const newErrors = {};
@@ -182,9 +181,7 @@ localStorage.setItem("userEmail", res.data.email);
                     <p className="text-gray-400">
                         New to SYSTEM BUILDERS? <a href="/register" className="text-red-500 font-semibold hover:underline">Create Account</a>
                     </p>
-                    <p>
-                        <a href="/reset" className="text-red-500 font-semibold hover:underline">Reset Password</a>
-                    </p>
+                    
                 </div>
 
                 {/* Need Help */}
