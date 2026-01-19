@@ -197,6 +197,7 @@ const Profile = () => {
                 </div>
 
                 {/* Right Content */}
+                     {/* Right Content */}
                 <div className="flex-1 bg-gray-950 p-4 sm:p-6 rounded-lg border border-red-500">
                     {/* PROFILE SECTION */}
                     {activeSection === 'profile' && (
