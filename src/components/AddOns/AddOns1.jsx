@@ -406,6 +406,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Monitor, Keyboard, Mouse, Headphones, Gamepad, MessageCircle, Phone } from 'lucide-react';
+import { PRODUCT_TYPES, getUserId } from '../../constants';
 
 
 const CATEGORIES = [
@@ -454,7 +455,7 @@ const AddOns1 = () => {
 
 const handleAddToCart = async (product) => {
   try {
-    const userId = localStorage.getItem("userId");
+    const userId = getUserId();
 
     if (!userId) {
       alert("Please login first");
@@ -464,7 +465,7 @@ const handleAddToCart = async (product) => {
     const cartItem = {
       userId: userId,
       productId: product.id,
-      productType: "ACCESSORY",   // 🔴 IMPORTANT
+      productType: PRODUCT_TYPES.ACCESSORY,
       name: product.name,
       price: product.price,
       image: product.image,
@@ -481,7 +482,8 @@ const handleAddToCart = async (product) => {
 
   } catch (err) {
     console.error("Add to cart failed:", err);
-    alert("Add to cart failed ❌");
+    const errorMsg = err.response?.data || "Add to cart failed ❌";
+    alert(errorMsg);
   }
 };
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getUserId } from '../../constants';
 
 const CheckoutCo = () => {
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
+  const userId = getUserId();
   const token = localStorage.getItem("token");
 
   const [cartItems, setCartItems] = useState([]);
@@ -36,8 +37,13 @@ const CheckoutCo = () => {
   };
 
   const deleteCartItem = async (itemId) => {
-    await axios.delete(`http://localhost:8181/api/cart/${userId}/${itemId}`);
-    loadCart();
+    try {
+      await axios.delete(`http://localhost:8181/api/cart/${itemId}`);
+      loadCart();
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("Failed to remove item");
+    }
   };
 
   /* ================= ADDRESS ================= */
@@ -51,8 +57,13 @@ const CheckoutCo = () => {
     }
   };
   const removeItem = async (id) => {
-    await axios.delete(`http://localhost:8181/api/cart/${id}`);
-    loadCart();
+    try {
+      await axios.delete(`http://localhost:8181/api/cart/${id}`);
+      loadCart();
+    } catch (err) {
+      console.error("Remove failed:", err);
+      alert("Failed to remove item");
+    }
   };
 
   const saveAddress = async () => {

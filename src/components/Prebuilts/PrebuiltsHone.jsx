@@ -365,6 +365,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { MessageCircle, Phone } from 'lucide-react';
 import { FaGamepad, FaRobot, FaBuilding, FaCamera, FaChartLine } from 'react-icons/fa';
+import { PRODUCT_TYPES, getUserId } from '../../constants';
 
 const API_URL = 'http://localhost:8181/api/prebuilts';
 
@@ -406,7 +407,7 @@ const PrebuiltsHone = () => {
 
   const handleAddToCart = async (product) => {
   try {
-    const userId = localStorage.getItem("userId");
+    const userId = getUserId();
 
     if (!userId) {
       alert("Please login first");
@@ -416,7 +417,7 @@ const PrebuiltsHone = () => {
     const cartItem = {
       userId: userId,
       productId: product.id,
-      productType: "ACCESSORY",   // 🔴 IMPORTANT
+      productType: PRODUCT_TYPES.PREBUILT,
       name: product.name,
       price: product.price,
       image: product.image,
@@ -433,7 +434,8 @@ const PrebuiltsHone = () => {
 
   } catch (err) {
     console.error("Add to cart failed:", err);
-    alert("Add to cart failed ❌");
+    const errorMsg = err.response?.data || "Add to cart failed ❌";
+    alert(errorMsg);
   }
 };
 

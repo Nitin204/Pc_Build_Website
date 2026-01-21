@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-const userId = localStorage.getItem("userId");
+import { getUserId } from '../../constants';
 const PaymentCo = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const userId = localStorage.getItem("userId"); // ✅ REQUIRED
+  const userId = getUserId();
   const { cartItems = [], selectedAddress, grandTotal } = location.state || {};
 
   const [paymentMethod, setPaymentMethod] = useState("upi");
@@ -16,10 +16,10 @@ const PaymentCo = () => {
     const res = await axios.post("http://localhost:8181/api/order", {
       userId,
       items: cartItems.map(i => ({
-        name: i.name,
-        price: i.price,
+        productId: i.productId || i.id,
+        productType: i.productType || "ACCESSORY",
         quantity: i.quantity,
-        image: i.image
+        price: i.price
       })),
       address: selectedAddress,
       totalAmount: grandTotal,
@@ -31,7 +31,8 @@ const PaymentCo = () => {
 
   } catch (err) {
     console.error(err);
-    alert("Order failed");
+    const errorMsg = err.response?.data || "Order failed";
+    alert(errorMsg);
   }
 };
 

@@ -505,6 +505,7 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, Phone } from 'lucide-react';
 import axios from 'axios';
+import { PRODUCT_TYPES, getUserId } from '../../constants';
 
 import img1 from '../../assets/imagepc.png';
 
@@ -611,20 +612,20 @@ const BuildPcsection = () => {
 
 const handleAddToCart = async (product) => {
   try {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = getUserId();
 
-    if (!user) {
+    if (!userId) {
       alert("Please login first");
       return;
     }
 
     const cartItem = {
-      userId: user.id,                // ✅ same as backend
+      userId: userId,
       productId: product.id,
-      productType: "PC_BUILD",        // ✅ correct type
+      productType: PRODUCT_TYPES.PCBUILD,
       name: product.name,
-      price: product.discountPrice,  // ✅ FIXED
-      image: product.image || img1,  // ✅ FIXED
+      price: product.discountPrice,
+      image: product.image || img1,
       quantity: 1
     };
 
@@ -638,7 +639,8 @@ const handleAddToCart = async (product) => {
 
   } catch (err) {
     console.error("Add to cart failed:", err);
-    alert("Add to cart failed ❌");
+    const errorMsg = err.response?.data || "Add to cart failed ❌";
+    alert(errorMsg);
   }
 };
 

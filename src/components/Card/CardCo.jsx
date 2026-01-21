@@ -229,10 +229,11 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getUserId } from '../../constants';
 
 const CardCo = () => {
   const [cartItems, setCartItems] = useState([]);
-  const userId = localStorage.getItem("userId");
+  const userId = getUserId();
 
   // 🔄 Load cart
   const loadCart = async () => {
@@ -275,10 +276,17 @@ const CardCo = () => {
   // ➕➖ Qty
   const updateQty = async (id, qty) => {
     if (qty <= 0) return removeItem(id);
-    await axios.put(
-      `http://localhost:8181/api/cart/qty/${id}/${qty}`
-    );
-    loadCart();
+    
+    try {
+      await axios.put(
+        `http://localhost:8181/api/cart/qty/${id}/${qty}`
+      );
+      loadCart();
+    } catch (err) {
+      console.error("Update quantity failed:", err);
+      const errorMsg = err.response?.data || "Stock limit reached";
+      alert(errorMsg);
+    }
   };
 
   // 💰 Totals
