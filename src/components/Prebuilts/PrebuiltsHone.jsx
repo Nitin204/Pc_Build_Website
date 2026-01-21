@@ -380,9 +380,10 @@ const CATEGORIES = [
 const PrebuiltsHone = () => {
     const [selectedCategory, setSelectedCategory] = useState('GAMING');
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [budget, setBudget] = useState(500000);
+    const [budget, setBudget] = useState(250000);
     const [showResults, setShowResults] = useState(false);
     const [products, setProducts] = useState([]);
+    const [showStockAlert, setShowStockAlert] = useState(false);
     const productsRef = useRef(null);
 
     // --- Fetch ALL products from backend ---
@@ -411,6 +412,12 @@ const PrebuiltsHone = () => {
 
     if (!userId) {
       alert("Please login first");
+      return;
+    }
+
+    // Check if quantity is 0 - show stock alert
+    if (product.quantity === 0) {
+      setShowStockAlert(true);
       return;
     }
 
@@ -468,13 +475,36 @@ const PrebuiltsHone = () => {
                     ))}
                 </div>
 
-                {/* Budget & Find */}
+                {/* Budget & Find - Middle Position */}
                 <div className="text-center mb-16">
+                    <style>
+                        {`
+                        input[type="range"]::-webkit-slider-thumb {
+                            appearance: none;
+                            height: 20px;
+                            width: 20px;
+                            border-radius: 50%;
+                            background: #ef4444;
+                            cursor: pointer;
+                            border: 2px solid #ffffff;
+                            box-shadow: 0 0 0 1px #ef4444;
+                        }
+                        input[type="range"]::-moz-range-thumb {
+                            height: 20px;
+                            width: 20px;
+                            border-radius: 50%;
+                            background: #ef4444;
+                            cursor: pointer;
+                            border: 2px solid #ffffff;
+                            box-shadow: 0 0 0 1px #ef4444;
+                        }
+                        `}
+                    </style>
                     <input 
                         type="range" 
-                        min="40000" 
-                        max="500000" 
-                        step="10000"
+                        min="6000" 
+                        max="600000" 
+                        step="1000"
                         value={budget} 
                         onChange={(e) => { setBudget(e.target.value); setShowResults(false); }}
                         className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-red-600 mb-4"
@@ -510,8 +540,14 @@ const PrebuiltsHone = () => {
                                     </p>
                                     <button 
                                         onClick={() => handleAddToCart(product)}
-                                        className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-500 hover:bg-red-600 text-white transition-all cursor-pointer">
-                                        Add to Cart
+                                        className={`flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md transition-all ${
+                                            product.quantity === 0 
+                                                ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                                                : 'bg-red-500 hover:bg-red-600 text-white cursor-pointer'
+                                        }`}
+                                        disabled={product.quantity === 0}
+                                    >
+                                        {product.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
                                     </button>
                                 </div>
                             </div>
@@ -524,6 +560,90 @@ const PrebuiltsHone = () => {
                             <a href="https://wa.me/" className="bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><MessageCircle className="h-6 w-6" /></a>
                             <a href="tel:+916369933507" className="bg-blue-600 text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><Phone className="h-6 w-6" /></a>
                         </div>
+
+            {/* Stock Alert Modal */}
+            {showStockAlert && (
+                <div className="fixed inset-0 bg-black/90 z-[110] flex items-center justify-center p-4">
+                    <div className="bg-black border-2 border-red-500 rounded-xl p-6 max-w-sm w-full text-center">
+                        <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                        <h3 className="text-xl font-bold text-white mb-2">Stock Not Available</h3>
+                        <p className="text-gray-400 text-sm mb-6">This product is currently out of stock. Please check back later.</p>
+                        <button 
+                            onClick={() => setShowStockAlert(false)}
+                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all uppercase text-sm"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Product Info Modal */}
+            {selectedProduct && (
+                <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4">
+                    <div className="bg-black text-white rounded-xl max-w-4xl w-full relative border border-red-500 overflow-hidden max-h-[95vh] overflow-y-auto">
+                        <button 
+                            onClick={() => setSelectedProduct(null)} 
+                            className="absolute top-6 right-6 text-white hover:text-red-500 transition-all text-2xl z-10 cursor-pointer"
+                        >
+                            ✕
+                        </button>
+
+                        <div className="flex flex-col md:flex-row">
+                            <div className="md:w-1/2 bg-black p-6 flex items-center justify-center">
+                                <img 
+                                    src={selectedProduct.image} 
+                                    alt={selectedProduct.name} 
+                                    className="w-full h-64 object-contain" 
+                                />
+                            </div>
+                            
+                            <div className="md:w-1/2 p-6 flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-2xl font-bold text-red-500 mb-2">{selectedProduct.name}</h2>
+                                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">{selectedProduct.specs}</p>
+                                    
+                                    <div className="space-y-3 mb-4">
+                                        <div className="border-l-4 border-red-500 pl-3">
+                                            <h4 className="text-xs uppercase font-bold text-gray-500 mb-1">CATEGORY</h4>
+                                            <p className="text-white text-sm">{selectedProduct.category}</p>
+                                        </div>
+                                        
+                                        <div className="border-l-4 border-red-500 pl-3">
+                                            <h4 className="text-xs uppercase font-bold text-gray-500 mb-1">WARRANTY</h4>
+                                            <p className="text-white text-sm">1 Year manufacturer warranty</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div className="mb-4">
+                                        <span className="text-3xl font-bold text-white">{formatCurrency(selectedProduct.price)}</span>
+                                        {selectedProduct.originalPrice && (
+                                            <div className="mt-1">
+                                                <span className="text-gray-500 line-through text-sm mr-2">{formatCurrency(selectedProduct.originalPrice)}</span>
+                                                <span className="text-red-500 text-sm font-bold">Save {formatCurrency(selectedProduct.originalPrice - selectedProduct.price)}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                    <button 
+                                        onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }}
+                                        className={`w-full font-bold py-3 rounded-lg transition-all uppercase text-sm ${
+                                            selectedProduct.quantity === 0
+                                                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                                : 'bg-red-500 hover:bg-red-600 text-white cursor-pointer'
+                                        }`}
+                                        disabled={selectedProduct.quantity === 0}
+                                    >
+                                        {selectedProduct.quantity === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

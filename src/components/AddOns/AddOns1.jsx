@@ -424,6 +424,7 @@ const AddOns1 = () => {
     const [showProductSummary, setShowProductSummary] = useState(false);
     const [summaryProduct, setSummaryProduct] = useState(null);
     const [priceRange, setPriceRange] = useState([0, 10000]);
+    const [showStockAlert, setShowStockAlert] = useState(false);
     const navigate = useNavigate();
 
     const API = "http://localhost:8181/api/admin/accessories"; // Admin backend API
@@ -459,6 +460,12 @@ const handleAddToCart = async (product) => {
 
     if (!userId) {
       alert("Please login first");
+      return;
+    }
+
+    // Check if quantity is 0 - show stock alert
+    if (product.quantity === 0) {
+      setShowStockAlert(true);
       return;
     }
 
@@ -573,7 +580,17 @@ const handleAddToCart = async (product) => {
                                             <p className="text-2xl font-black text-red-500">{product.displayPrice}</p>
                                             <div className="flex space-x-3 w-full sm:w-auto">
                                                 <button onClick={() => setSelectedProduct(product)} className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-all cursor-pointer">Show Info</button>
-                                                <button onClick={() => handleAddToCart(product)} className="flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md bg-red-600 hover:bg-red-700 text-white transition-all cursor-pointer">Add to Cart</button>
+                                                <button 
+                                                    onClick={() => handleAddToCart(product)} 
+                                                    className={`flex-1 sm:flex-none px-6 py-2 text-xs font-bold uppercase rounded-md transition-all ${
+                                                        product.quantity === 0 
+                                                            ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                                                            : 'bg-red-600 hover:bg-red-700 text-white cursor-pointer'
+                                                    }`}
+                                                    disabled={product.quantity === 0}
+                                                >
+                                                    {product.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -589,6 +606,23 @@ const handleAddToCart = async (product) => {
                 <a href="https://wa.me/" className="bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><MessageCircle className="h-6 w-6" /></a>
                 <a href="tel:+916369933507" className="bg-blue-600 text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform"><Phone className="h-6 w-6" /></a>
             </div>
+
+            {/* Stock Alert Modal */}
+            {showStockAlert && (
+                <div className="fixed inset-0 bg-black/90 z-[110] flex items-center justify-center p-4">
+                    <div className="bg-black border-2 border-red-500 rounded-xl p-6 max-w-sm w-full text-center">
+                        <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                        <h3 className="text-xl font-bold text-white mb-2">Stock Not Available</h3>
+                        <p className="text-gray-400 text-sm mb-6">This product is currently out of stock. Please check back later.</p>
+                        <button 
+                            onClick={() => setShowStockAlert(false)}
+                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all uppercase text-sm"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* Product Info Modal */}
             {selectedProduct && (
@@ -612,7 +646,17 @@ const handleAddToCart = async (product) => {
                                 </div>
                                 <div>
                                     <div className="mb-3 sm:mb-4"><span className="text-2xl sm:text-3xl font-bold text-white">{selectedProduct.displayPrice}</span></div>
-                                    <button onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }} className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg uppercase text-xs sm:text-sm">ADD TO CART</button>
+                                    <button 
+                                        onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); }} 
+                                        className={`w-full font-bold py-3 rounded-lg uppercase text-xs sm:text-sm ${
+                                            selectedProduct.quantity === 0
+                                                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                                : 'bg-red-500 hover:bg-red-600 text-white cursor-pointer'
+                                        }`}
+                                        disabled={selectedProduct.quantity === 0}
+                                    >
+                                        {selectedProduct.quantity === 0 ? 'OUT OF STOCK' : 'ADD TO CART'}
+                                    </button>
                                 </div>
                             </div>
                         </div>
