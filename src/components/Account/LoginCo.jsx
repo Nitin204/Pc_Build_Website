@@ -5,7 +5,7 @@ import image from '../../assets/image.png'; // Google icon
 
 // Simple check for Google login success
 window.addEventListener('message', (event) => {
-  if (event.origin !== 'http://localhost:8181') return;
+  if (event.origin !== 'https://pc-build-websiteabackend-2.onrender.com') return;
   
   if (event.data.type === 'GOOGLE_LOGIN_SUCCESS') {
     const { token, user } = event.data;
@@ -66,7 +66,7 @@ const LoginCo = () => {
 
     try {
         const response = await axios.post(
-            'http://localhost:8181/api/auth/login',
+            'https://pc-build-websiteabackend-2.onrender.com/api/auth/login',
             formData
         );
 
