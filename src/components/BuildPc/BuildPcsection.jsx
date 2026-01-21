@@ -520,7 +520,7 @@ const BuildPcsection = () => {
     const [pcBuilds, setPcBuilds] = useState([]);
     const [selectedBuild, setSelectedBuild] = useState(null);
 
-    const API_BASE = "http://localhost:8181/api/pcbuilds";
+    const API_BASE = "https://pc-build-websiteabackend-2.onrender.com/api/pcbuilds";
 
     // ✅ FETCH ADMIN BUILDS
     useEffect(() => {
@@ -630,7 +630,7 @@ const handleAddToCart = async (product) => {
     };
 
     await axios.post(
-      "http://localhost:8181/api/cart/add",
+      "https://pc-build-websiteabackend-2.onrender.com/api/cart/add",
       cartItem
     );
 

@@ -59,7 +59,7 @@ const Profile = () => {
     /* ================= ADDRESS LOGIC ================= */
     const loadAddresses = async () => {
         try {
-            const res = await axios.get(`http://localhost:8181/api/address/${userId}`);
+            const res = await axios.get(`https://pc-build-websiteabackend-2.onrender.com/api/address/${userId}`);
             setAddresses(res.data || []);
         } catch (error) {
             console.error("Error loading addresses", error);
@@ -69,9 +69,9 @@ const Profile = () => {
     const saveAddress = async () => {
         try {
             if (editingAddressId) {
-                await axios.put(`http://localhost:8181/api/address/${editingAddressId}`, { ...addressForm, userId });
+                await axios.put(`https://pc-build-websiteabackend-2.onrender.com/api/address/${editingAddressId}`, { ...addressForm, userId });
             } else {
-                await axios.post(`http://localhost:8181/api/address`, { ...addressForm, userId });
+                await axios.post(`https://pc-build-websiteabackend-2.onrender.com/api/address`, { ...addressForm, userId });
             }
             resetAddressForm();
             loadAddresses();
@@ -82,7 +82,7 @@ const Profile = () => {
 
     const deleteAddress = async (id) => {
         if (!window.confirm("Delete this address?")) return;
-        await axios.delete(`http://localhost:8181/api/address/${id}`);
+        await axios.delete(`https://pc-build-websiteabackend-2.onrender.com/api/address/${id}`);
         loadAddresses();
     };
 
@@ -103,7 +103,7 @@ const Profile = () => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`http://localhost:8181/api/user/update/${user.email}`, editData);
+            await axios.put(`https://pc-build-websiteabackend-2.onrender.com/api/user/update/${user.email}`, editData);
             const updatedUser = { ...user, ...editData };
             localStorage.setItem('user', JSON.stringify(updatedUser));
             setUser(updatedUser);
@@ -144,7 +144,7 @@ const Profile = () => {
     const loadOrders = async () => {
         try {
             setLoadingOrders(true);
-            const res = await axios.get("http://localhost:8181/api/order/user/" + userId);
+            const res = await axios.get("https://pc-build-websiteabackend-2.onrender.com/api/order/user/" + userId);
             setOrders(res.data || []);
         } catch (error) {
             console.error("Error loading orders", error);
@@ -156,7 +156,7 @@ const Profile = () => {
     const cancelOrder = async (orderId) => {
         if (!window.confirm("Cancel this order?")) return;
         try {
-            await axios.delete(`http://localhost:8181/api/order/${orderId}`);
+            await axios.delete(`https://pc-build-websiteabackend-2.onrender.com/api/order/${orderId}`);
             loadOrders();
         } catch (error) {
             alert("Error cancelling order");

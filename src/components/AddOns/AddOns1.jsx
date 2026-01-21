@@ -427,7 +427,7 @@ const AddOns1 = () => {
     const [showStockAlert, setShowStockAlert] = useState(false);
     const navigate = useNavigate();
 
-    const API = "http://localhost:8181/api/admin/accessories"; // Admin backend API
+    const API = "https://pc-build-websiteabackend-2.onrender.com/api/admin/accessories"; // Admin backend API
 
     // Fetch all accessories from admin backend
     const loadAccessories = async () => {
@@ -480,7 +480,7 @@ const handleAddToCart = async (product) => {
     };
 
     await axios.post(
-      "http://localhost:8181/api/cart/add",
+      "https://pc-build-websiteabackend-2.onrender.com/api/cart/add",
       cartItem
     );
 

@@ -203,7 +203,7 @@ const CareersCo = () => {
   formDataToSend.append("resume", formData.resume);
 
   try {
-    const response = await fetch("http://localhost:8181/api/careers", {
+    const response = await fetch("https://pc-build-websiteabackend-2.onrender.com/api/careers", {
       method: "POST",
       body: formDataToSend // ❗ no headers
     });

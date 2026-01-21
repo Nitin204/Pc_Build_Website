@@ -245,7 +245,7 @@ const CardCo = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:8181/api/cart/${userId}`
+        `https://pc-build-websiteabackend-2.onrender.com/api/cart/${userId}`
       );
       setCartItems(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
@@ -269,7 +269,7 @@ const CardCo = () => {
 
   // ❌ Remove
   const removeItem = async (id) => {
-    await axios.delete(`http://localhost:8181/api/cart/${id}`);
+    await axios.delete(`https://pc-build-websiteabackend-2.onrender.com/api/cart/${id}`);
     loadCart();
   };
 
@@ -279,7 +279,7 @@ const CardCo = () => {
     
     try {
       await axios.put(
-        `http://localhost:8181/api/cart/qty/${id}/${qty}`
+        `https://pc-build-websiteabackend-2.onrender.com/api/cart/qty/${id}/${qty}`
       );
       loadCart();
     } catch (err) {

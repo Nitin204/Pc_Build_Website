@@ -13,7 +13,7 @@ const PaymentCo = () => {
 
  const handlePayment = async () => {
   try {
-    const res = await axios.post("http://localhost:8181/api/order", {
+    const res = await axios.post("https://pc-build-websiteabackend-2.onrender.com/api/order", {
       userId,
       items: cartItems.map(i => ({
         productId: i.productId || i.id,

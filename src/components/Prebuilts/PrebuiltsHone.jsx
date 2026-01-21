@@ -367,7 +367,7 @@ import { MessageCircle, Phone } from 'lucide-react';
 import { FaGamepad, FaRobot, FaBuilding, FaCamera, FaChartLine } from 'react-icons/fa';
 import { PRODUCT_TYPES, getUserId } from '../../constants';
 
-const API_URL = 'http://localhost:8181/api/prebuilts';
+const API_URL = 'https://pc-build-websiteabackend-2.onrender.com/api/prebuilts';
 
 const CATEGORIES = [
     { label: "Gaming", key: "GAMING", icon: FaGamepad },
@@ -432,7 +432,7 @@ const PrebuiltsHone = () => {
     };
 
     await axios.post(
-      "http://localhost:8181/api/cart/add",
+      "https://pc-build-websiteabackend-2.onrender.com/api/cart/add",
       cartItem
     );
 

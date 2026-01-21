@@ -32,13 +32,13 @@ const CheckoutCo = () => {
   /* ================= CART ================= */
   const loadCart = async () => {
     if (!userId || !token) return;
-    const res = await axios.get(`http://localhost:8181/api/cart/${userId}`);
+    const res = await axios.get(`https://pc-build-websiteabackend-2.onrender.com/api/cart/${userId}`);
     setCartItems(res.data || []);
   };
 
   const deleteCartItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8181/api/cart/${itemId}`);
+      await axios.delete(`https://pc-build-websiteabackend-2.onrender.com/api/cart/${itemId}`);
       loadCart();
     } catch (err) {
       console.error("Delete failed:", err);
@@ -49,7 +49,7 @@ const CheckoutCo = () => {
   /* ================= ADDRESS ================= */
   const loadAddresses = async () => {
     const res = await axios.get(
-      `http://localhost:8181/api/address/${userId}`
+      `https://pc-build-websiteabackend-2.onrender.com/api/address/${userId}`
     );
     setAddresses(res.data || []);
     if (res.data?.length) {
@@ -58,7 +58,7 @@ const CheckoutCo = () => {
   };
   const removeItem = async (id) => {
     try {
-      await axios.delete(`http://localhost:8181/api/cart/${id}`);
+      await axios.delete(`https://pc-build-websiteabackend-2.onrender.com/api/cart/${id}`);
       loadCart();
     } catch (err) {
       console.error("Remove failed:", err);
@@ -69,12 +69,12 @@ const CheckoutCo = () => {
   const saveAddress = async () => {
     if (editingId) {
       await axios.put(
-        `http://localhost:8181/api/address/${editingId}`,
+        `https://pc-build-websiteabackend-2.onrender.com/api/address/${editingId}`,
         addressForm
       );
     } else {
       await axios.post(
-        `http://localhost:8181/api/address`,
+        `https://pc-build-websiteabackend-2.onrender.com/api/address`,
         addressForm
       );
     }
@@ -90,7 +90,7 @@ const CheckoutCo = () => {
 
   const deleteAddress = async (id) => {
     if (!window.confirm("Delete this address?")) return;
-    await axios.delete(`http://localhost:8181/api/address/${id}`);
+    await axios.delete(`https://pc-build-websiteabackend-2.onrender.com/api/address/${id}`);
     loadAddresses();
     setSelectedAddress(null);
   };

@@ -59,7 +59,7 @@ const RegisterCo = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8181/api/auth/register',
+        'https://pc-build-websiteabackend-2.onrender.com/api/auth/register',
         {
           firstName: formData.firstName,
           lastName: formData.lastName,
