@@ -285,7 +285,7 @@ const CardCo = () => {
     } catch (err) {
       console.error("Update quantity failed:", err);
       const errorMsg = err.response?.data || "Stock limit reached";
-      alert(errorMsg);
+      alert("Out Of Stock");
     }
   };
 

@@ -66,7 +66,7 @@ const Footer = () => {
                             <i className="fa-brands fa-facebook-f text-xl text-white hover:text-red-500 transition duration-300"></i>
                             <i className="fa-brands fa-youtube text-xl text-white hover:text-red-500 transition duration-300"></i>
                             <i className="fa-brands fa-linkedin text-xl text-white hover:text-red-500 transition duration-300"></i>
-                            <a href="https://wa.me/916369933507" aria-label="WhatsApp" className="text-white hover:text-red-500 transition duration-300">
+                            <a href="https://wa.me/7887782951" aria-label="WhatsApp" className="text-white hover:text-red-500 transition duration-300">
                               <i className="fa-brands fa-whatsapp text-xl"></i></a>
                         </div>
                     </div>
@@ -105,14 +105,14 @@ const Footer = () => {
                             <p className="flex items-center space-x-3">
                                 <i className="fa-solid fa-envelope text-red-500 text-lg"></i>
                                 <a href="mailto:future.retail20@gmail.com" className="hover:text-white transition duration-200">
-                                    future.retail20@gmail.com
+                                    nitinkatore686@gmail.com
                                 </a>
                             </p>
                             {/* Phone */}
                             <p className="flex items-center space-x-3">
                                 <i className="fa-solid fa-phone text-red-500 text-lg"></i>
-                                <a href="tel:+916369933507" className="hover:text-white transition duration-200">
-                                    +91-63699 33507
+                                <a href="tel:+917887782951" className="hover:text-white transition duration-200">
+                                    +91-7887782951
                                 </a>
                             </p>
                         </div>

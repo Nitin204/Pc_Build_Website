@@ -32,7 +32,7 @@ const PaymentCo = () => {
   } catch (err) {
     console.error(err);
     const errorMsg = err.response?.data || "Order failed";
-    alert(errorMsg);
+    alert("Out Of Stock");
   }
 };
 

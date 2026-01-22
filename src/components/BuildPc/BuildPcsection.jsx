@@ -657,12 +657,12 @@ const handleAddToCart = async (product) => {
         "w-full bg-black text-white p-3 rounded-md border border-gray-600";
 
     return (
-        <section className="py-20 px-4 bg-black">
+        <section className="py-8 md:py-20 px-1 sm:px-2 md:px-4 bg-black">
 
             {/* ================= BUILD FORM ================= */}
             <div className="flex justify-center">
-                <div className="bg-gray-950 text-white p-6 md:p-10 w-full max-w-lg rounded-lg border border-gray-800">
-                    <h2 className="text-3xl font-bold text-center text-red-500 mb-8">
+                <div className="bg-gray-950 text-white p-3 sm:p-4 md:p-6 lg:p-10 w-full max-w-xs sm:max-w-sm md:max-w-lg rounded-lg border border-gray-800">
+                    <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center text-red-500 mb-4 sm:mb-6 md:mb-8">
                         Build Your Own PC
                     </h2>
 
@@ -677,27 +677,27 @@ const handleAddToCart = async (product) => {
                         <div key={field} className="border-t border-gray-800">
                             <div
                                 onClick={() => toggleSection(field)}
-                                className="flex justify-between p-3 cursor-pointer hover:bg-gray-800"
+                                className="flex justify-between items-center p-2 sm:p-2 md:p-3 cursor-pointer hover:bg-gray-800 transition-colors"
                             >
-                                <div className="flex flex-col">
-                                    <span>{field}</span>
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-xs sm:text-sm md:text-base font-medium">{field}</span>
                                     {selectedValues && (
-                                        <span className="text-sm text-red-400 mt-1">{selectedValues}</span>
+                                        <span className="text-xs sm:text-xs md:text-sm text-red-400 mt-1 truncate">{selectedValues}</span>
                                     )}
                                 </div>
-                                <span>{openSection === field ? "▲" : "▼"}</span>
+                                <span className="text-gray-400 text-xs sm:text-sm ml-2">{openSection === field ? "▲" : "▼"}</span>
                             </div>
 
                             {openSection === field && (
-                                <div className="p-4 bg-gray-900 space-y-3">
+                                <div className="p-2 sm:p-3 md:p-4 bg-gray-900 space-y-2 md:space-y-3">
                                     {subFieldMapping[field].map(sub => (
                                         <div key={sub.key}>
-                                            <label className="block text-sm font-medium mb-1 text-white">{sub.label}</label>
+                                            <label className="block text-xs sm:text-xs md:text-sm font-medium mb-1 text-white">{sub.label}</label>
                                             <select
                                                 name={sub.key}
                                                 value={formData[sub.key] || ''}
                                                 onChange={handleChange}
-                                                className={subDropdownClass}
+                                                className="w-full bg-black text-white p-2 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base rounded-md border border-gray-600 focus:border-red-500 focus:outline-none"
                                             >
                                                 <option value="">Select {sub.label}</option>
                                                 {sub.options.map(opt => (
@@ -714,7 +714,7 @@ const handleAddToCart = async (product) => {
 
                     <button
                         onClick={handleBuildPC}
-                        className="w-full mt-6 bg-red-600 py-3 rounded font-bold"
+                        className="w-full mt-3 sm:mt-4 md:mt-6 bg-red-600 hover:bg-red-700 py-2 sm:py-2 md:py-3 rounded font-bold text-xs sm:text-sm md:text-base transition-colors"
                     >
                         Build PC
                     </button>
@@ -723,24 +723,24 @@ const handleAddToCart = async (product) => {
 
             {/* ================= ADVANCED SUMMARY ================= */}
             {showBuildSummary && selectedBuild && (
-                <div className="flex justify-center mt-8 px-4">
-                    <div className="bg-gray-950 text-white p-6 w-full max-w-6xl rounded-lg border border-gray-700">
+                <div className="flex justify-center mt-4 md:mt-8 px-1 sm:px-2 md:px-4">
+                    <div className="bg-gray-950 text-white p-3 sm:p-4 md:p-6 w-full max-w-xs sm:max-w-sm md:max-w-6xl rounded-lg border border-gray-700">
 
-                        <h3 className="text-2xl font-bold text-red-500 mb-2 text-center">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-red-500 mb-2 text-center">
                             {selectedBuild.name}
                         </h3>
-                        <p className="text-center text-gray-400 mb-6">
+                        <p className="text-center text-gray-400 mb-4 md:mb-6 text-xs sm:text-sm">
                             Powered by AI System
                         </p>
 
                         {/* Tabs */}
-                        <div className="flex justify-center mb-6">
+                        <div className="flex justify-center mb-4 md:mb-6">
                             <div className="flex bg-gray-800 rounded-lg p-1">
                                 {['features', 'overview'].map(tab => (
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
-                                        className={`px-6 py-2 rounded-md text-sm font-medium ${
+                                        className={`px-3 sm:px-4 md:px-6 py-1 sm:py-2 rounded-md text-xs sm:text-sm font-medium ${
                                             activeTab === tab
                                                 ? 'bg-red-600 text-white'
                                                 : 'text-gray-400 hover:text-white'
@@ -752,15 +752,15 @@ const handleAddToCart = async (product) => {
                             </div>
                         </div>
 
-                        <div className="flex flex-col lg:flex-row gap-8">
+                        <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
 
                             {/* Image */}
                             <div className="lg:w-1/3">
-                                <div className="bg-black rounded-lg p-6 border border-gray-700">
+                                <div className="bg-black rounded-lg p-3 sm:p-4 md:p-6 border border-gray-700">
                                     <img
                                         src={selectedBuild.image || img1}
                                         alt="PC"
-                                        className="h-64 mx-auto object-contain"
+                                        className="h-32 sm:h-48 md:h-64 mx-auto object-contain"
                                     />
                                 </div>
                             </div>
@@ -770,9 +770,9 @@ const handleAddToCart = async (product) => {
 
                                 {activeTab === 'overview' && (
                                     <div>
-                                        <h4 className="text-red-500 font-bold mb-4">Specifications</h4>
+                                        <h4 className="text-red-500 font-bold mb-2 md:mb-4 text-sm sm:text-base">Specifications</h4>
                                         {Object.entries(selectedBuild.specs).map(([k, v]) => (
-                                            <p key={k} className="text-sm text-gray-300">
+                                            <p key={k} className="text-xs sm:text-sm text-gray-300 mb-1">
                                                 • {k.replace(/_/g, ' ')} : <span className="text-white">{v}</span>
                                             </p>
                                         ))}
@@ -780,39 +780,39 @@ const handleAddToCart = async (product) => {
                                 )}
 
                                 {activeTab === 'features' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                                         <div>
-                                            <h4 className="text-red-500 font-bold mb-4">Premium Features</h4>
-                                            <p>✓ RGB Lighting Control</p>
-                                            <p>✓ Liquid Cooling</p>
-                                            <p>✓ Tempered Glass</p>
-                                            <p>✓ Tool-less Upgrade</p>
+                                            <h4 className="text-red-500 font-bold mb-2 md:mb-4 text-sm sm:text-base">Premium Features</h4>
+                                            <p className="text-xs sm:text-sm mb-1">✓ RGB Lighting Control</p>
+                                            <p className="text-xs sm:text-sm mb-1">✓ Liquid Cooling</p>
+                                            <p className="text-xs sm:text-sm mb-1">✓ Tempered Glass</p>
+                                            <p className="text-xs sm:text-sm mb-1">✓ Tool-less Upgrade</p>
                                         </div>
                                         <div>
-                                            <h4 className="text-red-500 font-bold mb-4">Warranty</h4>
-                                            <p>✓ 3 Year Warranty</p>
-                                            <p>✓ 24/7 Support</p>
-                                            <p>✓ Free Delivery</p>
+                                            <h4 className="text-red-500 font-bold mb-2 md:mb-4 text-sm sm:text-base">Warranty</h4>
+                                            <p className="text-xs sm:text-sm mb-1">✓ 3 Year Warranty</p>
+                                            <p className="text-xs sm:text-sm mb-1">✓ 24/7 Support</p>
+                                            <p className="text-xs sm:text-sm mb-1">✓ Free Delivery</p>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* Price */}
-                                <div className="mt-8 pt-6 border-t border-gray-700 flex justify-between items-center">
-                                    <div>
-                                        <p className="line-through text-gray-400">₹{buildPrice + 10000}</p>
-                                        <p className="text-3xl font-bold text-green-400">₹{buildPrice}</p>
+                                <div className="mt-4 md:mt-8 pt-3 md:pt-6 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-3">
+                                    <div className="text-center sm:text-left">
+                                        <p className="line-through text-gray-400 text-xs sm:text-sm">₹{buildPrice + 10000}</p>
+                                        <p className="text-xl sm:text-2xl md:text-3xl font-bold text-green-400">₹{buildPrice}</p>
                                     </div>
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-2 md:gap-3 w-full sm:w-auto">
                                         <button
                                             onClick={() => setShowBuildSummary(false)}
-                                            className="bg-gray-700 px-6 py-3 rounded"
+                                            className="bg-gray-700 px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded text-xs sm:text-sm flex-1 sm:flex-none"
                                         >
                                             Edit Build
                                         </button>
                                        <button
   onClick={() => handleAddToCart(selectedBuild)}
-  className="bg-red-600 px-6 py-3 rounded font-bold"
+  className="bg-red-600 px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded font-bold text-xs sm:text-sm flex-1 sm:flex-none"
 >
   ADD TO CART
 </button>
