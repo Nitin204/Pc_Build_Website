@@ -200,7 +200,7 @@ const Navbar = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:8181/api/cart/${userId}`
+        `https://pc-build-websiteabackend-2.onrender.com/api/cart/${userId}`
       );
       setCartCount(res.data.length || 0);
     } catch (err) {
