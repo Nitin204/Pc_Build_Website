@@ -21,7 +21,7 @@ const AddOns1 = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showProductSummary, setShowProductSummary] = useState(false);
     const [summaryProduct, setSummaryProduct] = useState(null);
-    const [priceRange, setPriceRange] = useState([0, 10000]);
+    const [priceRange, setPriceRange] = useState([0, 50000]);
     const [showStockAlert, setShowStockAlert] = useState(false);
     const navigate = useNavigate();
 
