@@ -122,7 +122,7 @@ const handleAddToCart = async (product) => {
                                     <input
                                         type="number"
                                         value={priceRange[1]}
-                                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 10000])}
+                                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 50000])}
                                         className="w-16 lg:w-20 px-2 py-1 bg-gray-800 text-white rounded text-sm"
                                         placeholder="Max"
                                     />
